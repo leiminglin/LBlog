@@ -1,0 +1,42 @@
+<?php
+class ModelStatistic extends Model{
+
+	public function save(){
+		$http_accept_language = isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])?$_SERVER['HTTP_ACCEPT_LANGUAGE']:'';
+		$http_accept_encoding =  isset($_SERVER['HTTP_ACCEPT_ENCODING'])?$_SERVER['HTTP_ACCEPT_ENCODING']:'';
+		$http_referer =  isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
+		$arr = array(
+			'http_host' => $_SERVER['HTTP_HOST'],
+			'request_uri' => $_SERVER['REQUEST_URI'],
+			'http_user_agent' => isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'',
+			'http_accept' => isset($_SERVER['HTTP_ACCEPT'])?$_SERVER['HTTP_ACCEPT']:'',
+			'http_accept_language' => $http_accept_language,
+			'http_accept_encoding' => $http_accept_encoding,
+			'http_referer' => $http_referer,
+			'remote_addr' => $_SERVER['REMOTE_ADDR'],
+			'request_time' => $_SERVER['REQUEST_TIME'],
+			'add_time' => time(),
+		);
+		return $this->db->insert($this->dbPrefix.'statistic', $arr);
+	}
+	
+	public function articleTodayRank(){
+		$sql = "SELECT request_uri FROM {$this->dbPrefix}statistic "
+				."WHERE request_uri like '/archives/%' "
+				."AND request_time > '".strtotime('today')."'";
+		$rs = $this->db->query($sql);
+		$statistic = array();
+		foreach ($rs as $t){
+			if( preg_match('/\/archives\/(\d+)/i', $t['request_uri'], $matches) ){
+				if( isset($statistic['/archives/'.$matches[1]]) ){
+					$statistic['/archives/'.$matches[1]]++;
+				}else{
+					$statistic['/archives/'.$matches[1]] = 1;
+				}
+			}
+		}
+		arsort($statistic);
+		return $statistic;
+	}
+	
+}
