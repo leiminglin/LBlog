@@ -110,10 +110,14 @@ var leftHeight, rightHeight;
 var rightFloat = function(){
 	leftHeight = left.offsetHeight;
 	rightHeight = right.offsetHeight;
-	var viewportHeight = parseInt(getWindowViewport().height);
-	if(leftHeight <= rightHeight || leftHeight < viewportHeight){
-		return;
+	if(leftHeight < rightHeight){
+		var temp = right;
+		right = left;
+		left = temp;
+		leftHeight = left.offsetHeight;
+		rightHeight = right.offsetHeight;
 	}
+	var viewportHeight = parseInt(getWindowViewport().height);
 	var pageScrollTop = parseInt(getPageScrollOffset().y);
 	var leftOffsetTop = parseInt(getElementOffsetTop(left));
 	var rightBoxOffsetTop = parseInt(getElementOffsetTop(right));
@@ -143,8 +147,8 @@ var rightFloat = function(){
 			}
 			return;
 		}
-		var pos = startFloatDownVal >= (leftHeight + leftOffsetTop - rightHeight - rightOriginOffsetTop) 
-			? (leftHeight + leftOffsetTop  - rightHeight - rightOriginOffsetTop) : startFloatDownVal;
+		var actualVal = leftHeight + leftOffsetTop - rightHeight - rightOriginOffsetTop;
+		var pos = startFloatDownVal >= actualVal ? actualVal : startFloatDownVal;
 		right.style.cssText = "margin-top:" + pos + 'px';
 	}
 
