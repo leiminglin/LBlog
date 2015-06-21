@@ -215,108 +215,118 @@ login_template .mask{
 <script type="text/javascript">
 window.onload=function(){deferred.promise()};
 deferred.then(function(){
-	lml.loadJs('<?php echo Tool::getCDNUrl('ueditorconfig.txt')?>');
-});
-deferred.then(function(){
-	lml.loadJs('<?php echo Tool::getCDNUrl('ueditorallmin.txt')?>');
-});
-deferred.then(function(){
-	lml.loadJs('//code.jquery.com/jquery.min.js');
-});
-deferred.then(function(){
-	var ue = UE.getEditor('commentarea', {
-		toolbars: [
-			['fullscreen', 'source', 'undo', 'redo', 'bold','italic','preview','horizontal','fontfamily',
-				 'underline','strikethrough','formatmatch','removeformat','link','unlink','justifyleft','justifyright',
-				'justifycenter','justifyjustify','forecolor','backcolor']
-		],
-		autoHeightEnabled: true,
-		autoFloatEnabled: true,
-		initialFrameWidth:'90%',
-		initialFrameHeight:100,
-		elementPathEnabled:false,
-		enableAutoSave:false,
-		saveInterval:500,
-		wordCount:false,
-		autoFloatEnabled:false,
-		UEDITOR_HOME_URL:'<?php echo WEB_PATH?>static/ueditor/',
-		serverUrl:'<?php echo WEB_PATH?>static/ueditor/php/controller.php'
+	var def2 = lml.createDeferred();
+	def2.then(function(){
+		lml.loadJs('<?php echo Tool::getCDNUrl('ueditorconfig.txt')?>', function(){
+			def2.promise();
+		});
 	});
+	def2.then(function(){
+		lml.loadJs('<?php echo Tool::getCDNUrl('ueditorallmin.txt')?>', function(){
+			def2.promise();
+		});
+	});
+	def2.then(function(){
+		lml.loadJs('//code.jquery.com/jquery.min.js', function(){
+			def2.promise();
+		});
+	});
+	def2.then(function(){
+		var ue = UE.getEditor('commentarea', {
+			toolbars: [
+				['fullscreen', 'source', 'undo', 'redo', 'bold','italic','preview','horizontal','fontfamily',
+					 'underline','strikethrough','formatmatch','removeformat','link','unlink','justifyleft','justifyright',
+					'justifycenter','justifyjustify','forecolor','backcolor']
+			],
+			autoHeightEnabled: true,
+			autoFloatEnabled: true,
+			initialFrameWidth:'90%',
+			initialFrameHeight:100,
+			elementPathEnabled:false,
+			enableAutoSave:false,
+			saveInterval:500,
+			wordCount:false,
+			autoFloatEnabled:false,
+			UEDITOR_HOME_URL:'<?php echo WEB_PATH?>static/ueditor/',
+			serverUrl:'<?php echo WEB_PATH?>static/ueditor/php/controller.php'
+		});
 
-	showInfo=function(v, f, w, s){
-		var a = $("<div/>")
-		.attr({"style":"border:1px solid green;width:100px;height:30px;background:#fff;box-shadow:5px 3px 4px #ccc;z-index:10000;"
-			+"position:fixed;padding:5px;top:-30px;left:50%;text-align:center;margin-left:-50px;line-height:30px;border-radius:5px;"})
-		.css({"opacity":.5})
-		.html(v),f=f||200,s=s||1000,w=w||1000;
-		$(document.body).append(
-			a.animate({"top":"100px","opacity":1}, f)
-			.delay(w)
-			.animate({"top":"-30px","opacity":.5}, s)
-			.queue(function(){a.remove()}));
-	};
-	
-	var loginflag;
-	$("table a.linkbtn").click(function(){
-		if(!document.cookie.match(/LMLUSS=\d+_\d+_[a-z0-9]+/)){
-			var logindiv = $('.login_template');
-			if(loginflag){
+		showInfo=function(v, f, w, s){
+			var a = $("<div/>")
+			.attr({"style":"border:1px solid green;width:100px;height:30px;background:#fff;box-shadow:5px 3px 4px #ccc;z-index:10000;"
+				+"position:fixed;padding:5px;top:-30px;left:50%;text-align:center;margin-left:-50px;line-height:30px;border-radius:5px;"})
+			.css({"opacity":.5})
+			.html(v),f=f||200,s=s||1000,w=w||1000;
+			$(document.body).append(
+				a.animate({"top":"100px","opacity":1}, f)
+				.delay(w)
+				.animate({"top":"-30px","opacity":.5}, s)
+				.queue(function(){a.remove()}));
+		};
+		
+		var loginflag;
+		$("table a.linkbtn").click(function(){
+			if(!document.cookie.match(/LMLUSS=\d+_\d+_[a-z0-9]+/)){
+				var logindiv = $('.login_template');
+				if(loginflag){
+					logindiv.show();
+					return;
+				}
+				loginflag = 1;
+				logindiv.html(logindiv.html().replace(/<!--|-->/g,''));
 				logindiv.show();
+				logindiv.children('.loginpage').append($('<div/>').css({"padding":"20px"}).html('<br/>请选择登录方式<br/>'))
+				.append($('.header .login').clone(true).css({"padding":"20px"}));
+				$('.close',logindiv).hover(function(){
+					$(this).addClass('closehover');
+				},function(){
+					$(this).removeClass('closehover');
+				}).click(function(){
+					logindiv.hide();
+				});
 				return;
 			}
-			loginflag = 1;
-			logindiv.html(logindiv.html().replace(/<!--|-->/g,''));
-			logindiv.show();
-			logindiv.children('.loginpage').append($('<div/>').css({"padding":"20px"}).html('<br/>请选择登录方式<br/>'))
-			.append($('.header .login').clone(true).css({"padding":"20px"}));
-			$('.close',logindiv).hover(function(){
-				$(this).addClass('closehover');
-			},function(){
-				$(this).removeClass('closehover');
-			}).click(function(){
-				logindiv.hide();
-			});
-			return;
-		}
 
-		content=ue.getContent();
-		if( $.trim(content)=='' ){
-			if(this.tips){
-				clearTimeout(this.timeout);
-				this.tips.show('fast');
-			}else{
-				this.tips=$('<span/>').css({"color":"red"}).html('内容不能为空！').insertAfter($(this)).hide().show('fast');
-			}
-			var tips = this.tips;
-			this.timeout=setTimeout(function(){
-				tips.hide('fast');
-			}, 1000);
-			return;
-		}
-		var self=this;
-		$.ajax({
-			type:'POST',
-			url:'<?php echo WEB_APP_PATH;?>archives/comment',
-			dataType:'json',
-			data:{'content':content,'aid':<?php echo $id?>},
-			success:function(m){
-				if(m.status){
-					showInfo('评价成功！');
-					ue.execCommand('cleardoc');
+			content=ue.getContent();
+			if( $.trim(content)=='' ){
+				if(this.tips){
+					clearTimeout(this.timeout);
+					this.tips.show('fast');
 				}else{
-					showInfo(m.msg);
+					this.tips=$('<span/>').css({"color":"red"}).html('内容不能为空！').insertAfter($(this)).hide().show('fast');
 				}
-			},
-			error:function(){
-				showInfo('<font color="red">评价失败！</font>');
+				var tips = this.tips;
+				this.timeout=setTimeout(function(){
+					tips.hide('fast');
+				}, 1000);
+				return;
 			}
+			var self=this;
+			$.ajax({
+				type:'POST',
+				url:'<?php echo WEB_APP_PATH;?>archives/comment',
+				dataType:'json',
+				data:{'content':content,'aid':<?php echo $id?>},
+				success:function(m){
+					if(m.status){
+						showInfo('评价成功！');
+						ue.execCommand('cleardoc');
+					}else{
+						showInfo(m.msg);
+					}
+				},
+				error:function(){
+					showInfo('<font color="red">评价失败！</font>');
+				}
+			});
+			
 		});
 		
+		def2.promise();
 	});
-	
 	deferred.promise();
+	def2.promise();
 });
-
 </script>
 <?php
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/foot.php';
