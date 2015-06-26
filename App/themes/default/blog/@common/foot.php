@@ -106,6 +106,8 @@ var left = document.getElementsByClassName('left')[0];
 var right = document.getElementsByClassName('right')[0];
 var rightOriginOffsetTop = parseInt(getElementOffsetTop(right));
 var leftHeight, rightHeight;
+left.originMarginTop = left.style.marginTop.match(/\d+/);
+right.originMarginTop = right.style.marginTop.match(/\d+/);
 
 var rightFloat = function(){
 	leftHeight = left.offsetHeight;
@@ -117,6 +119,7 @@ var rightFloat = function(){
 		leftHeight = left.offsetHeight;
 		rightHeight = right.offsetHeight;
 	}
+	left.style.cssText = "margin-top:" + (left.originMarginTop) + 'px';
 	var viewportHeight = parseInt(getWindowViewport().height);
 	var pageScrollTop = parseInt(getPageScrollOffset().y);
 	var leftOffsetTop = parseInt(getElementOffsetTop(left));
