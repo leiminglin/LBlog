@@ -80,7 +80,7 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 
 <div class="lbox litem">
 
-<?php 
+<?php
 if( $relevance ){
 ?>
 <div class="relations">
@@ -203,7 +203,7 @@ login_template .mask{
 }
 </textarea>
 <div class="login_template">
-<!-- 
+<!--
 <div class="mask"></div>
 <div class="loginpage">
 <div class="loginheader">
@@ -267,10 +267,10 @@ deferred.then(function(){
 				.animate({"top":"-30px","opacity":.5}, s)
 				.queue(function(){a.remove()}));
 		};
-		
+
 		var loginflag;
 		$("table a.linkbtn").click(function(){
-			if(!document.cookie.match(/LMLUSS=\d+_\d+_[a-z0-9]+/)){
+			if(!document.cookie.match(/<?php echo LBLOGUSS;?>=\d+_\d+_[a-z0-9]+/)){
 				var logindiv = $('.login_template');
 				if(loginflag){
 					logindiv.show();
@@ -323,9 +323,9 @@ deferred.then(function(){
 					showInfo('<font color="red">评价失败！</font>');
 				}
 			});
-			
+
 		});
-		
+
 		def2.promise();
 	});
 	deferred.promise();
