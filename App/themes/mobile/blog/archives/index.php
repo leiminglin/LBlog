@@ -266,7 +266,7 @@ deferred.then(function(){
 		
 		var loginflag;
 		$("table a.linkbtn").click(function(){
-			if(!document.cookie.match(/LMLUSS=\d+_\d+_[a-z0-9]+/)){
+			if(!document.cookie.match(/<?php echo LBLOGUSS;?>=\d+_\d+_[a-z0-9]+/)){
 				var logindiv = $('.login_template');
 				if(loginflag){
 					logindiv.show();
