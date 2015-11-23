@@ -1,7 +1,7 @@
 <?php
 //define('ADMIN_FORCE', true);
 $start_time = microtime();
-define("APP_DOMAIN", 'lblog.may');
+define("APP_DOMAIN", $_SERVER['HTTP_HOST']);
 ini_set('session.cookie_domain', APP_DOMAIN);
 session_start();
 function getRemoteLmlPhp(){

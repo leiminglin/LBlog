@@ -1,8 +1,8 @@
 <?php
 class ModuleUser extends LmlBase{
-	
-	
-	
+
+
+
 	/**
 	 * QQ login callback
 	 */
@@ -43,7 +43,7 @@ class ModuleUser extends LmlBase{
 			);
 			$mUser->addQq($arrsql);
 		}
-		
+
 		$arrsql = array(
 				'userid'=>$userid,
 				'from'=>'qq',
@@ -56,7 +56,7 @@ class ModuleUser extends LmlBase{
 		header('Status:302 Moved Temporarily');
 		header('Location:'.$_SESSION['backurl']);
 	}
-	
+
 	/**
 	 * sina weibo login callback
 	 */
@@ -89,7 +89,7 @@ class ModuleUser extends LmlBase{
 			}else{
 				$user_message = $c->show_user_by_id($uid_get['uid']);
 				/*
-				lml()->fileDebug('WB_AKEY:'.WB_AKEY.',WB_SKEY:'.WB_SKEY.',TOKEN:'.$_SESSION['token']['access_token'], 
+				lml()->fileDebug('WB_AKEY:'.WB_AKEY.',WB_SKEY:'.WB_SKEY.',TOKEN:'.$_SESSION['token']['access_token'],
 					APP_PATH.'LMLPHP_debug/authweibo.txt');
 				lml()->fileDebug($user_message, APP_PATH.'LMLPHP_debug/authweibo.txt');
 				*/
@@ -126,9 +126,9 @@ class ModuleUser extends LmlBase{
 			header('Location:'.$_SESSION['backurl']);
 		}
 	}
-	
+
 	/**
-	 * user login 
+	 * user login
 	 * just for qq now
 	 */
 	public function login(){
@@ -138,11 +138,11 @@ class ModuleUser extends LmlBase{
 		$_SESSION['backurl'] = $_GET['backurl'];
 		require_once(APP_PATH."third/qqconnect2.1/API/qqConnectAPI.php");
 		$qc = new QC();
-		$qc->qq_login(array('callback'=>$_SERVER['HTTP_HOST'].WEB_PATH.'user/oauth'));
+		$qc->qq_login(array('callback'=>APP_DOMAIN.WEB_PATH.'user/oauth'));
 	}
-	
+
 	/**
-	 * user login 
+	 * user login
 	 * just for sina weibo
 	 */
 	public function weibologin(){
@@ -167,7 +167,7 @@ class ModuleUser extends LmlBase{
 		if( isset($_SERVER['HTTP_REFERER']) ){
 			header('Location:'.$_SERVER['HTTP_REFERER']);
 		}else{
-			header('Location:http://'.$_SERVER['HTTP_HOST']);
+			header('Location:http://'.APP_DOMAIN);
 		}
 	}
 }
