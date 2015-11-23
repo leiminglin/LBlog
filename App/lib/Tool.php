@@ -1,15 +1,15 @@
 <?php
 class Tool{
-	
+
 	public static function notFoundPage(){
 		LmlUtils::_404();
 		include DEFAULT_THEME_PATH.(defined('C_GROUP') ? C_GROUP.'/' : '').'@common/404.php';
 	}
-	
+
 	public static function getCDNUrl($filename){
 		return WEB_PATH.'static/resource/'.$filename;
 	}
-	
+
 	public static function htmlspecialcharsDeep($v){
 		if(is_array($v)){
 			foreach ($v as $a=>$b){
@@ -20,12 +20,12 @@ class Tool{
 		}
 		return $v;
 	}
-	
-	
+
+
 	public static function getCookieValue($v, $e){
 		return $v.'_'.$e.'_'.sha1($v.$e.LBLOGSALT);
 	}
-	
+
 	public static function checkCookie($v=''){
 		if(defined('ADMIN_FORCE') && ADMIN_FORCE){
 			return 1;
@@ -48,7 +48,7 @@ class Tool{
 		}
 		return false;
 	}
-	
+
 	public static function getUserNickName(){
 		if( ($userid = self::checkCookie())==true ){
 			$m = new ModelUser();
@@ -57,7 +57,7 @@ class Tool{
 		}
 		return false;
 	}
-	
+
 	public static function convertTimeToWords($t){
 		static $now, $day, $week, $month, $year;
 		if(!$now){
@@ -89,11 +89,11 @@ class Tool{
 		}
 		return $str.' '.date("H:i", $t);
 	}
-	
+
 	public static function getArticleUrl($id, $name = ''){
 		return WEB_APP_PATH.'archives/'.$id.($name ? '/'.$name : '');
 	}
-	
+
 	public static function getArrayFieldList($array, $field){
 		$list = array();
 		foreach ($array as $v){
@@ -103,12 +103,12 @@ class Tool{
 		}
 		return $list;
 	}
-	
+
 	public static function getOriginLinks($path){
 		return '
-		原文链接 : <a href="http://'.SITE_DOMAIN.$path.'">
-		http://'.SITE_DOMAIN.$path.'</a>
-		 &nbsp;来自 : <a href="http://'.SITE_DOMAIN.'/">'.SITE_NAME.'</a>
+		原文链接 : <a href="http://'.APP_DOMAIN.$path.'">
+		http://'.APP_DOMAIN.$path.'</a>
+		 &nbsp;来自 : <a href="http://'.APP_DOMAIN.'/">'.SITE_NAME.'</a>
 		';
 	}
 }
