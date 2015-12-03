@@ -110,13 +110,13 @@ class ModuleInstall extends LmlBase{
 				if(substr($line, -1) == ';'){
 					$statement = str_replace('`lblog_', '`'.$dbprefix, $statement);
 
-					echo '<p>execute success!</p><p><a href="/">go home page</a></p>';
+					echo '<p>execute success!</p>';
 
 					$db->query($statement);
 					$statement = '';
 				}
 			}
-			echo '<p>install success!</p>';
+			echo '<p>install success!</p><p><a href="/">go home page</a></p>';
 		}catch (Exception $e){
 			echo '<p>error!</p>';
 			$this->outputBack();
