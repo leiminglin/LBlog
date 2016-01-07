@@ -114,7 +114,7 @@ CREATE TABLE `lblog_statistic` (
   `add_time` bigint(20) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `request_time` (`request_time`)
-) ENGINE=MyISAM AUTO_INCREMENT=241 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `lblog_user`;
@@ -127,7 +127,7 @@ CREATE TABLE `lblog_user` (
   `createtime` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `lblog_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', '老大', null, '1412265580');
 
