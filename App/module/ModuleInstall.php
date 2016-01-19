@@ -54,31 +54,31 @@ class ModuleInstall extends LmlBase{
 </table>
 </form>
 ';
-			exit;
+			return;
 		}
 
 		$sql_file = APP_PATH.'lblog.sql';
 
 		$fp = fopen($sql_file, 'r');
 
-		if(!isset($_POST['hostname']) || !isset($_POST['hostport']) ||
-				!isset($_POST['username']) || !isset($_POST['password']) ||
-				!isset($_POST['database']) || !isset($_POST['charset']) ||
-				!isset($_POST['dbprefix'])
-				){
+		if( !isset($_POST['hostname']) || !isset($_POST['hostport']) ||
+			!isset($_POST['username']) || !isset($_POST['password']) ||
+			!isset($_POST['database']) || !isset($_POST['charset']) ||
+			!isset($_POST['dbprefix'])
+		){
 			echo '<p>please input completely!</p>';
-            $this->outputBack();
-			exit;
+			$this->outputBack();
+			return;
 		}
 
 
-		$hostname = $_POST['hostname'];
-		$hostport = $_POST['hostport'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$database = $_POST['database'];
-		$charset = $_POST['charset'];
-		$dbprefix = $_POST['dbprefix'];
+		$hostname = trim($_POST['hostname']);
+		$hostport = trim($_POST['hostport']);
+		$username = trim($_POST['username']);
+		$password = trim($_POST['password']);
+		$database = trim($_POST['database']);
+		$charset = trim($_POST['charset']);
+		$dbprefix = trim($_POST['dbprefix']);
 
 		$config = compact('hostname', 'hostport', 'username', 'password', 'database', 'charset', 'dbprefix');
 
@@ -91,7 +91,7 @@ class ModuleInstall extends LmlBase{
 		}catch(Exception $e){
 			echo '<p>connect database fail!</p>';
 			$this->outputBack();
-			exit;
+			return;
 		}
 
 		echo '<p>begin</p>';
@@ -109,10 +109,8 @@ class ModuleInstall extends LmlBase{
 				$statement .= $line;
 				if(substr($line, -1) == ';'){
 					$statement = str_replace('`lblog_', '`'.$dbprefix, $statement);
-
-					echo '<p>execute success!</p>';
-
 					$db->query($statement);
+					echo '<p>execute success!</p>';
 					$statement = '';
 				}
 			}
@@ -120,9 +118,8 @@ class ModuleInstall extends LmlBase{
 		}catch (Exception $e){
 			echo '<p>error!</p>';
 			$this->outputBack();
-			exit;
+			return;
 		}
-
 
 		// save to config file
 		$config['persist'] = false;
@@ -130,7 +127,6 @@ class ModuleInstall extends LmlBase{
 
 		// rename this file
 		rename(APP_PATH.'module/ModuleInstall.php', APP_PATH.'module/.ModuleInstall.php');
-
 	}
 
 	public function saveConfig($config=array()){
