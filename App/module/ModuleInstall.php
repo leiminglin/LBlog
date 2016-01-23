@@ -44,7 +44,7 @@ class ModuleInstall extends LmlBase{
 
 <tr>
 	<td>dbprefix:</td>
-	<td><input type="text" name="dbprefix"/></td>
+	<td><input type="text" name="dbprefix" value="lblog_"/></td>
 </tr>
 
 <tr align="center">
@@ -124,6 +124,7 @@ class ModuleInstall extends LmlBase{
 		// save to config file
 		$config['persist'] = false;
 		$this->saveConfig($config);
+		$this->generateSalt();
 
 		// rename this file
 		rename(APP_PATH.'module/ModuleInstall.php', APP_PATH.'module/.ModuleInstall.php');
@@ -136,5 +137,20 @@ class ModuleInstall extends LmlBase{
 
 	public function outputBack(){
 		echo '<p><a href="javascript:history.go(-1);">go back</a></p>';
+	}
+
+	public function generateSalt(){
+		$config_file = APP_PATH.'conf/siteconfig.php';
+		$config_str = file_get_contents($config_file);
+		$str = '';
+		for( $i=0; $i<100; $i++ ) {
+			$char = chr(mt_rand(33, 126));
+			if ($char == "'") {
+				$char = "\'";
+			}
+			$str .= $char;
+		}
+		$config_str = str_replace("'salt_need_install_to_generate'", "'".$str.'_'.md5($str.time())."'", $config_str);
+		file_put_contents($config_file, $config_str);
 	}
 }
