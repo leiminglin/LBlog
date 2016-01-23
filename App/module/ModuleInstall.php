@@ -44,7 +44,7 @@ class ModuleInstall extends LmlBase{
 
 <tr>
 	<td>dbprefix:</td>
-	<td><input type="text" name="dbprefix"/></td>
+	<td><input type="text" name="dbprefix" value="lblog_"/></td>
 </tr>
 
 <tr align="center">
