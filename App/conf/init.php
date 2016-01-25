@@ -1,5 +1,28 @@
 <?php
 
+//define('ADMIN_FORCE', true);
+
+$start_time = microtime();
+define("APP_DOMAIN", $_SERVER['HTTP_HOST']);
+ini_set('session.cookie_domain', APP_DOMAIN);
+session_start();
+
+$lastRouter = array('last');
+
+$domain = array(
+	APP_DOMAIN => array(
+		'blog' => array(
+			'/^(?:\/index\.php)?\/p\/([1-9][\d]*)/i'=>array(
+				'param'=>array('pid'),
+				'm'=>'index'
+			)
+		)
+	)
+);
+
+defined('DEFAULT_THEME_NAME')||define('DEFAULT_THEME_NAME', get_theme());
+
+
 /**
  *
  * &theme=default&switch_theme_once
@@ -30,5 +53,11 @@ function get_theme() {
 	return 'default';
 }
 
-defined('DEFAULT_THEME_NAME')||define('DEFAULT_THEME_NAME', get_theme());
+
+/**
+ * last router
+ */
+function last(){
+	Tool::notFoundPage();
+}
 
