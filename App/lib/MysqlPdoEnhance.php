@@ -26,16 +26,18 @@ interface MysqlPdoInterface{
 	public function update($table, $arrData, $where = '');
 
 	public function delete($table, $where='', $params=array());
+
+	public function select($table, $fields='*', $where_tail='', $params=array());
 }
 
 class MysqlPdoEnhance implements MysqlPdoInterface
 {
 	private static $config;
-	private static $instance;
+	private static $instances;
 	private $db;
 
 	private function __construct() {
-		$dsn = 'mysql:host='.self::$config['hostname'].';dbname='.self::$config['database'];
+		$dsn = 'mysql:host='.self::$config['hostname'].';port='.self::$config['hostport'].';dbname='.self::$config['database'];
 		$username = self::$config['username'];
 		$password = self::$config['password'];
 		$options = array(
@@ -49,10 +51,11 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 
 	public static function getInstance($config){
 		self::$config = $config;
-		if(self::$instance && self::$instance instanceof self){
-			return self::$instance;
+		$flag = $config['hostname'] . $config['database'];
+		if (isset(self::$instances[$flag]) && self::$instances[$flag] instanceof self){
+			return self::$instances[$flag];
 		}
-		return new self();
+		return self::$instances[$flag] = new self();
 	}
 
 	public function query($sql, $params = array()){
@@ -60,6 +63,9 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 
 		if($params){
 			foreach ($params as $k => $v){
+				if(is_int($k)){
+					$k++;
+				}
 				if(is_array($v)){
 					$value = $v['value'];
 					$type = isset($v['type']) ? $v['type'] : false;
@@ -78,7 +84,7 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 		}
 
 		$stmt->execute();
-		if(preg_match('/^update|^insert/i', trim($sql))){
+		if(preg_match('/^update|^insert|^replace/i', trim($sql))){
 			return $stmt->rowCount();
 		}else{
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -124,11 +130,18 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 	}
 
 	public function delete($table, $where='', $params=array()){
-		$sql = 'DELETE FROM '.$table.' ';
+		$sql = 'DELETE FROM '.$table;
 		if($where){
 			$sql .= ' WHERE '.$where;
 		}
 		return $this->query($sql, $params);
 	}
 
+	public function select($table, $fields='*', $where_tail='', $params=array()){
+		$sql = 'SELECT '.$fields.' FROM '.$table;
+		if($where_tail){
+			$sql .= ' WHERE '.$where_tail;
+		}
+		return $this->query($sql, $params);
+	}
 }

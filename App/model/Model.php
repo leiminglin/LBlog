@@ -7,11 +7,7 @@ abstract class Model{
 	public function __construct(){
 		$dbconfig = $GLOBALS['dbconfig'];
 		$this->dbconfig = $dbconfig;
-		if (extension_loaded('pdo_mysql') && extension_loaded('PDO')) {
-			$this->db = MysqlPdoEnhance::getInstance($dbconfig);
-		} else {
-			$this->db = Mysql::getInstance($dbconfig);
-		}
+		$this->db = db();
 		$this->dbPrefix = $dbconfig['dbprefix'];
 	}
 }
