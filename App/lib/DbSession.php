@@ -5,6 +5,8 @@ class DbSession
 	
 	protected $dbconfig;
 	
+	protected $expire_time = 86400;
+	
 	function open($savePath, $sessionName){
 		if(!$this->link){
 			global $dbconfig;
@@ -46,7 +48,7 @@ class DbSession
 	function write($id, $data)
 	{
 		$rs = $this->link->query('replace into ' . $this->dbconfig['dbprefix'] 
-				. 'session set id=?, expires=?, data=?', array($id, time()+3600, $data));
+				. 'session set id=?, expires=?, data=?', array($id, time()+$this->expire_time, $data));
 		if($rs){
 			return true;
 		}
