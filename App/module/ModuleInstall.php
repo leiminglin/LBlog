@@ -145,8 +145,8 @@ class ModuleInstall extends LmlBase{
 		$str = '';
 		for( $i=0; $i<100; $i++ ) {
 			$char = chr(mt_rand(33, 126));
-			if ($char == "'") {
-				$char = "\'";
+			if ($char == "'" || $char == '\\') {
+				$char = '\\'.$char;
 			}
 			$str .= $char;
 		}
