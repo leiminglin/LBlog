@@ -345,7 +345,7 @@ var deferred = lml.deferred;
 <div class="header">
 <div class="login">
 <?php if( ($nickname = Tool::getUserNickName())==true ){?>
-您好，<?php echo $nickname;?>&nbsp;<a href="<?php echo WEB_APP_PATH.'/user/logout'?>">退出</a>
+您好，<?php echo $nickname;?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>">退出</a>
 <?php }else{?>
 <div class="logintype">
 <a href="javascript:void(0)" onclick='javascript:toQzoneLogin();return false;'><img alt="Use qq login" title="使用QQ登录" osrc="<?php echo Tool::getCDNUrl('qq_login.png');?>" height="24" width="120"></a>
