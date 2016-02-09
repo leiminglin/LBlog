@@ -47,6 +47,16 @@ class ModuleInstall extends LmlBase{
 	<td><input type="text" name="dbprefix" value="lblog_"/></td>
 </tr>
 
+<tr>
+	<td>admin email:</td>
+	<td><input type="text" name="email" value="admin"/></td>
+</tr>
+
+<tr>
+	<td>admin passwd:</td>
+	<td><input type="password" name="admin_passwd" value=""/></td>
+</tr>
+
 <tr align="center">
 	<td colspan="2"><input type="submit" value="Submit"/></td>
 </tr>
@@ -79,15 +89,13 @@ class ModuleInstall extends LmlBase{
 		$database = trim($_POST['database']);
 		$charset = trim($_POST['charset']);
 		$dbprefix = trim($_POST['dbprefix']);
+		$email = trim($_POST['email']);
+		$admin_passwd = trim($_POST['admin_passwd']);
 
 		$config = compact('hostname', 'hostport', 'username', 'password', 'database', 'charset', 'dbprefix');
 
 		try{
-			if (extension_loaded('pdo_mysql') && extension_loaded('PDO')) {
-				$db = MysqlPdoEnhance::getInstance($config);
-			} else {
-				$db = Mysql::getInstance($config);
-			}
+			$db = db();
 		}catch(Exception $e){
 			echo '<p>connect database fail!</p>';
 			$this->outputBack();
@@ -114,6 +122,12 @@ class ModuleInstall extends LmlBase{
 					$statement = '';
 				}
 			}
+			$admin_data = array(
+					'email' => $email,
+					'password' => $admin_passwd,
+					'createtime' => time()
+				);
+			$db->update($config['dbprefix'].'user', $admin_data, "id=1");
 			echo '<p>install success!</p><p><a href="/">go home page</a></p>';
 		}catch (Exception $e){
 			echo '<p>error!</p>';
