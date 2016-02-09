@@ -9,7 +9,11 @@ class ModuleInstall extends LmlBase{
 <form action="'.WEB_APP_PATH.'install" method="post">
 <table align="center">
 <tr>
-	<th colspan="2">LBlog Install</th>
+	<th colspan="2"><h3>LBlog Install Guard</h3></th>
+</tr>
+
+<tr>
+	<th colspan="2">db config</th>
 </tr>
 
 <tr>
@@ -45,6 +49,10 @@ class ModuleInstall extends LmlBase{
 <tr>
 	<td>dbprefix:</td>
 	<td><input type="text" name="dbprefix" value="lblog_"/></td>
+</tr>
+
+<tr>
+	<th colspan="2">admin</th>
 </tr>
 
 <tr>
@@ -95,7 +103,7 @@ class ModuleInstall extends LmlBase{
 		$config = compact('hostname', 'hostport', 'username', 'password', 'database', 'charset', 'dbprefix');
 
 		try{
-			$db = db();
+			$db = db($config);
 		}catch(Exception $e){
 			echo '<p>connect database fail!</p>';
 			$this->outputBack();
@@ -124,7 +132,7 @@ class ModuleInstall extends LmlBase{
 			}
 			$admin_data = array(
 					'email' => $email,
-					'password' => $admin_passwd,
+					'passwd' => md5(md5($admin_passwd)),
 					'createtime' => time()
 				);
 			$db->update($config['dbprefix'].'user', $admin_data, "id=1");

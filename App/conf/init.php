@@ -75,8 +75,12 @@ function is_session_started()
     return FALSE;
 }
 
-function db(){
-	$dbconfig = $GLOBALS['dbconfig'];
+function db($config=array()){
+	if($config){
+		$dbconfig = $config;
+	}else{
+		$dbconfig = $GLOBALS['dbconfig'];
+	}
 	if (extension_loaded('pdo_mysql') && extension_loaded('PDO')) {
 		return MysqlPdoEnhance::getInstance($dbconfig);
 	}
