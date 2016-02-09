@@ -27,6 +27,7 @@ class Statistic{
 						array($handler, 'gc')
 					);
 				}
+				session_name('LBLOGSID');
 				session_start();
 			}
 			
