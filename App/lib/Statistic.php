@@ -33,7 +33,8 @@ class Statistic{
 		}else{
 			if(LML_REQUEST_URI != '/install'){
 				header('HTTP/1.1 301 Moved Permanently');
-				header('Status:301 Moved Permanently');
+				header('Status: 301 Moved Permanently');
+				header('Cache-Control: no-cache');
 				header('Location: http://'.APP_DOMAIN.'/install');
 				exit;
 			}
