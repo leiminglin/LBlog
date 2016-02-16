@@ -87,5 +87,9 @@ function db($config=array()){
 	return Mysql::getInstance($dbconfig);
 }
 
-
+function route_match($regexp){
+	$matches = array();
+	preg_match('/^(?:\/index\.php)?\/'.C_MODULE.'\/'.C_ACTION.'\/?'.$regexp.'*/i', LML_REQUEST_URI, $matches);
+	return $matches;
+}
 

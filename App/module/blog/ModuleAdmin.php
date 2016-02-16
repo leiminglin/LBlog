@@ -156,4 +156,22 @@ class ModuleAdmin extends LmlBlog{
 			$c++;
 		}
 	}
+	
+	public function archives(){
+		$matches = route_match('([\w]+)');
+		$action = isset($matches[1]) ? $matches[1] : 'list';
+		switch ($action){
+			case 'list':
+				$mArchives = new ModelArchives();
+				$rs = $mArchives->getArticleTitles(0, 5);
+				$this->assign('rs', $rs);
+				$this->display('', '/list.php');
+				break;
+		}
+	}
+	
+	
+	
+	
+	
 }
