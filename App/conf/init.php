@@ -93,3 +93,11 @@ function route_match($regexp){
 	return $matches;
 }
 
+function arr_get($arr, $k, $r=''){
+	return isset($arr[$k]) ? $arr[$k] : $r;
+}
+
+function tag_a($text, $func){
+	return '<a href="javascript:void(0)" onclick="'.$func.'">'.$text.'</a>';
+}
+

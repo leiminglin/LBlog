@@ -39,7 +39,7 @@ a:hover{
 .top{
 	line-height:40px;
 	font-size:16px;
-	border-bottom:1px dotted gray;
+	border-bottom:1px solid #e6e9ed;
 	padding-left:10px;
 }
 .top span{
@@ -47,16 +47,31 @@ a:hover{
 }
 .left{
 	float:left;
-	border-right:1px dotted red;
+	border-right:1px solid #edeff2;
 	height:2000px;
 	padding:10px;
+	width:100px;
 }
 .right{
 	float:left;
 	height:1000px;
 }
+.right .content{
+	padding:10px;
+}
 .bottom{
 	text-align:center;
+}
+
+table tr td, table tr th{
+	border:1px solid #eee;
+	padding:5px;
+}
+table{
+	border-collapse:collapse;
+}
+div.line{
+	margin:10px;
 }
 </style>
 </head>
@@ -71,15 +86,19 @@ a:hover{
 <div class="middle">
 
 	<div class="left">
-	left
+		<ul>
+			<li><?php echo tag_a('物料列表', 'get_list_archives()');?></li>
+		</ul>
 	</div>
 	
 	<div class="right">
-	<input type="button" value="refresh" onclick="re()"/>
-	<div id="result">
-	
-	</div>
-	
+		<div class="content">
+		
+			<div id="result">
+			
+			</div>
+			
+		</div>
 	
 
 
@@ -123,14 +142,48 @@ function form_iframe_get(action, callback){
 		c_iframe.parentNode.removeChild(c_iframe);
 	}
 }
-function re(){
+function get_list_archives(){
 	form_iframe_get('<?php echo WEB_APP_PATH?>admin/archives/list', function(rs){
 		document.getElementById('result').innerHTML = rs;
 	});
 }
 
+function get_edit_archives(id){
+	form_iframe_get('<?php echo WEB_APP_PATH?>admin/archives/edit/'+id, function(rs){
+		document.getElementById('result').innerHTML = rs;
+	});
+}
+
+function get_post_archives(){
+	form_iframe_get('<?php echo WEB_APP_PATH?>admin/archives/post', function(rs){
+		document.getElementById('result').innerHTML = rs;
+	});
+}
+
+function get_save_archives(form){
+	var time = new Date().getTime()
+	,c_iframe = document.createElement('iframe')
+	,c_form = form;
+	c_iframe.className = 'hidden';
+	c_iframe.name = 'request_iframe_'+time;
+	c_form.target=c_iframe.name;
+	
+	document.body.appendChild(c_iframe);
+	c_iframe.onload = function(){
+		document.getElementById('result').innerHTML = c_iframe.contentWindow.document.body.innerHTML;
+		c_iframe.parentNode.removeChild(c_iframe);
+	};
+	return true;
+}
+
 window.onload = function(){
-	re();
+	get_list_archives();
+
+	var left_w = document.getElementsByClassName('left')[0].offsetWidth
+	,body_w = document.body.clientWidth, right = document.getElementsByClassName('right')[0];
+	right.style.width = body_w - left_w + "px";
+
+	
 }
 </script>
 
@@ -254,7 +307,7 @@ target="_blank">
 			rightHeight = right.offsetHeight;
 		}
 
-		left.style.cssText = "margin-top:" + (left.originMarginTop) + 'px';
+		left.style.marginTop = left.originMarginTop + 'px';
 
 		var viewportHeight = parseInt(getWindowViewport().height);
 		var pageScrollTop = parseInt(getPageScrollOffset().y);
@@ -266,7 +319,7 @@ target="_blank">
 		if(maxMarginTopVal > 0){
 			var startBack = rightBoxOffsetTop - pageScrollTop;
 			if(startBack > 0){
-				right.style.cssText = "margin-top:" + (pageScrollTop - rightOriginOffsetTop) + 'px';
+				right.style.marginTop = (pageScrollTop - rightOriginOffsetTop) + 'px';
 			}
 			return;
 		}
@@ -282,18 +335,18 @@ target="_blank">
 			if(rightBoxMarginTop >= startFloatDownVal){
 				if(rightBoxOffsetTop > pageScrollTop && rightBoxOffsetTop > rightOriginOffsetTop){
 					var temp = pageScrollTop - rightOriginOffsetTop;
-					right.style.cssText = "margin-top:"+ (temp>0?temp:0) +'px';
+					right.style.marginTop = (temp>0?temp:0) +'px';
 				}
 				return;
 			}
 			var actualVal = leftHeight + leftOffsetTop - rightHeight - rightOriginOffsetTop;
 			var pos = startFloatDownVal >= actualVal ? actualVal : startFloatDownVal;
-			right.style.cssText = "margin-top:" + pos + 'px';
+			right.style.marginTop =  pos + 'px';
 		}
 
 		if(rightBoxOffsetTop > pageScrollTop && rightBoxOffsetTop > rightOriginOffsetTop){
 			var temp = pageScrollTop - rightOriginOffsetTop;
-			right.style.cssText = "margin-top:"+ (temp>0?temp:0) +'px';
+			right.style.marginTop = (temp>0?temp:0) +'px';
 		}
 	};
 

@@ -8,7 +8,8 @@ class ModuleAdmin extends LmlBlog{
 		'backData' => 'checkLogin',
 		'index' => 'checkLogin',
 		'addrelationarticle' => 'checkLogin',
-		'removerelationarticle' => 'checkLogin'
+		'removerelationarticle' => 'checkLogin',
+		'archives' => 'checkLogin'
 	);
 	
 	public function __construct(){
@@ -159,13 +160,43 @@ class ModuleAdmin extends LmlBlog{
 	
 	public function archives(){
 		$matches = route_match('([\w]+)');
-		$action = isset($matches[1]) ? $matches[1] : 'list';
+		$action = arr_get($matches, 1, 'list');
 		switch ($action){
 			case 'list':
 				$mArchives = new ModelArchives();
 				$rs = $mArchives->getArticleTitles(0, 5);
 				$this->assign('rs', $rs);
 				$this->display('', '/list.php');
+				break;
+			case 'edit':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					return;
+				}
+				$article = $this->mArchives->getArticleById($matches[1], 0);
+				$this->assign('article', $article);
+				$this->display('', '/edit.php');
+				break;
+			case 'post':
+				$this->display('', '/post.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					if($article_id = $this->mArchives->addArticle($_POST)){
+						$this->assign('save_status', '保存成功！');
+					}
+				}else{
+					$article_id = $matches[1];
+					if($this->mArchives->modifyArticle($_POST, $article_id)){
+						$this->assign('save_status', '保存成功！');
+					}else{
+						$this->assign('save_status', '内容未改变！');
+					}
+				}
+				$article = $this->mArchives->getArticleById($article_id, 0);
+				$this->assign('article', $article);
+				$this->display('', '/edit.php');
 				break;
 		}
 	}

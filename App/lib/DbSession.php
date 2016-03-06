@@ -66,7 +66,7 @@ class DbSession
 
 	function gc($maxlifetime)
 	{
-		$rs = $this->link->delete($this->dbconfig['dbprefix'].'session', '(expire +'.$maxlifetime.') < '.time());
+		$rs = $this->link->delete($this->dbconfig['dbprefix'].'session', '(expires +'.$maxlifetime.') < '.time());
 		if($rs){
 			return true;
 		}
