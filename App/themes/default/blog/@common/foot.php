@@ -38,6 +38,7 @@ deferred.then(function(){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i
 */
 </script>
 
+<script type="text/javascript">deferred.then(function(){var def2 = lml.createDeferred();def2.then(function(){lml.loadJs('https://rawgit.com/leiminglin/LMLJS/master/lib/highlight.js', function(){def2.promise();});});deferred.promise();def2.promise();});</script>
 
 <script>
 (function(){
