@@ -103,7 +103,7 @@ div.line{
 <div class="sitewrap">
 
 <div class="top">
-	<span>LBLOG 后台管理</span>
+	<span><?php echo SITE_NAME?></span>
 </div>
 
 <div class="middle">
@@ -176,8 +176,12 @@ function form_iframe_get(action, callback){
 		};
 	} 
 }
-function get_list_archives(){
-	form_iframe_get('<?php echo WEB_APP_PATH?>admin/archives/list', function(rs){
+function get_list_archives(pid){
+	var url = '<?php echo WEB_APP_PATH?>admin/archives/list';
+	if(pid){
+		url += '/'+pid;
+	}
+	form_iframe_get(url, function(rs){
 		document.getElementById('result').innerHTML = rs;
 	});
 }

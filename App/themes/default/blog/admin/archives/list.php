@@ -1,5 +1,3 @@
-<div id="result">
-
 <div class="line">
 <?php echo tag_a('发布', 'get_post_archives()');?>
 </div>
@@ -27,4 +25,6 @@
 </tr>
 <?php }?>
 </table>
-</div>
+<?php
+include DEFAULT_THEME_PATH.C_GROUP.'/admin/common/admin_page.php';
+?>

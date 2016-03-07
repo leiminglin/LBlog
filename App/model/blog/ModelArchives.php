@@ -1,11 +1,15 @@
 <?php
 class ModelArchives extends Model{
 	
-	public function getArticles($begin=0, $count=5){
+	public function getArticles($begin=0, $count=5, $is_active = 'Y'){
+		$where = '';
+		if($is_active) {
+			$where .= "AND a.is_active='".$is_active."'";
+		}
 		$sql = "SELECT a.*,u.nickname,s.viewtimes,s.commenttimes FROM {$this->dbPrefix}blog_archives a"
 			." LEFT JOIN {$this->dbPrefix}user u ON a.userid=u.id"
 			." LEFT JOIN {$this->dbPrefix}blog_archives_statistic s ON a.id=s.aid"
-			." WHERE is_active='Y' ORDER BY id DESC LIMIT $begin,$count";
+			." WHERE 1=1 $where ORDER BY id DESC LIMIT $begin,$count";
 		$archives = $this->db->query($sql);
 		$ids = Tool::getArrayFieldList($archives, 'id');
 		$urls = $this->getArchivesUrlByIds($ids);
@@ -47,9 +51,13 @@ class ModelArchives extends Model{
 		return $return;
 	}
 	
-	public function getCount(){
+	public function getCount($is_active='Y'){
+		$active_sql = '';
+		if($is_active){
+			$active_sql = "AND is_active='".$is_active."'";
+		}
 		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}blog_archives"
-		." WHERE is_active='Y'";
+		." WHERE 1=1 $active_sql";
 		$c = $this->db->getOne($sql);
 		return $c['C'];
 	}

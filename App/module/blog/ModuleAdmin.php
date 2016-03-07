@@ -164,8 +164,18 @@ class ModuleAdmin extends LmlBlog{
 		switch ($action){
 			case 'list':
 				$mArchives = new ModelArchives();
-				$rs = $mArchives->getArticleTitles(0, 5);
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $mArchives->getArticles(10*($pid-1), 10, false);
+				$count = $mArchives->getCount(false);
+				$page = new Paging($count, $pid, 10);
 				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('click_func', 'get_list_archives');
+				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
 				break;
 			case 'edit':
