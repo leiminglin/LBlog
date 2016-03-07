@@ -1,7 +1,7 @@
 <div id="result">
 
 <div class="line">
-<?php echo tag_a('发表文章', 'get_post_archives()');?>
+<?php echo tag_a('发布', 'get_post_archives()');?>
 </div>
 
 

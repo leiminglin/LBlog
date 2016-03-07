@@ -27,7 +27,7 @@
 </tr>
 <tr>
 <td>Content：</td>
-<td><textarea cols="100" rows="15" name="content"></textarea></td>
+<td><textarea cols="60" rows="10" name="content"></textarea></td>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="submit" value="Submit"/></td>
