@@ -78,7 +78,7 @@ table{
 	border-collapse:collapse;
 }
 div.line{
-	margin:10px;
+	margin:10px 0;
 }
 </style>
 <script>
@@ -164,6 +164,7 @@ function form_iframe_get(action, callback){
 		callback(c_iframe.contentWindow.document.body.innerHTML);
 		c_form.parentNode.removeChild(c_form);
 		c_iframe.parentNode.removeChild(c_iframe);
+		adjust_right();
 	};
 
 	if(c_iframe.attachEvent){
@@ -214,16 +215,15 @@ function get_save_archives(form){
 	return true;
 }
 
-
+function adjust_right(){
+	var left_w = document.getElementsByClassName('left')[0].offsetWidth
+	,body_w = document.body.clientWidth, right = document.getElementsByClassName('right')[0];
+	right.style.width = body_w - left_w + "px";
+};
 
 window.onload = function(){
 	lml.run();
 	get_list_archives();
-	function adjust_right(){
-		var left_w = document.getElementsByClassName('left')[0].offsetWidth
-		,body_w = document.body.clientWidth, right = document.getElementsByClassName('right')[0];
-		right.style.width = body_w - left_w + "px";
-	};
 	adjust_right();
 	lml.registerOnResize(adjust_right);
 }
@@ -349,7 +349,9 @@ target="_blank">
 			rightHeight = right.offsetHeight;
 		}
 
-		left.style.marginTop = left.originMarginTop + 'px';
+		if(left.originMarginTop){
+			left.style.marginTop = left.originMarginTop + 'px';
+		}
 
 		var viewportHeight = parseInt(getWindowViewport().height);
 		var pageScrollTop = parseInt(getPageScrollOffset().y);

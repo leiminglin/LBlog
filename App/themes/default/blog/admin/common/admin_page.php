@@ -3,29 +3,25 @@ if( isset($page) && ($count = $page->getPageCount()) > 1 && isset($click_func) &
 ?>
 <style>
 .page{
-	height:30px;
 	line-height:30px;
-	margin:40px 0px;
+	margin:25px 0px;
 	font-family:Microsoft Yahei;
 }
 .page a{
-	width:30px;
-	height:30px;
 	display:inline-block;
 	text-decoration:none;
 	border:1px solid #eee;
 	color:#666;
 	font-weight:bold;
 	margin-left:-1px;
+	padding:0 5px;
+	float:left;
 }
 .page a:hover{
-	/* text-decoration:underline; */
 	color:#fd703d;
 }
 .page a.current{
 	color:#fd703d;
-	/* background-color:#fd703d;
-	border:1px solid #fd703d; */
 	text-decoration:none;
 }
 .page a.gray{
@@ -33,7 +29,6 @@ if( isset($page) && ($count = $page->getPageCount()) > 1 && isset($click_func) &
 	text-decoration:none;
 }
 .page a.word{
-	width:52px;
 	font-weight:normal;
 }
 .page .leftradius{
