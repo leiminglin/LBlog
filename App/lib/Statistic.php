@@ -10,9 +10,9 @@ class Statistic{
 			$mStatistic = new ModelStatistic();
 			$mStatistic->save();
 			
-			$handler = new DbSession();
 			ini_set('session.cookie_domain', APP_DOMAIN);
 			if ( is_session_started() === FALSE ) {
+				$handler = new DbSession();
 				if ( version_compare(phpversion(), '5.4.0', '>=') ) {
 					$handler = new DbSessionHandler();
 					session_register_shutdown();
