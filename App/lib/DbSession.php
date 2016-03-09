@@ -75,6 +75,12 @@ class DbSession
 }
 
 
+
+if ( version_compare(phpversion(), '5.4.0', '>=') ) {
+	class DbSessionHandler extends DbSession implements SessionHandlerInterface{}
+}
+
+
 // $handler = new DbSessionHandler();
 // session_set_save_handler($handler, true);
 // session_start();
