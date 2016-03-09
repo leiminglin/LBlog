@@ -94,6 +94,9 @@ div.line{
  *
  */
 !function(e,t,n){function o(e){return e={},e.queue=[],e.running=0,e.promise=function(){e.queue.length?(e.running=1,e.queue.shift()()):e.running=0},e.then=function(t){e.queue.push(t)},e}function r(){function t(t){n.push(t),e.onresize=function(){for(var e in n)n[e]()}}var n=[];return t}function a(n){function r(n,o,r,a){r=t.createElement("script"),a=t.getElementsByTagName("script")[0],r.async=1,r.src=n;try{a.parentNode.insertBefore(r,a),e.addEventListener?r.addEventListener("load",o,!1):e.attachEvent?r.onreadystatechange=function(){this.readyState.match(/loaded|complete/i)&&o()}:r.onload=function(){o()}}catch(i){o()}}function a(e,t,o,r){function a(r,s){r=e.shift(),s=e.shift(),e.unshift(s),i(r,function(){s?(a(),n[s].callback.running||i.start(s)):t()},o)}r=e[0],a()}function i(e,t,s,c){function u(){function o(){r(e,function(){n[e].loaded=1,t(),i.start(e)})}s=s+""=="1"?1:0,s?o():n[e].start||n[e].loaded?(t(),i.start(e)):o(),n[e].start=1}return"object"==typeof e&&e instanceof Array?a(e,t):(t=t||function(){l.promise()},n[e]?n[e].callback.then(u):(c=o(),c.then(u),n[e]={loaded:0,start:0,callback:c}),void(n[e].callback.running||i.start(e)))}return n={},i.competeLoad=function(e,t,n,o,r){for(o=0,r=e.length;r>o;o++)i(e.shift(),function(){this.flag||(t(),this.flag=1)})},i.start=function(e,t){if(f.onload)if(e)n[e].callback.promise();else for(t in n)n[t].callback.promise()},i}function i(n){var o,r,a=n.offsetTop,i=n.offsetParent;if(null==i&&n.parentNode)for(o=n.parentNode;null==i&&(i=o.offsetParent,o=o.parentNode););for(;null!==i;)a+=i.offsetTop+i.clientTop,i=i.offsetParent;return"number"==typeof e.pageYOffset?r=e.pageYOffset:(docElement=t.compatMode&&"CSS1Compat"===t.compatMode?t.documentElement:t.body,r=docElement.scrollTop),a-r}function s(){return t.compatMode&&"BackCompat"==t.compatMode&&t.body?{width:t.body.clientWidth,height:t.body.clientHeight}:{width:t.documentElement.clientWidth,height:t.documentElement.clientHeight}}function c(e,n){n=t.createElement("style"),n.type="text/css",n.styleSheet?n.styleSheet.cssText=e:n.innerHTML=e,t.getElementsByTagName("head")[0].appendChild(n)}var l=o(),u=a(),f={};f.registerOnResize=r(),l.then(function(){function n(){if(h>=u.length)return void(e.addEventListener?t.removeEventListener("scroll",n,!1):e.attachEvent&&e.detachEvent(event,n));for(o=0,j=u.length;o<j;o++)u[o].getAttribute("src")||(a=i(u[o]),c=u[o].getAttribute("height")||0,a>=-c&&a<d.height&&(r=u[o].getAttribute("osrc"))&&(u[o].setAttribute("src",r),u[o].onerror=function(){(r=this.getAttribute("osrc-bak"))&&(this.setAttribute("src",r),this.onerror=null)},u[o].onload=function(){h++}))}var o,r,a,c,u=t.getElementsByTagName("IMG"),d=s(),h=0;f.registerOnResize(function(){d=s()}),e.addEventListener?t.addEventListener("scroll",n,!1):e.attachEvent&&e.attachEvent("onscroll",n),n(),l.promise()}),"function"!=typeof t.getElementsByClassName&&(t.getElementsByClassName=function(e){var n,o,e,r=t.getElementsByTagName("*"),a=new RegExp("\\b"+e+"\\b"),i=[];for(n=0,o=r.length;o>n;n++)e=r[n].className,a.test(e)&&i.push(r[n]);return i}),l.then(function(e,n){for(e=t.getElementsByClassName("lazyCss"),n=0;n<e.length;n++)c(e[n].value||e[n].innerHTML);l.promise()}),l.then(function(){var e,n,o=t.getElementsByClassName("lazyHtml");for(e=0;e<o.length;e++)"TEXTAREA"==o[e].tagName&&(n=t.createElement("DIV"),n.innerHTML=o[e].value,o[e].parentNode.insertBefore(n,o[e]));l.promise()}),f.deferred=l,f.createDeferred=o,f.loadJs=u,f.onload=0,f.run=function(){f.onload=1,l.promise(),u.start()},e.lml=f}(window,document);
+window.onload = function(){
+	lml.run();
+}
 </script>
 
 
@@ -144,89 +147,10 @@ div.line{
 
 
 <script>
-function form_iframe_get(action, callback){
-	var time = new Date().getTime()
-	,c_iframe = document.createElement('iframe')
-	,c_form = document.createElement('form');
-	c_iframe.className = 'hidden';
-	c_iframe.name = 'request_iframe_'+time;
-	c_form.className = 'hidden';
-	c_form.id = 'request_form_'+time;
-	c_form.method='get';
-	c_form.target=c_iframe.name;
-	c_form.action=action;
-	
-	document.body.appendChild(c_iframe);
-	document.body.appendChild(c_form);
-	c_form.submit();
-
-	var loadedDo = function(){
-		callback(c_iframe.contentWindow.document.body.innerHTML);
-		c_form.parentNode.removeChild(c_form);
-		c_iframe.parentNode.removeChild(c_iframe);
-		adjust_right();
-	};
-
-	if(c_iframe.attachEvent){
-		c_iframe.attachEvent("onload", function(){
-			loadedDo();
-		});
-	} else {
-		c_iframe.onload = function(){
-			loadedDo();
-		};
-	} 
-}
-function get_list_archives(pid){
-	var url = '<?php echo WEB_APP_PATH?>admin/archives/list';
-	if(pid){
-		url += '/'+pid;
-	}
-	form_iframe_get(url, function(rs){
-		document.getElementById('result').innerHTML = rs;
-	});
-}
-
-function get_edit_archives(id){
-	form_iframe_get('<?php echo WEB_APP_PATH?>admin/archives/edit/'+id, function(rs){
-		document.getElementById('result').innerHTML = rs;
-	});
-}
-
-function get_post_archives(){
-	form_iframe_get('<?php echo WEB_APP_PATH?>admin/archives/post', function(rs){
-		document.getElementById('result').innerHTML = rs;
-	});
-}
-
-function get_save_archives(form){
-	var time = new Date().getTime()
-	,c_iframe = document.createElement('iframe')
-	,c_form = form;
-	c_iframe.className = 'hidden';
-	c_iframe.name = 'request_iframe_'+time;
-	c_form.target=c_iframe.name;
-	
-	document.body.appendChild(c_iframe);
-	c_iframe.onload = function(){
-		document.getElementById('result').innerHTML = c_iframe.contentWindow.document.body.innerHTML;
-		c_iframe.parentNode.removeChild(c_iframe);
-	};
-	return true;
-}
-
-function adjust_right(){
-	var left_w = document.getElementsByClassName('left')[0].offsetWidth
-	,body_w = document.body.clientWidth, right = document.getElementsByClassName('right')[0];
-	right.style.width = body_w - left_w + "px";
-};
-
-window.onload = function(){
-	lml.run();
-	get_list_archives();
-	adjust_right();
-	lml.registerOnResize(adjust_right);
-}
+lml.loadJs(
+	['<?php echo WEB_APP_PATH?>admin/js/common?t=' + <?php echo filectime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/common.js');?>, 
+	'<?php echo WEB_APP_PATH?>admin/js/archives?t=' + <?php echo filectime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/archives.js');?>], 
+	function(){});
 </script>
 
 

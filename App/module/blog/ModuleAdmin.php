@@ -211,6 +211,17 @@ class ModuleAdmin extends LmlBlog{
 		}
 	}
 	
+	public function js(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'common');
+		$cache_seconds = 86400*365;
+		header('Pragma: none');
+		header('Content-Type: text/javascript');
+		header('Cache-Control: public, max-age='.$cache_seconds);
+		// Sun, 05 Mar 2017 15:02:23 GMT
+		header('Expires: '.date('D, d M Y H:i:s e', time() + $cache_seconds));
+		$this->display('', '/'.$action.'.js');
+	}
 	
 	
 	
