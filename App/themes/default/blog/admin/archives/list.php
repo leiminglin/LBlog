@@ -1,5 +1,5 @@
 <div class="line">
-<?php echo tag_a('发布', 'get_post_archives()');?>
+<a href="javascript:void(0)" id="lblog_admin_archives_post_a">发布</a>
 </div>
 
 
@@ -20,7 +20,7 @@
 <td><?php echo $v['is_active'];?></td>
 <td><?php echo date("Y-m-d H:i:s", $v['createtime']);?></td>
 <td>
-<?php echo tag_a('Edit', 'get_edit_archives('.$v['id'].')');?>
+<a href="javascript:void(0)" id="lblog_admin_archives_edit_a" data="<?php echo $v['id'];?>">Edit</a>
 </td>
 </tr>
 <?php }?>

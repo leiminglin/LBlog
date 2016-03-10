@@ -36,4 +36,26 @@ function get_save_archives(form){
 	return true;
 }
 
+
+
+
+
+
+
+
+
 get_list_archives();
+
+var archives_post_a = eid('lblog_admin_archives_post_a');
+var archives_edit_a = eid('lblog_admin_archives_edit_a');
+
+on(archives_post_a, 'click', get_post_archives);
+on(archives_edit_a, 'click', function(){
+	get_edit_archives(archives_edit_a.getAttribute('data'));
+});
+
+
+
+
+
+

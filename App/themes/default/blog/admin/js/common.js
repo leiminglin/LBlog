@@ -38,6 +38,23 @@ function adjust_right(){
 	right.style.width = body_w - left_w + "px";
 }
 
+function eid(i){
+	return document.getElementById(i);
+}
+
+function on(o,e,c){
+	if(window.addEventListener){
+		o.addEventListener(e, c, false);
+	}else if(window.attachEvent){
+		o.attachEvent('on'+e, c);
+	}
+}
+
+
+
+
+
+
 lml.registerOnResize(adjust_right);
 
 (function(){
