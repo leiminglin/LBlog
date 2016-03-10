@@ -110,6 +110,12 @@ class ModuleInstall extends LmlBase{
 			return;
 		}
 
+		if(!is_writeable(APP_PATH)){
+			echo '<p>app directory can\'t be writeable!</p>';
+			$this->outputBack();
+			return;
+		}
+
 		echo '<p>begin</p>';
 
 		$statement = '';
