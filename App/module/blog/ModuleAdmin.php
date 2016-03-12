@@ -174,7 +174,6 @@ class ModuleAdmin extends LmlBlog{
 				$page = new Paging($count, $pid, 10);
 				$this->assign('rs', $rs);
 				$this->assign('page', $page);
-				$this->assign('click_func', 'get_list_archives');
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
 				break;
@@ -222,6 +221,7 @@ class ModuleAdmin extends LmlBlog{
 		header('Expires: '.date('D, d M Y H:i:s e', time() + $cache_seconds));
 		$this->display('', '/'.$action.'.js');
 	}
+	
 	
 	
 	

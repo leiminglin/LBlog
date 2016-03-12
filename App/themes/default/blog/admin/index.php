@@ -113,7 +113,9 @@ window.onload = function(){
 
 	<div class="left">
 		<ul>
-			<li><?php echo tag_a('物料管理', 'get_list_archives()');?></li>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">物料管理</a>
+			</li>
 		</ul>
 	</div>
 	
@@ -148,8 +150,8 @@ window.onload = function(){
 
 <script>
 lml.loadJs(
-	['<?php echo WEB_APP_PATH?>admin/js/common?t='+<?php echo filectime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/common.js');?>, 
-	'<?php echo WEB_APP_PATH?>admin/js/archives?t='+<?php echo filectime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/archives.js');?>], 
+	['<?php echo WEB_APP_PATH?>admin/js/common?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/common.js');?>, 
+	'<?php echo WEB_APP_PATH?>admin/js/archives?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/archives.js');?>], 
 	function(){});
 </script>
 

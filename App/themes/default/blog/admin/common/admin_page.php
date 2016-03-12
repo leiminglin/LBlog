@@ -1,5 +1,5 @@
 <?php 
-if( isset($page) && ($count = $page->getPageCount()) > 1 && isset($click_func) && isset($pid) ){
+if( isset($page) && ($count = $page->getPageCount()) > 1 && isset($data_action) && isset($pid) ){
 ?>
 <style>
 .page{
@@ -45,7 +45,7 @@ if( isset($page) && ($count = $page->getPageCount()) > 1 && isset($click_func) &
 $pids = $page->getPids(9);
 if( $page->hasPrev() ){
 ?>
-<a href="javascript:void(0)" onclick="<?php echo $click_func .'('. $page->getPrev();?>)" class="word leftradius">上一页</a>
+<a href="javascript:void(0)" data-action="<?php echo $data_action?>" data-id="<?php echo $page->getPrev();?>" class="word leftradius">上一页</a>
 <?php }else{?>
 <a href="javascript:void(0)" class="gray word leftradius">上一页</a>
 <?php }?>
@@ -54,11 +54,11 @@ foreach ($pids as $t){
 	if($pid == $t){?>
 <a href="javascript:void(0)" class="current"><?php echo $t?></a>
 <?php }else{?>
-<a href="javascript:void(0)" onclick="<?php echo $click_func.'('.$t?>)"><?php echo $t?></a>
+<a href="javascript:void(0)" data-action="<?php echo $data_action?>" data-id="<?php echo $t?>"><?php echo $t?></a>
 <?php }}
 if( $page->hasNext() ){
 ?>
-<a href="javascript:void(0)" onclick="<?php echo $click_func.'('.$page->getNext()?>)" class="word rightradius">下一页</a>
+<a href="javascript:void(0)" data-action="<?php echo $data_action?>" data-id="<?php echo $page->getNext()?>" class="word rightradius">下一页</a>
 <?php }else{?>
 <a href="javascript:void(0)" class="gray word rightradius">下一页</a>
 <?php }?>
