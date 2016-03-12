@@ -61,6 +61,7 @@ a:hover{
 	float:left;
 	height:auto;
 	min-height:300px;
+	position:relative;
 	/* height:1000px; */
 }
 .right .content{
@@ -79,6 +80,23 @@ table{
 }
 div.line{
 	margin:10px 0;
+}
+
+.tabs_title{
+	position:absolute;
+	top:-24px;
+	left:10px;
+	line-height:22px;
+}
+.tabs_title a{
+	display:inline-block;
+	margin:0 3px;
+	padding:0 8px;
+	cursor:pointer;
+}
+.bbw{
+	border:1px solid #e6e9ed;
+	border-bottom:1px solid #fff;
 }
 </style>
 <script>
@@ -120,10 +138,19 @@ window.onload = function(){
 	</div>
 	
 	<div class="right">
+		<div class="tabs_title">
+			<a data-tab="1">
+				Home
+			</a>
+		</div>
 		<div class="content">
 		
 			<div id="result">
-			
+				<div class="tabs_content">
+					<div data-tab="1">
+						Welcome!
+					</div>
+				</div>
 			</div>
 			
 		</div>

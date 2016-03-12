@@ -9,7 +9,7 @@ function get_list_archives_page(pid){
 		path += '/'+pid;
 	}
 	$.get(path, function(rs){
-		$('#result').html(rs);
+		create_tab('列表', rs);
 	});
 }
 
@@ -19,11 +19,27 @@ function get_post_archives_page(id){
 		path += '/'+id;
 	}
 	$.get(path, function(rs){
-		$('#result').html(rs);
+		create_tab('发布', rs);
 	});
 }
 
-
+function create_tab(title, content){
+	var tags_title = $('.tabs_title');
+	var tags_content = $('.tabs_content');
+	var tag_title = $('a[data-tab='+title+']', tags_title);
+	
+	$(tags_title).children('a').removeClass('bbw');
+	$(tags_content).children('div').addClass('hidden');
+	
+	if(tag_title.length==0){
+		$('<a/>').attr('data-tab', title).html(title).addClass('bbw').appendTo(tags_title);
+		$('<div/>').attr('data-tab', title).html(content).appendTo(tags_content);
+	}else{
+		$('a[data-tab='+title+']', tags_title).addClass('bbw');
+		$('div[data-tab='+title+']', tags_content).removeClass('hidden').html(content);
+	}
+	adjust_right();
+}
 
 
 
@@ -35,7 +51,17 @@ lml.loadJs.competeLoad([
 	'//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
 	'//code.jquery.com/jquery-1.11.1.min.js'], function(){
 
+	
 	get_list_archives_page(false);
+	
+	$('.tabs_title').delegate("a", "click", function(e){
+		var title = $(this).attr('data-tab');
+		$(this).siblings().removeClass('bbw');
+		$(this).addClass('bbw');
+		$('div.tabs_content').children().addClass('hidden');
+		$('div.tabs_content').children('div[data-tab='+title+']').removeClass('hidden');
+		adjust_right();
+	});
 
 	var taga_actions = {
 		'lblog_admin_archives_list_page':function(o){
@@ -65,7 +91,7 @@ lml.loadJs.competeLoad([
 
 	$('#result').delegate("input[type=button]", "click", function(){
 		$.post($(this.form).attr('action'), $(this.form).serialize(), function(rs){
-			$('#result').html(rs);
+			create_tab('发布', rs);
 		});
 	});
 
