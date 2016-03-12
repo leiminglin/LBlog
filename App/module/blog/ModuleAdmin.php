@@ -177,17 +177,13 @@ class ModuleAdmin extends LmlBlog{
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
 				break;
-			case 'edit':
-				$matches = route_match('[\w]+\/(\d+)');
-				if (!isset($matches[1])) {
-					return;
-				}
-				$article = $this->mArchives->getArticleById($matches[1], 0);
-				$this->assign('article', $article);
-				$this->display('', '/edit.php');
-				break;
 			case 'post':
-				$this->display('', '/post.php');
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1])) {
+					$article = $this->mArchives->getArticleById($matches[1], 0);
+					$this->assign('article', $article);
+				}
+				$this->display('', '/edit.php');
 				break;
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');

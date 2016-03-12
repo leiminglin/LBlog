@@ -20,7 +20,7 @@
 <td><?php echo $v['is_active'];?></td>
 <td><?php echo date("Y-m-d H:i:s", $v['createtime']);?></td>
 <td>
-<a href="javascript:void(0)" data-action="lblog_admin_archives_edit_page" data-id="<?php echo $v['id'];?>">Edit</a>
+<a href="javascript:void(0)" data-action="lblog_admin_archives_post_page" data-id="<?php echo $v['id'];?>">Edit</a>
 </td>
 </tr>
 <?php }?>
