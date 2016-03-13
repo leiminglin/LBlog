@@ -36,6 +36,7 @@ function adjust_right(){
 	var left_w = document.getElementsByClassName('left')[0].offsetWidth
 	,body_w = document.body.clientWidth, right = document.getElementsByClassName('right')[0];
 	right.style.width = body_w - left_w + "px";
+	lmlSmartFloat();
 }
 
 function eid(i){
@@ -49,6 +50,20 @@ function on(o,e,c){
 		o.attachEvent('on'+e, c);
 	}
 }
+
+function show_info(v, f, w, s){
+	var a = $("<div/>")
+	.attr({"style":"border:1px solid green;background:#fff;box-shadow:5px 3px 4px #ccc;z-index:10000;"
+		+"position:absolute;padding:5px;top:-42px;left:50%;text-align:center;line-height:30px;border-radius:5px;"})
+	.css({"opacity":.5})
+	.html(v),f=f||200,s=s||1000,w=w||1000;
+	$(document.body).append(
+		a.animate({"top":"100px","opacity":1}, f)
+		.delay(w)
+		.animate({"top":"-42px","opacity":.5}, s)
+		.queue(function(){a.remove()}));
+	a.css({'margin-left': -a.width()/2+'px'});
+};
 
 
 
@@ -187,5 +202,6 @@ lml.registerOnResize(adjust_right);
 	}else if( window.attachEvent ){
 		window.attachEvent("onscroll", rightFloat); 
 	}
+	window.lmlSmartFloat = rightFloat;
 })();
 

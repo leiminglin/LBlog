@@ -14,12 +14,13 @@ function get_list_archives_page(pid){
 }
 
 function get_post_archives_page(id){
-	var path = archives_post_path;
+	var path = archives_post_path,title='发布';
 	if(id){
 		path += '/'+id;
+		title = '编辑-'+id;
 	}
 	$.get(path, function(rs){
-		create_tab('发布', rs);
+		create_tab(title, rs);
 	});
 }
 
@@ -39,6 +40,13 @@ function create_tab(title, content){
 		$('div[data-tab='+title+']', tags_content).removeClass('hidden').html(content);
 	}
 	adjust_right();
+}
+
+function modify_tab_title(origin_title, new_title){
+	var tags_title = $('.tabs_title');
+	var tags_content = $('.tabs_content');
+	$(tags_title).children('a[data-tab='+origin_title+']').attr({"data-tab":new_title}).html(new_title);
+	$(tags_content).children('div[data-tab='+origin_title+']').attr({"data-tab":new_title});
 }
 
 
@@ -91,7 +99,9 @@ lml.loadJs.competeLoad([
 
 	$('#result').delegate("input[type=button]", "click", function(){
 		$.post($(this.form).attr('action'), $(this.form).serialize(), function(rs){
-			create_tab('发布', rs);
+			$('.tabs_content').children(':visible').html(rs);
+			adjust_right();
+			show_info('Save Successfully!');
 		});
 	});
 
