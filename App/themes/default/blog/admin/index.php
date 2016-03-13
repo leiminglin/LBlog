@@ -57,6 +57,9 @@ a:hover{
 	height:auto;
 	min-height:300px;
 }
+.left ul li{
+	margin:5px;
+}
 .right{
 	float:left;
 	height:auto;
@@ -81,6 +84,9 @@ table{
 div.line{
 	margin:10px 0;
 }
+div.line span{
+	margin:0 10px;
+}
 
 .tabs_title{
 	position:absolute;
@@ -93,10 +99,15 @@ div.line{
 	margin:0 3px;
 	padding:0 8px;
 	cursor:pointer;
+	position:relative;
 }
 .bbw{
 	border:1px solid #e6e9ed;
 	border-bottom:1px solid #fff;
+	color:#ff6f3d;
+}
+.cl{
+	color:#ff6f3d;
 }
 </style>
 <script>
@@ -132,7 +143,13 @@ window.onload = function(){
 	<div class="left">
 		<ul>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">物料管理</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Archives</a>
+			</li>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Relations</a>
+			</li>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Settings</a>
 			</li>
 		</ul>
 	</div>
