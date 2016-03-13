@@ -1,7 +1,7 @@
 (function(){
 
-	var archives_list_path = '<?php echo WEB_APP_PATH?>admin/archives/list';
-	var archives_post_path = '<?php echo WEB_APP_PATH?>admin/archives/post';
+var archives_list_path = '<?php echo WEB_APP_PATH?>admin/archives/list';
+var archives_post_path = '<?php echo WEB_APP_PATH?>admin/archives/post';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -24,30 +24,8 @@ function get_post_archives_page(id){
 	});
 }
 
-function create_tab(title, content){
-	var tags_title = $('.tabs_title');
-	var tags_content = $('.tabs_content');
-	var tag_title = $('a[data-tab='+title+']', tags_title);
-	
-	$(tags_title).children('a').removeClass('bbw');
-	$(tags_content).children('div').addClass('hidden');
-	
-	if(tag_title.length==0){
-		$('<a/>').attr('data-tab', title).html(title).addClass('bbw').appendTo(tags_title);
-		$('<div/>').attr('data-tab', title).html(content).appendTo(tags_content);
-	}else{
-		$('a[data-tab='+title+']', tags_title).addClass('bbw');
-		$('div[data-tab='+title+']', tags_content).removeClass('hidden').html(content);
-	}
-	adjust_right();
-}
 
-function modify_tab_title(origin_title, new_title){
-	var tags_title = $('.tabs_title');
-	var tags_content = $('.tabs_content');
-	$(tags_title).children('a[data-tab='+origin_title+']').attr({"data-tab":new_title}).html(new_title);
-	$(tags_content).children('div[data-tab='+origin_title+']').attr({"data-tab":new_title});
-}
+
 
 
 

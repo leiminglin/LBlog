@@ -194,9 +194,11 @@ window.onload = function(){
 
 <script>
 lml.loadJs(
-	['<?php echo WEB_APP_PATH?>admin/js/common?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/common.js');?>, 
-	'<?php echo WEB_APP_PATH?>admin/js/archives?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/archives.js');?>], 
-	function(){});
+[
+'<?php echo WEB_APP_PATH?>admin/js/common?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/common.js');?>, 
+'<?php echo WEB_APP_PATH?>admin/js/archives?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/archives.js');?>
+],
+function(){});
 </script>
 
 
