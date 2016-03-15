@@ -82,7 +82,7 @@ table{
 	border-collapse:collapse;
 }
 div.line{
-	margin:10px 0;
+	margin-right:10px;
 }
 div.line span{
 	margin:0 10px;
