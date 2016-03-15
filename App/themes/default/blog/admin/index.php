@@ -143,15 +143,21 @@ window.onload = function(){
 	<div class="left">
 		<ul>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Archives</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Archive</a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Relations</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Relation</a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Settings</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Cat</a>
 			</li>
-		</ul>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Statistic</a>
+			</li>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Setting</a>
+			</li>
+	</ul>
 	</div>
 	
 	<div class="right">

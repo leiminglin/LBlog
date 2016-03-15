@@ -9,7 +9,7 @@ function get_list_archives_page(pid){
 		path += '/'+pid;
 	}
 	$.get(path, function(rs){
-		create_tab('Archives', rs);
+		create_tab('Archive', rs);
 	});
 }
 
