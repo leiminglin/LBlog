@@ -58,7 +58,7 @@ a:hover{
 	min-height:300px;
 }
 .left ul li{
-	margin:5px;
+	margin:8px 0;
 }
 .right{
 	float:left;
