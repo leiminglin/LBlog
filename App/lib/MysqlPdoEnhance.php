@@ -84,7 +84,7 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 		}
 
 		$stmt->execute();
-		if(preg_match('/^update|^insert|^replace/i', trim($sql))){
+		if(preg_match('/^update|^insert|^replace|^delete/i', trim($sql))){
 			return $stmt->rowCount();
 		}else{
 			return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -93,7 +93,7 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 
 	public function getOne($sql, $params = array()){
 		$result = $this->query($sql, $params);
-		return $result[0];
+		return isset($return[0]) ? $result[0] : array();
 	}
 
 	public function getLastId(){
