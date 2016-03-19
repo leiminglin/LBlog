@@ -6,6 +6,7 @@ var archives_relation_path = '<?php echo WEB_APP_PATH?>admin/archives/relation';
 var archives_relation_remove_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/remove';
 var archives_relation_set_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/set';
 var cats_list_path = '<?php echo WEB_APP_PATH?>admin/cats/list';
+var save_cat_path = '<?php echo WEB_APP_PATH?>admin/cats/save';
 var statistics_list_path = '<?php echo WEB_APP_PATH?>admin/statistics/list';
 
 function get_list_archives_page(pid){
@@ -59,6 +60,9 @@ function set_relation_archives(o){
 
 function get_cats_list_page(o){
 	var path = cats_list_path;
+	if(o){
+		path += '/'+o;
+	}
 	$.get(path, function(rs){
 		create_tab('Cat', rs);
 	});
@@ -74,6 +78,20 @@ function get_statistics_list_page(o){
 		create_tab('Statistic', rs);
 	});
 }
+
+function add_cat(name, id){
+	var path = save_cat_path;
+	if(id){
+		path +='/'+id;
+	}
+	$.post(path, {'name':name}, function(rs){
+		show_info(rs);
+		var x = $('.tabs_content').children(':visible').find('a.current').html();
+		get_cats_list_page(x);
+	});
+}
+
+
 
 
 
@@ -179,10 +197,27 @@ lml.loadJs.competeLoad([
 			set_relation_archives(o);
 		},
 		'lblog_admin_cats_page':function(o){
-			get_cats_list_page(o);
+			if(o.getAttribute('data-id')){
+				get_cats_list_page(o.getAttribute('data-id'));
+			}else{
+				get_cats_list_page(false);
+			}
 		},
 		'lblog_admin_statistics_page':function(o){
 			get_statistics_list_page(o)
+		},
+		'lblog_admin_cats_post':function(o){
+			add_cat(o.previousSibling.value);
+		},
+		'lblog_admin_cats_edit':function(o){
+			var td = $(o).parent().prev(), name=td.html();
+			if(o.flag){
+				add_cat(td.children('input').val(), o.getAttribute('data-id'));
+			}else{
+				td.html($("<input/>").val(name).attr({"type":"text"}));
+				$(o).html('Save');
+				o.flag = 1;
+			}
 		}
 	};
 

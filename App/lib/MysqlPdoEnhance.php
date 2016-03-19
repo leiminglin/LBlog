@@ -115,7 +115,7 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 		return $this->query($sql, $params);
 	}
 
-	public function update($table, $data, $where = ''){
+	public function update($table, $data, $where = '', $wparams=array()){
 		$sql = 'UPDATE '.$table.' SET ';
 		$params = array();
 		foreach ($data as $k=>$v){
@@ -126,7 +126,7 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 		if($where){
 			$sql .= ' WHERE '.$where;
 		}
-		return $this->query($sql, $params);
+		return $this->query($sql, array_merge($params, $wparams));
 	}
 
 	public function delete($table, $where='', $params=array()){

@@ -104,7 +104,7 @@ class Mysql{
 		return $this->query($sql);
 	}
 
-	public function update($table, $arr, $where=''){
+	public function update($table, $arr, $where='', $params=array()){
 		$sql = 'UPDATE '.$table.' SET ';
 		foreach ($arr as $k=>$v){
 			$sql .= '`'.$k.'` = \''.$this->escapeString($v).'\',';
@@ -113,7 +113,7 @@ class Mysql{
 		if($where){
 			$sql .= ' WHERE '.$where;
 		}
-		return $this->query($sql);
+		return $this->query($sql, $params);
 	}
 
 	public function delete($table, $where='', $params=array()){

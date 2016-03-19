@@ -246,10 +246,29 @@ class ModuleAdmin extends LmlBlog{
 				$rs = $mCats->getCats(10*($pid-1), 10);
 				$count = $mCats->getCount();
 				$page = new Paging($count, $pid, 10);
+				
 				$this->assign('rs', $rs);
 				$this->assign('page', $page);
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					if($mCats->addCat($_POST['name'])){
+						echo 'Add Successfully!';
+					}else{
+						echo 'Add Failed!';
+					}
+				}else{
+					$id = $matches[1];
+					if($mCats->modifyCat($id, $_POST['name'])){
+						echo 'Modify Successfully!';
+					}else{
+						echo 'Modify Failed!';
+					}
+				}
+				
 				break;
 		}
 	}
