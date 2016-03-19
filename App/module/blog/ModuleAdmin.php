@@ -9,7 +9,9 @@ class ModuleAdmin extends LmlBlog{
 		'index' => 'checkLogin',
 		'addrelationarticle' => 'checkLogin',
 		'removerelationarticle' => 'checkLogin',
-		'archives' => 'checkLogin'
+		'archives' => 'checkLogin',
+		'cats' => 'checkLogin',
+		'statistics' => 'checkLogin',
 	);
 	
 	public function __construct(){
@@ -163,14 +165,13 @@ class ModuleAdmin extends LmlBlog{
 		$action = arr_get($matches, 1, 'list');
 		switch ($action){
 			case 'list':
-				$mArchives = new ModelArchives();
 				$pid = 1;
 				$matches = route_match('[\w]+\/(\d+)');
 				if (isset($matches[1]) && $matches[1] > 1) {
 					$pid = $matches[1];
 				}
-				$rs = $mArchives->getArticles(10*($pid-1), 10, false);
-				$count = $mArchives->getCount(false);
+				$rs = $this->mArchives->getArticles(10*($pid-1), 10, false);
+				$count = $this->mArchives->getCount(false);
 				$page = new Paging($count, $pid, 10);
 				$this->assign('rs', $rs);
 				$this->assign('page', $page);
@@ -227,6 +228,50 @@ class ModuleAdmin extends LmlBlog{
 					$this->assign('pid', $pid);
 					$this->display('', '/relation.php');
 				}
+				break;
+		}
+	}
+	
+	public function cats(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		$mCats = new ModelCat();
+		switch ($action){
+			case 'list':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $mCats->getCats(10*($pid-1), 10);
+				$count = $mCats->getCount();
+				$page = new Paging($count, $pid, 10);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+		}
+	}
+	
+	public function statistics(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		$mStatistic = new ModelStatistic();
+		switch ($action){
+			case 'list':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $mStatistic->getList(10*($pid-1), 10);
+				$count = $mStatistic->getCount();
+				$page = new Paging($count, $pid, 10);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
 				break;
 		}
 	}

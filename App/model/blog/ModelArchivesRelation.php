@@ -31,7 +31,7 @@ class ModelArchivesRelation extends Model{
 				"(aid='{$aid}' AND relation_aid='{$aid2}') OR (relation_aid='{$aid}' AND aid='{$aid2}')");
 	}
 	
-	public function getAll($offset, $limit){
+	public function getAll($offset = 0, $limit = 10){
 		return $this->db->select($this->dbPrefix.'blog_archives_relation', '*', "1=1 order by aid desc limit ?, ?", array($offset, $limit));
 	}
 	
