@@ -10,7 +10,7 @@ foreach ($cats as $t){
 }
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/meta.php';
 ?>
-<title><?php echo $title,' - ',$current_cat['name']?> - <?php echo SITE_NAME?></title>
+<title><?php echo $title,' - ',arr_get($current_cat, 'name')?> - <?php echo SITE_NAME?></title>
 <?php
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 ?>
@@ -22,10 +22,10 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 <div class="lbox litem">
 <h2>
 <a href="<?php echo Tool::getArticleUrl($id, $article['url']);?>" name="title"><?php echo Tool::htmlspecialcharsDeep($article['title'])?></a>
-<a href="<?php echo WEB_APP_PATH?>cat/<?php echo$current_cat['id']?>">
+<a href="<?php echo WEB_APP_PATH?>cat/<?php echo arr_get($current_cat, 'id')?>">
 <span class="tag">
 <span class="arrow"></span>
-<?php echo$current_cat['name']?>
+<?php echo arr_get($current_cat, 'name')?>
 </span></a>
 </h2>
 <div class="author"><span><a><?php echo $article['nickname']?></a> 发表于<a><?php echo date("Y-m-d H:i", $article['createtime'])?></a></span></div>
@@ -53,12 +53,10 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 .commentitem .avatar {
 	float: left;
 	height: 100px;
-	margin-right: 20px;
 	width: 100px;
 }
 .commentitem .itext {
-	float: left;
-	width:570px;
+	padding-left:120px;
 	word-break:break-all;
 }
 .relations{

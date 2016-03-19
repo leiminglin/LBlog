@@ -52,8 +52,7 @@ class ModelUser extends Model{
 	}
 	
 	public function checkLogin($email, $passwd){
-		$sql = "select * from {$this->dbPrefix}user where email='".mysql_real_escape_string($email)."'";
-		$rs = $this->db->query($sql);
+		$rs = $this->db->select($this->dbPrefix.'user', '*', 'email=?', array($email));
 		if(count($rs) == 1 && md5(md5($passwd)) == $rs[0]['passwd']){
 			return $rs[0]['id'];
 		}

@@ -58,13 +58,24 @@ $cut_content = CutHtml::doCut($v['content'], 300);
 $matches = $thumbImg = '';
 preg_match_all('/<img.*?\/?>/i', $v['content'], $matches);
 if( isset($matches[0]) && count($matches[0]) > 0 ){
+	$max_length = 200;
 	$thumbImg = '<table class="thumbImg"><tr>';
 	$c = 0;
 	foreach( $matches[0] as $t ){
 		if($c>1){
 			break;
 		}
-		$t = preg_replace('/\swidth\s*=\s*.\d*.|\sheight\s*=\s*.\d*./', '', $t);
+		preg_match('/\sheight\s*=\s*.(\d+)./', $t, $matches_height);
+		preg_match('/\swidth\s*=\s*.(\d+)./', $t, $matches_width);
+		$height = isset($matches_height[1]) ? $matches_height[1] : $max_length;
+		$width = isset($matches_width[1]) ? $matches_width[1] : $max_length;
+		if ($height > $max_length || $width > $max_length) {
+			$rate = min(array($max_length/$height, $max_length/$width));
+			$thumb_width = round($rate * $width);
+			$thumb_height = round($rate * $height);
+			$t = preg_replace('/width\s*=\s*[\'"](\d+)[\'"]/', 'width="'.$thumb_width.'"', $t);
+			$t = preg_replace('/height\s*=\s*[\'"](\d+)[\'"]/', 'height="'.$thumb_height.'"', $t);
+		}
 		$thumbImg .= '<td><div class="imgWrap">'.$t.'</div></td>';
 		$c++;
 	}

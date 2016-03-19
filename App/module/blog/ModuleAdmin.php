@@ -8,7 +8,8 @@ class ModuleAdmin extends LmlBlog{
 		'backData' => 'checkLogin',
 		'index' => 'checkLogin',
 		'addrelationarticle' => 'checkLogin',
-		'removerelationarticle' => 'checkLogin'
+		'removerelationarticle' => 'checkLogin',
+		'archives' => 'checkLogin'
 	);
 	
 	public function __construct(){
@@ -156,4 +157,69 @@ class ModuleAdmin extends LmlBlog{
 			$c++;
 		}
 	}
+	
+	public function archives(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		switch ($action){
+			case 'list':
+				$mArchives = new ModelArchives();
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $mArchives->getArticles(10*($pid-1), 10, false);
+				$count = $mArchives->getCount(false);
+				$page = new Paging($count, $pid, 10);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+			case 'post':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1])) {
+					$article = $this->mArchives->getArticleById($matches[1], 0);
+					$this->assign('article', $article);
+				}
+				$this->display('', '/edit.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					if($article_id = $this->mArchives->addArticle($_POST)){
+						$this->assign('save_status', '保存成功！');
+					}
+				}else{
+					$article_id = $matches[1];
+					if($this->mArchives->modifyArticle($_POST, $article_id)){
+						$this->assign('save_status', '保存成功！');
+					}else{
+						$this->assign('save_status', '内容未改变！');
+					}
+				}
+				$article = $this->mArchives->getArticleById($article_id, 0);
+				$this->assign('article', $article);
+				$this->display('', '/edit.php');
+				break;
+		}
+	}
+	
+	public function js(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'common');
+		$cache_seconds = 86400*365;
+		header('Pragma: none');
+		header('Content-Type: text/javascript');
+		header('Cache-Control: public, max-age='.$cache_seconds);
+		// Sun, 05 Mar 2017 15:02:23 GMT
+		header('Expires: '.date('D, d M Y H:i:s e', time() + $cache_seconds));
+		$this->display('', '/'.$action.'.js');
+	}
+	
+	
+	
+	
+	
 }

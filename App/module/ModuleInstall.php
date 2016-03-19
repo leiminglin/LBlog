@@ -9,7 +9,11 @@ class ModuleInstall extends LmlBase{
 <form action="'.WEB_APP_PATH.'install" method="post">
 <table align="center">
 <tr>
-	<th colspan="2">LBlog Install</th>
+	<th colspan="2"><h3>LBlog Install Guard</h3></th>
+</tr>
+
+<tr>
+	<th colspan="2">db config</th>
 </tr>
 
 <tr>
@@ -47,6 +51,20 @@ class ModuleInstall extends LmlBase{
 	<td><input type="text" name="dbprefix" value="lblog_"/></td>
 </tr>
 
+<tr>
+	<th colspan="2">admin</th>
+</tr>
+
+<tr>
+	<td>admin email:</td>
+	<td><input type="text" name="email" value="admin"/></td>
+</tr>
+
+<tr>
+	<td>admin passwd:</td>
+	<td><input type="password" name="admin_passwd" value=""/></td>
+</tr>
+
 <tr align="center">
 	<td colspan="2"><input type="submit" value="Submit"/></td>
 </tr>
@@ -79,17 +97,21 @@ class ModuleInstall extends LmlBase{
 		$database = trim($_POST['database']);
 		$charset = trim($_POST['charset']);
 		$dbprefix = trim($_POST['dbprefix']);
+		$email = trim($_POST['email']);
+		$admin_passwd = trim($_POST['admin_passwd']);
 
 		$config = compact('hostname', 'hostport', 'username', 'password', 'database', 'charset', 'dbprefix');
 
 		try{
-			if (extension_loaded('pdo_mysql') && extension_loaded('PDO')) {
-				$db = MysqlPdoEnhance::getInstance($config);
-			} else {
-				$db = Mysql::getInstance($config);
-			}
+			$db = db($config);
 		}catch(Exception $e){
 			echo '<p>connect database fail!</p>';
+			$this->outputBack();
+			return;
+		}
+
+		if(!is_writeable(APP_PATH)){
+			echo '<p>app directory can\'t be writeable!</p>';
 			$this->outputBack();
 			return;
 		}
@@ -114,6 +136,12 @@ class ModuleInstall extends LmlBase{
 					$statement = '';
 				}
 			}
+			$admin_data = array(
+					'email' => $email,
+					'passwd' => md5(md5($admin_passwd)),
+					'createtime' => time()
+				);
+			$db->update($config['dbprefix'].'user', $admin_data, "id=1");
 			echo '<p>install success!</p><p><a href="/">go home page</a></p>';
 		}catch (Exception $e){
 			echo '<p>error!</p>';
@@ -145,8 +173,8 @@ class ModuleInstall extends LmlBase{
 		$str = '';
 		for( $i=0; $i<100; $i++ ) {
 			$char = chr(mt_rand(33, 126));
-			if ($char == "'") {
-				$char = "\'";
+			if ($char == "'" || $char == '\\') {
+				$char = '\\'.$char;
 			}
 			$str .= $char;
 		}

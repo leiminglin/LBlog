@@ -21,6 +21,8 @@ class ModelComment extends Model{
 				$rs[$k]['userinfo']['avatar'] = $users[$v['userid']]['figureurl_qq_2'];
 			}elseif( isset($users[$v['userid']]['avatar_large']) ){
 				$rs[$k]['userinfo']['avatar'] = $users[$v['userid']]['avatar_large'];
+			}else{
+				$rs[$k]['userinfo']['avatar'] = '';
 			}
 		}
 		return $rs;
@@ -51,6 +53,8 @@ class ModelComment extends Model{
 			$table = $this->dbPrefix.'user_qq';
 		}elseif($source == 'weibo'){
 			$table = $this->dbPrefix.'user_weibo';
+		}else{
+			return '';
 		}
 		$sql = "SELECT userinfo FROM {$table} WHERE userid='{$uid}'";
 		$rs = $this->db->query($sql);

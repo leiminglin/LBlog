@@ -20,7 +20,7 @@
 <script>
 deferred.then(function(){document.getElementById('footdate').style.display='none';deferred.promise()});
 deferred.then(function(){
-	document.body.style.background='#F1F2F6 url(https://raw.githubusercontent.com/leiminglin/images/master/2014/12/wallpapers/'+new Date().getDate()+'.jpg) center 0px no-repeat scroll';
+	document.getElementsByClassName('header')[0].style.background='#F1F2F6 url(https://raw.githubusercontent.com/leiminglin/images/master/2014/12/wallpapers/'+new Date().getDate()+'.jpg) center 0px repeat-x scroll';
 	deferred.promise()
 });
 </script>

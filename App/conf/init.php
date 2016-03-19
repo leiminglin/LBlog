@@ -4,16 +4,6 @@
 
 $start_time = microtime();
 define("APP_DOMAIN", $_SERVER['HTTP_HOST']);
-ini_set('session.cookie_domain', APP_DOMAIN);
-
-if ( is_session_started() === FALSE ) {
-    if ( version_compare(phpversion(), '5.4.0', '>=') ) {
-        session_register_shutdown();
-    } else {
-        register_shutdown_function('session_write_close');
-    }
-    session_start();
-}
 
 $lastRouter = array('last');
 
@@ -85,7 +75,29 @@ function is_session_started()
     return FALSE;
 }
 
+function db($config=array()){
+	if($config){
+		$dbconfig = $config;
+	}else{
+		$dbconfig = $GLOBALS['dbconfig'];
+	}
+	if (extension_loaded('pdo_mysql') && extension_loaded('PDO')) {
+		return MysqlPdoEnhance::getInstance($dbconfig);
+	}
+	return Mysql::getInstance($dbconfig);
+}
 
+function route_match($regexp){
+	$matches = array();
+	preg_match('/^(?:\/index\.php)?\/'.C_MODULE.'\/'.C_ACTION.'\/?'.$regexp.'*/i', LML_REQUEST_URI, $matches);
+	return $matches;
+}
 
+function arr_get($arr, $k, $r=''){
+	return isset($arr[$k]) ? $arr[$k] : $r;
+}
 
+function tag_a($text, $func){
+	return '<a href="javascript:void(0)" onclick="'.$func.'">'.$text.'</a>';
+}
 
