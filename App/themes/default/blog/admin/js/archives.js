@@ -41,7 +41,8 @@ function remove_relation_archives(o){
 	var path = archives_relation_remove_path;
 	$.post(path, {'relation_ids':o.getAttribute('data-id')}, function(rs){
 		show_info(rs);
-		$(o).parent().html('Removed');
+		$(o).addClass('hidden');
+		$(o).siblings('a').removeClass('hidden');
 	});
 }
 

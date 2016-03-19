@@ -20,6 +20,8 @@
 <td><?php echo date("Y-m-d H:i:s", $v['addtime']);?></td>
 <td>
 <a href="javascript:void(0)" data-action="lblog_admin_archives_relation_remove" data-id="<?php echo $v['aid'].' '.$v['relation_aid'];?>">Remove</a>
+<input type="hidden" value="<?php echo $v['aid'].' '.$v['relation_aid'];?>"/>
+<a href="javascript:void(0)" data-action="lblog_admin_set_relation_archives" class="hidden">Revert</a>
 </td>
 </tr>
 <?php }?>

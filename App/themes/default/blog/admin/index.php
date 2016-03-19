@@ -100,8 +100,12 @@ div.line span{
 	padding:0 8px;
 	cursor:pointer;
 	position:relative;
+	border-left:1px solid white;
+	border-right:1px solid white;
+	border-top:1px solid white;
+	border-bottom:1px solid #e6e9ed;
 }
-.bbw{
+a.bbw{
 	border:1px solid #e6e9ed;
 	border-bottom:1px solid #fff;
 	color:#ff6f3d;
