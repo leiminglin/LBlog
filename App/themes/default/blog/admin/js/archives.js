@@ -2,6 +2,9 @@
 
 var archives_list_path = '<?php echo WEB_APP_PATH?>admin/archives/list';
 var archives_post_path = '<?php echo WEB_APP_PATH?>admin/archives/post';
+var archives_relation_path = '<?php echo WEB_APP_PATH?>admin/archives/relation';
+var archives_relation_remove_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/remove';
+var archives_relation_set_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/set';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -24,8 +27,32 @@ function get_post_archives_page(id){
 	});
 }
 
+function get_relation_archives_list_page(pid){
+	var path = archives_relation_path;
+	if(pid){
+		path += '/'+pid;
+	}
+	$.get(path, function(rs){
+		create_tab('Relation', rs);
+	});
+}
 
+function remove_relation_archives(o){
+	var path = archives_relation_remove_path;
+	$.post(path, {'relation_ids':o.getAttribute('data-id')}, function(rs){
+		show_info(rs);
+		$(o).parent().html('Removed');
+	});
+}
 
+function set_relation_archives(o){
+	var path = archives_relation_set_path;
+	$.post(path, {'relation_ids':o.previousSibling.value}, function(rs){
+		show_info(rs);
+		var x = $('.tabs_content').children(':visible').find('a.current').html();
+		get_relation_archives_list_page(x);
+	});
+}
 
 
 
@@ -117,6 +144,19 @@ lml.loadJs.competeLoad([
 		},
 		'edit_specified_archives':function(o){
 			get_post_archives_page(o.previousSibling.value);
+		},
+		'lblog_admin_archives_relation_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_relation_archives_list_page(o.getAttribute('data-id'));
+			}else{
+				get_relation_archives_list_page(false);
+			}
+		},
+		'lblog_admin_archives_relation_remove':function(o){
+			remove_relation_archives(o);
+		},
+		'lblog_admin_set_relation_archives':function(o){
+			set_relation_archives(o);
 		}
 	};
 

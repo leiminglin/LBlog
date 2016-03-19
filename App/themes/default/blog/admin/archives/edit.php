@@ -48,7 +48,7 @@ if(arr_get($article,'is_active')=='N'){
 </tr>
 <tr>
 <td>Content：</td>
-<td><textarea cols="60" rows="10" name="content"><?php echo htmlspecialchars(arr_get($article, 'content'));?></textarea></td>
+<td><textarea cols="88" rows="20" name="content"><?php echo htmlspecialchars(arr_get($article, 'content'));?></textarea></td>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="button" value="Submit"/></td>

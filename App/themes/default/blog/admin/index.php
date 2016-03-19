@@ -82,10 +82,10 @@ table{
 	border-collapse:collapse;
 }
 div.line{
-	margin-right:10px;
+	margin:10px 0;
 }
 div.line span{
-	margin:0 10px;
+	margin-right:10px;
 }
 
 .tabs_title{
@@ -143,10 +143,10 @@ window.onload = function(){
 	<div class="left">
 		<ul>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Archive</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page" class="cl">Archive</a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page">Relation</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_relation_page">Relation</a>
 			</li>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Cat</a>

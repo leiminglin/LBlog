@@ -3,7 +3,7 @@
 <a href="javascript:void(0)" data-action="lblog_admin_archives_post_page">发布</a>
 </span>
 <span>
-<input type="text" placeholder="id" style="width:40px;"/>
+<input type="text" placeholder=" id" style="width:40px;border:1px solid #edeff2;"/>
 <a href="javascript:void(0)" data-action="edit_specified_archives">Edit</a>
 </span>
 </div>

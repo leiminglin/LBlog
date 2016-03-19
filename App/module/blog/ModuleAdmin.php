@@ -66,7 +66,7 @@ class ModuleAdmin extends LmlBlog{
 	}
 	
 	private function getRelationArticleIds(&$aid, &$aid2){
-		$relation_ids = isset($_GET['relation_ids'])?$_GET['relation_ids']:'';
+		$relation_ids = isset($_REQUEST['relation_ids'])?$_REQUEST['relation_ids']:'';
 		if(!$relation_ids){
 			echo 'no relation ids';
 			exit;
@@ -202,6 +202,31 @@ class ModuleAdmin extends LmlBlog{
 				$article = $this->mArchives->getArticleById($article_id, 0);
 				$this->assign('article', $article);
 				$this->display('', '/edit.php');
+				break;
+			case 'relation':
+				$matches = route_match('relation\/([a-zA-Z]+)');
+				
+				if (isset($matches[1]) && $matches[1]) {
+					if($matches[1] == 'remove'){
+						return $this->removerelationarticle();
+					}elseif($matches[1] == 'set'){
+						return $this->addrelationarticle();
+					}
+				} else {
+					$mRelations = new ModelArchivesRelation();
+					$pid = 1;
+					$matches = route_match('[\w]+\/(\d+)');
+					if (isset($matches[1]) && $matches[1] > 1) {
+						$pid = $matches[1];
+					}
+					$rs = $mRelations->getAll(10*($pid-1), 10);
+					$count = $mRelations->getCount();
+					$page = new Paging($count, $pid, 10);
+					$this->assign('rs', $rs);
+					$this->assign('page', $page);
+					$this->assign('pid', $pid);
+					$this->display('', '/relation.php');
+				}
 				break;
 		}
 	}
