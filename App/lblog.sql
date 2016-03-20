@@ -157,3 +157,16 @@ CREATE TABLE `lblog_user_weibo` (
   KEY `userid` (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
+DROP TABLE IF EXISTS `lblog_config`;
+CREATE TABLE `lblog_config` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(50) collate utf8_unicode_ci NOT NULL default '',
+  `data` text collate utf8_unicode_ci NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+INSERT INTO `lblog_config` VALUES ('1', 'SITE_NAME', 'LBlog');
+INSERT INTO `lblog_config` VALUES ('2', 'SITE_KEYWORDS', '开源博客系统-LBLOG');
+INSERT INTO `lblog_config` VALUES ('3', 'SITE_DESCRIPTION', 'LBLOG博客系统是一款轻量级的博客兼CMS建站系统,基于LMLPHP框架,丰富的模板和雄厚的社区技术支持,为自由快速建站而生,让网站轻盈而高速.');
+

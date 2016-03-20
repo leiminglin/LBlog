@@ -171,6 +171,9 @@ window.onload=function(){
 			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page">Statistic</a>
 			</li>
 			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_users_page">User</a>
+			</li>
+			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Setting</a>
 			</li>
 	</ul>

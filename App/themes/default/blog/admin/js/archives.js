@@ -8,6 +8,7 @@ var archives_relation_set_path = '<?php echo WEB_APP_PATH?>admin/archives/relati
 var cats_list_path = '<?php echo WEB_APP_PATH?>admin/cats/list';
 var save_cat_path = '<?php echo WEB_APP_PATH?>admin/cats/save';
 var statistics_list_path = '<?php echo WEB_APP_PATH?>admin/statistics/list';
+var settings_path = '<?php echo WEB_APP_PATH?>admin/settings';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -91,7 +92,12 @@ function add_cat(name, id){
 	});
 }
 
-
+function get_settings_page(){
+	var path = settings_path;
+	$.get(path, function(rs){
+		create_tab('Setting', rs);
+	});
+}
 
 
 
@@ -218,6 +224,9 @@ lml.loadJs.competeLoad([
 				$(o).html('Save');
 				o.flag = 1;
 			}
+		},
+		'lblog_admin_settings_page':function(o){
+			get_settings_page(o);
 		}
 	};
 
@@ -231,8 +240,13 @@ lml.loadJs.competeLoad([
 	});
 
 	$('#result').delegate("input[type=button]", "click", function(){
+		var _this = this;
+		this.disabled = true;
 		$.post($(this.form).attr('action'), $(this.form).serialize(), function(rs){
-			$('.tabs_content').children(':visible').html(rs);
+			if(_this.getAttribute('data-need-refresh')==1){
+				$('.tabs_content').children(':visible').html(rs);
+			}
+			_this.disabled = false;
 			adjust_right();
 			show_info('Save Successfully!');
 		});

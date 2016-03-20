@@ -51,7 +51,7 @@ if(arr_get($article,'is_active')=='N'){
 <td><textarea cols="88" rows="20" name="content"><?php echo htmlspecialchars(arr_get($article, 'content'));?></textarea></td>
 </tr>
 <tr>
-<td align="center" colspan="2"><input class="btn" type="button" value="Submit"/></td>
+<td align="center" colspan="2"><input class="btn" type="button" value="Submit"<?php if(!isset($article['id'])){echo ' data-need-refresh="1"';};?>/></td>
 </tr>
 </table>
 </form>

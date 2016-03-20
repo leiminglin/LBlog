@@ -13,6 +13,7 @@ class ModuleAdmin extends LmlBlog{
 		'archives' => 'checkLogin',
 		'cats' => 'checkLogin',
 		'statistics' => 'checkLogin',
+		'settings' => 'checkLogin',
 	);
 	
 	public function __construct(){
@@ -199,8 +200,11 @@ class ModuleAdmin extends LmlBlog{
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');
 				if (!isset($matches[1])) {
-					if($article_id = $this->mArchives->addArticle($_POST)){
+					if(($article_id = $this->mArchives->addArticle($_POST)) == true){
 						$this->assign('save_status', '保存成功！');
+						$article = $this->mArchives->getArticleById($article_id, 0);
+						$this->assign('article', $article);
+						$this->display('', '/edit.php');
 					}
 				}else{
 					$article_id = $matches[1];
@@ -210,9 +214,6 @@ class ModuleAdmin extends LmlBlog{
 						$this->assign('save_status', '内容未改变！');
 					}
 				}
-				$article = $this->mArchives->getArticleById($article_id, 0);
-				$this->assign('article', $article);
-				$this->display('', '/edit.php');
 				break;
 			case 'relation':
 				$matches = route_match('relation\/([a-zA-Z]+)');
@@ -301,6 +302,32 @@ class ModuleAdmin extends LmlBlog{
 				$this->assign('page', $page);
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
+				break;
+		}
+	}
+	
+	public function settings() {
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1);
+		$mConfig = new ModelConfig();
+		switch ($action){
+			case 'save';
+				$matches_save = route_match('save\/([\w]+)');
+				$type = arr_get($matches_save, 1);
+				if($type == 'seo'){
+					foreach ($_POST as $k=>$v){
+						$mConfig->updateConfig($k, $v);
+					}
+					// $mConfig->saveConfig($name, $data);
+				}
+				break;
+			case '';
+				$site = array();
+				$site['site_name'] = $mConfig->getConfig('SITE_NAME');
+				$site['site_keywords'] = $mConfig->getConfig('SITE_KEYWORDS');
+				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
+				$this->assign('site', $site);
+				$this->display('', '/home.php');
 				break;
 		}
 	}
