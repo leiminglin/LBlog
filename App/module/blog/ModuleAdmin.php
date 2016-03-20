@@ -6,9 +6,10 @@ class ModuleAdmin extends LmlBlog{
 		'postarticle' => 'checkLogin',
 		'editarticle' => 'checkLogin',
 		'backData' => 'checkLogin',
-		'index' => 'checkLogin',
+
 		'addrelationarticle' => 'checkLogin',
 		'removerelationarticle' => 'checkLogin',
+
 		'archives' => 'checkLogin',
 		'cats' => 'checkLogin',
 		'statistics' => 'checkLogin',
@@ -19,7 +20,11 @@ class ModuleAdmin extends LmlBlog{
 	}
 	
 	public function index(){
-		$this->display();
+		if($this->checkLogin()){
+			$this->display();
+		}else{
+			header("Location:".WEB_PATH);
+		}
 	}
 	
 	public function login(){
@@ -35,8 +40,13 @@ class ModuleAdmin extends LmlBlog{
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
 			}
+		}else{
+			if($this->checkLogin()){
+				header("Location:".WEB_APP_PATH.'admin');
+			}else{
+				$this->display();
+			}
 		}
-		$this->display();
 	}
 	
 	public function postarticle(){

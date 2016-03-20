@@ -48,6 +48,14 @@ a:hover{
 .top span{
 	color:#333;
 }
+.top .title{
+	float:left;
+}
+.top .user{
+	float:right;
+	margin:0 10px;
+	font-size:12px;
+}
 .left{
 	float:left;
 	border-right:1px solid #edeff2;
@@ -137,7 +145,13 @@ window.onload=function(){
 <div class="sitewrap">
 
 <div class="top">
-	<span><?php echo SITE_NAME?></span>
+	<span class="title"><?php echo SITE_NAME?></span>
+	<span class="user">
+	<?php if( ($nickname = Tool::getUserNickName())==true ){?>
+您好，<?php echo $nickname;?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>">退出</a>
+<?php }?>
+	</span>
+	<div class="clear"></div>
 </div>
 
 <div class="middle">
