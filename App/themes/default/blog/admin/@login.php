@@ -34,7 +34,7 @@ table{
 </head>
 <body>
 <div class="login">
-<form action="<?php echo WEB_APP_PATH?>admin/login" method="post">
+<form action="<?php echo WEB_APP_PATH?>admin/<?php echo isset($login_page_uri) ? $login_page_uri : '';?>" method="post">
 <table>
 <tr>
 <td colspan="2" style="background:#f7f7f7;"><?php echo SITE_NAME;?></td>

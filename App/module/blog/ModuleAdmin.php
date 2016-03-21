@@ -20,6 +20,15 @@ class ModuleAdmin extends LmlBlog{
 		$this->mArchives = new ModelArchives();
 	}
 	
+	public function __call($name, $arg){
+		$mConfig = new ModelConfig();
+		$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
+		if($name == $login_uri){
+			return $this->login($login_uri);
+		}
+		return parent::__call($name, $arg);
+	}
+	
 	public function index(){
 		if($this->checkLogin()){
 			$this->display();
@@ -28,7 +37,8 @@ class ModuleAdmin extends LmlBlog{
 		}
 	}
 	
-	public function login(){
+	private function login($uri='login'){
+		$this->assign('login_page_uri', $uri);
 		if($_POST){
 			$email = $_POST['email'];
 			$passwd = $_POST['passwd'];
@@ -40,12 +50,13 @@ class ModuleAdmin extends LmlBlog{
 				exit;
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
+				$this->display('admin/@login');
 			}
 		}else{
 			if($this->checkLogin()){
 				header("Location:".WEB_APP_PATH.'admin');
 			}else{
-				$this->display();
+				$this->display('admin/@login');
 			}
 		}
 	}
@@ -318,7 +329,12 @@ class ModuleAdmin extends LmlBlog{
 					foreach ($_POST as $k=>$v){
 						$mConfig->updateConfig($k, $v);
 					}
-					// $mConfig->saveConfig($name, $data);
+				}elseif($type == 'security'){
+					if($mConfig->checkConfigExists('LOGIN_PAGE_URI')){
+						$mConfig->updateConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
+					}else{
+						$mConfig->saveConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
+					}
 				}
 				break;
 			case '';
@@ -326,6 +342,7 @@ class ModuleAdmin extends LmlBlog{
 				$site['site_name'] = $mConfig->getConfig('SITE_NAME');
 				$site['site_keywords'] = $mConfig->getConfig('SITE_KEYWORDS');
 				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
+				$site['login_page_uri'] = $mConfig->getConfig('LOGIN_PAGE_URI');
 				$this->assign('site', $site);
 				$this->display('', '/home.php');
 				break;

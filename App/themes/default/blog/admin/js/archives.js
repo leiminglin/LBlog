@@ -252,6 +252,15 @@ lml.loadJs.competeLoad([
 		});
 	});
 
+	$(document).keydown(function(e){
+		if(e.keyCode==13){
+			var obj = e.target||e.srcElement;
+			if(obj.tagName=='INPUT'){
+				e.preventDefault();
+			}
+		}
+	});
+	
 });
 
 

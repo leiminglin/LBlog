@@ -13,6 +13,11 @@ class ModelConfig extends Model{
 		return isset($rs['data']) ? $rs['data'] : '';
 	}
 	
+	public function checkConfigExists($name){
+		$rs = $this->db->getOne("select COUNT(1) C from {$this->table} where name=?", array($name));
+		return (isset($rs['C']) && $rs['C'] > 0) ? true : false;
+	}
+	
 	public function saveConfig($name, $data){
 		return $this->db->insert($this->table, 
 				array('name'=>$name, 'data'=>$data));

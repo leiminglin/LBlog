@@ -119,6 +119,9 @@ a.bbw{
 .cl{
 	color:#ff6f3d;
 }
+.longinput{
+	width:400px;
+}
 </style>
 <script>
 /**
