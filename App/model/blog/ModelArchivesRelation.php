@@ -32,7 +32,9 @@ class ModelArchivesRelation extends Model{
 	}
 	
 	public function getAll($offset = 0, $limit = 10){
-		return $this->db->select($this->dbPrefix.'blog_archives_relation', '*', "1=1 order by aid desc limit ?, ?", array($offset, $limit));
+		$offset = (int)$offset;
+		$limit = (int)$limit;
+		return $this->db->query("select * from {$this->dbPrefix}blog_archives_relation order by aid desc limit $offset, $limit");
 	}
 	
 	public function getCount(){

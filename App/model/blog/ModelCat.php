@@ -2,8 +2,10 @@
 class ModelCat extends Model{
 	
 	public function getCats($offset = 0, $limit = 10){
-		$sql = "SELECT * FROM {$this->dbPrefix}blog_cat order by id desc limit ?, ?";
-		return $this->db->query($sql, array($offset, $limit));
+		$offset = (int)$offset;
+		$limit = (int)$limit;
+		$sql = "SELECT * FROM {$this->dbPrefix}blog_cat order by id desc limit $offset, $limit";
+		return $this->db->query($sql);
 	}
 	
 	public function getCount(){
