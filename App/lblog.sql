@@ -164,7 +164,7 @@ CREATE TABLE `lblog_config` (
   `name` varchar(50) collate utf8_unicode_ci NOT NULL default '',
   `data` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `lblog_config` VALUES ('1', 'SITE_NAME', 'LBlog');
 INSERT INTO `lblog_config` VALUES ('2', 'SITE_KEYWORDS', '开源博客系统-LBLOG');
