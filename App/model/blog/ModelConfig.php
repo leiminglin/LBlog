@@ -19,6 +19,6 @@ class ModelConfig extends Model{
 	}
 	
 	public function updateConfig($name, $data){
-		return $this->db->update($this->table, array('data'=>$data), 'name=?', array($name));
+		return $this->db->update($this->table, array('data'=>$data), 'name=:name', array('name'=>$name));
 	}
 }
