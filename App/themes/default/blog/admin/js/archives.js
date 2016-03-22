@@ -248,7 +248,7 @@ lml.loadJs.competeLoad([
 			}
 			_this.disabled = false;
 			adjust_right();
-			show_info('Save Successfully!');
+			show_info(rs||'Save Successfully!');
 		});
 	});
 

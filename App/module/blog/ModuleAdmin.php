@@ -330,6 +330,10 @@ class ModuleAdmin extends LmlBlog{
 						$mConfig->updateConfig($k, $v);
 					}
 				}elseif($type == 'security'){
+					if(!preg_match('/^login/', $_POST['login_page_uri'])){
+						echo 'must begin with login';
+						return;
+					}
 					if($mConfig->checkConfigExists('LOGIN_PAGE_URI')){
 						$mConfig->updateConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
 					}else{
