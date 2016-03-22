@@ -6,21 +6,39 @@ class ModuleAdmin extends LmlBlog{
 		'postarticle' => 'checkLogin',
 		'editarticle' => 'checkLogin',
 		'backData' => 'checkLogin',
-		'index' => 'checkLogin',
+
 		'addrelationarticle' => 'checkLogin',
 		'removerelationarticle' => 'checkLogin',
-		'archives' => 'checkLogin'
+
+		'archives' => 'checkLogin',
+		'cats' => 'checkLogin',
+		'statistics' => 'checkLogin',
+		'settings' => 'checkLogin',
 	);
 	
 	public function __construct(){
 		$this->mArchives = new ModelArchives();
 	}
 	
-	public function index(){
-		$this->display();
+	public function __call($name, $arg){
+		$mConfig = new ModelConfig();
+		$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
+		if($name == $login_uri){
+			return $this->login($login_uri);
+		}
+		return parent::__call($name, $arg);
 	}
 	
-	public function login(){
+	public function index(){
+		if($this->checkLogin()){
+			$this->display();
+		}else{
+			header("Location:".WEB_PATH);
+		}
+	}
+	
+	private function login($uri='login'){
+		$this->assign('login_page_uri', $uri);
 		if($_POST){
 			$email = $_POST['email'];
 			$passwd = $_POST['passwd'];
@@ -32,9 +50,15 @@ class ModuleAdmin extends LmlBlog{
 				exit;
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
+				$this->display('admin/@login');
+			}
+		}else{
+			if($this->checkLogin()){
+				header("Location:".WEB_APP_PATH.'admin');
+			}else{
+				$this->display('admin/@login');
 			}
 		}
-		$this->display();
 	}
 	
 	public function postarticle(){
@@ -66,7 +90,7 @@ class ModuleAdmin extends LmlBlog{
 	}
 	
 	private function getRelationArticleIds(&$aid, &$aid2){
-		$relation_ids = isset($_GET['relation_ids'])?$_GET['relation_ids']:'';
+		$relation_ids = isset($_REQUEST['relation_ids'])?$_REQUEST['relation_ids']:'';
 		if(!$relation_ids){
 			echo 'no relation ids';
 			exit;
@@ -163,14 +187,13 @@ class ModuleAdmin extends LmlBlog{
 		$action = arr_get($matches, 1, 'list');
 		switch ($action){
 			case 'list':
-				$mArchives = new ModelArchives();
 				$pid = 1;
 				$matches = route_match('[\w]+\/(\d+)');
 				if (isset($matches[1]) && $matches[1] > 1) {
 					$pid = $matches[1];
 				}
-				$rs = $mArchives->getArticles(10*($pid-1), 10, false);
-				$count = $mArchives->getCount(false);
+				$rs = $this->mArchives->getArticles(10*($pid-1), 10, false);
+				$count = $this->mArchives->getCount(false);
 				$page = new Paging($count, $pid, 10);
 				$this->assign('rs', $rs);
 				$this->assign('page', $page);
@@ -188,8 +211,11 @@ class ModuleAdmin extends LmlBlog{
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');
 				if (!isset($matches[1])) {
-					if($article_id = $this->mArchives->addArticle($_POST)){
+					if(($article_id = $this->mArchives->addArticle($_POST)) == true){
 						$this->assign('save_status', '保存成功！');
+						$article = $this->mArchives->getArticleById($article_id, 0);
+						$this->assign('article', $article);
+						$this->display('', '/edit.php');
 					}
 				}else{
 					$article_id = $matches[1];
@@ -199,9 +225,126 @@ class ModuleAdmin extends LmlBlog{
 						$this->assign('save_status', '内容未改变！');
 					}
 				}
-				$article = $this->mArchives->getArticleById($article_id, 0);
-				$this->assign('article', $article);
-				$this->display('', '/edit.php');
+				break;
+			case 'relation':
+				$matches = route_match('relation\/([a-zA-Z]+)');
+				
+				if (isset($matches[1]) && $matches[1]) {
+					if($matches[1] == 'remove'){
+						return $this->removerelationarticle();
+					}elseif($matches[1] == 'set'){
+						return $this->addrelationarticle();
+					}
+				} else {
+					$mRelations = new ModelArchivesRelation();
+					$pid = 1;
+					$matches = route_match('[\w]+\/(\d+)');
+					if (isset($matches[1]) && $matches[1] > 1) {
+						$pid = $matches[1];
+					}
+					$rs = $mRelations->getAll(10*($pid-1), 10);
+					$count = $mRelations->getCount();
+					$page = new Paging($count, $pid, 10);
+					$this->assign('rs', $rs);
+					$this->assign('page', $page);
+					$this->assign('pid', $pid);
+					$this->display('', '/relation.php');
+				}
+				break;
+		}
+	}
+	
+	public function cats(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		$mCats = new ModelCat();
+		switch ($action){
+			case 'list':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $mCats->getCats(10*($pid-1), 10);
+				$count = $mCats->getCount();
+				$page = new Paging($count, $pid, 10);
+				
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					if($mCats->addCat($_POST['name'])){
+						echo 'Add Successfully!';
+					}else{
+						echo 'Add Failed!';
+					}
+				}else{
+					$id = $matches[1];
+					if($mCats->modifyCat($id, $_POST['name'])){
+						echo 'Modify Successfully!';
+					}else{
+						echo 'Modify Failed!';
+					}
+				}
+				
+				break;
+		}
+	}
+	
+	public function statistics(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		$mStatistic = new ModelStatistic();
+		switch ($action){
+			case 'list':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $mStatistic->getList(10*($pid-1), 10);
+				$count = $mStatistic->getCount();
+				$page = new Paging($count, $pid, 10);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+		}
+	}
+	
+	public function settings() {
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1);
+		$mConfig = new ModelConfig();
+		switch ($action){
+			case 'save';
+				$matches_save = route_match('save\/([\w]+)');
+				$type = arr_get($matches_save, 1);
+				if($type == 'seo'){
+					foreach ($_POST as $k=>$v){
+						$mConfig->updateConfig($k, $v);
+					}
+				}elseif($type == 'security'){
+					if($mConfig->checkConfigExists('LOGIN_PAGE_URI')){
+						$mConfig->updateConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
+					}else{
+						$mConfig->saveConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
+					}
+				}
+				break;
+			case '';
+				$site = array();
+				$site['site_name'] = $mConfig->getConfig('SITE_NAME');
+				$site['site_keywords'] = $mConfig->getConfig('SITE_KEYWORDS');
+				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
+				$site['login_page_uri'] = $mConfig->getConfig('LOGIN_PAGE_URI');
+				$this->assign('site', $site);
+				$this->display('', '/home.php');
 				break;
 		}
 	}

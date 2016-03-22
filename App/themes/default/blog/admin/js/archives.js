@@ -2,6 +2,13 @@
 
 var archives_list_path = '<?php echo WEB_APP_PATH?>admin/archives/list';
 var archives_post_path = '<?php echo WEB_APP_PATH?>admin/archives/post';
+var archives_relation_path = '<?php echo WEB_APP_PATH?>admin/archives/relation';
+var archives_relation_remove_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/remove';
+var archives_relation_set_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/set';
+var cats_list_path = '<?php echo WEB_APP_PATH?>admin/cats/list';
+var save_cat_path = '<?php echo WEB_APP_PATH?>admin/cats/save';
+var statistics_list_path = '<?php echo WEB_APP_PATH?>admin/statistics/list';
+var settings_path = '<?php echo WEB_APP_PATH?>admin/settings';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -24,9 +31,73 @@ function get_post_archives_page(id){
 	});
 }
 
+function get_relation_archives_list_page(pid){
+	var path = archives_relation_path;
+	if(pid){
+		path += '/'+pid;
+	}
+	$.get(path, function(rs){
+		create_tab('Relation', rs);
+	});
+}
 
+function remove_relation_archives(o){
+	var path = archives_relation_remove_path;
+	$.post(path, {'relation_ids':o.getAttribute('data-id')}, function(rs){
+		show_info(rs);
+		$(o).addClass('hidden');
+		$(o).siblings('a').removeClass('hidden');
+	});
+}
 
+function set_relation_archives(o){
+	var path = archives_relation_set_path;
+	$.post(path, {'relation_ids':o.previousSibling.value}, function(rs){
+		show_info(rs);
+		var x = $('.tabs_content').children(':visible').find('a.current').html();
+		get_relation_archives_list_page(x);
+	});
+}
 
+function get_cats_list_page(o){
+	var path = cats_list_path;
+	if(o){
+		path += '/'+o;
+	}
+	$.get(path, function(rs){
+		create_tab('Cat', rs);
+	});
+}
+
+function get_statistics_list_page(o){
+	var path = statistics_list_path;
+	if(o.getAttribute('data-id')){
+		path += '/'+o.getAttribute('data-id');
+	}
+
+	$.get(path, function(rs){
+		create_tab('Statistic', rs);
+	});
+}
+
+function add_cat(name, id){
+	var path = save_cat_path;
+	if(id){
+		path +='/'+id;
+	}
+	$.post(path, {'name':name}, function(rs){
+		show_info(rs);
+		var x = $('.tabs_content').children(':visible').find('a.current').html();
+		get_cats_list_page(x);
+	});
+}
+
+function get_settings_page(){
+	var path = settings_path;
+	$.get(path, function(rs){
+		create_tab('Setting', rs);
+	});
+}
 
 
 
@@ -117,6 +188,45 @@ lml.loadJs.competeLoad([
 		},
 		'edit_specified_archives':function(o){
 			get_post_archives_page(o.previousSibling.value);
+		},
+		'lblog_admin_archives_relation_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_relation_archives_list_page(o.getAttribute('data-id'));
+			}else{
+				get_relation_archives_list_page(false);
+			}
+		},
+		'lblog_admin_archives_relation_remove':function(o){
+			remove_relation_archives(o);
+		},
+		'lblog_admin_set_relation_archives':function(o){
+			set_relation_archives(o);
+		},
+		'lblog_admin_cats_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_cats_list_page(o.getAttribute('data-id'));
+			}else{
+				get_cats_list_page(false);
+			}
+		},
+		'lblog_admin_statistics_page':function(o){
+			get_statistics_list_page(o)
+		},
+		'lblog_admin_cats_post':function(o){
+			add_cat(o.previousSibling.value);
+		},
+		'lblog_admin_cats_edit':function(o){
+			var td = $(o).parent().prev(), name=td.html();
+			if(o.flag){
+				add_cat(td.children('input').val(), o.getAttribute('data-id'));
+			}else{
+				td.html($("<input/>").val(name).attr({"type":"text"}));
+				$(o).html('Save');
+				o.flag = 1;
+			}
+		},
+		'lblog_admin_settings_page':function(o){
+			get_settings_page(o);
 		}
 	};
 
@@ -130,13 +240,27 @@ lml.loadJs.competeLoad([
 	});
 
 	$('#result').delegate("input[type=button]", "click", function(){
+		var _this = this;
+		this.disabled = true;
 		$.post($(this.form).attr('action'), $(this.form).serialize(), function(rs){
-			$('.tabs_content').children(':visible').html(rs);
+			if(_this.getAttribute('data-need-refresh')==1){
+				$('.tabs_content').children(':visible').html(rs);
+			}
+			_this.disabled = false;
 			adjust_right();
 			show_info('Save Successfully!');
 		});
 	});
 
+	$(document).keydown(function(e){
+		if(e.keyCode==13){
+			var obj = e.target||e.srcElement;
+			if(obj.tagName=='INPUT'){
+				e.preventDefault();
+			}
+		}
+	});
+	
 });
 
 

@@ -3,12 +3,12 @@ class Statistic{
 	
 	public static function start(){
 		require APP_PATH.'conf/dbconfig.php';
-		require APP_PATH.'conf/siteconfig.php';
 		
 		if($dbconfig){
 			$GLOBALS['dbconfig'] = $dbconfig;
 			$mStatistic = new ModelStatistic();
 			$mStatistic->save();
+			require APP_PATH.'conf/siteconfig.php';
 			
 			ini_set('session.cookie_domain', APP_DOMAIN);
 			if ( is_session_started() === FALSE ) {

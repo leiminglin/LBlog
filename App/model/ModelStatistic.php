@@ -39,4 +39,17 @@ class ModelStatistic extends Model{
 		return $statistic;
 	}
 	
+	public function getList($offset = 0, $limit = 10){
+		$offset = (int)$offset;
+		$limit = (int)$limit;
+		$sql = "select * from {$this->dbPrefix}statistic order by id desc limit $offset, $limit";
+		return $this->db->query($sql);
+	}
+	
+	public function getCount($offset = 0, $limit = 10){
+		$sql = "select COUNT(1) C from {$this->dbPrefix}statistic";
+		$rs = $this->db->getOne($sql);
+		return isset($rs['C']) ? $rs['C'] : 0;
+	}
+	
 }

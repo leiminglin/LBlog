@@ -31,5 +31,14 @@ class ModelArchivesRelation extends Model{
 				"(aid='{$aid}' AND relation_aid='{$aid2}') OR (relation_aid='{$aid}' AND aid='{$aid2}')");
 	}
 	
+	public function getAll($offset = 0, $limit = 10){
+		$offset = (int)$offset;
+		$limit = (int)$limit;
+		return $this->db->query("select * from {$this->dbPrefix}blog_archives_relation order by aid desc limit $offset, $limit");
+	}
 	
+	public function getCount(){
+		$rs = $this->db->select($this->dbPrefix.'blog_archives_relation', 'COUNT(1) C');
+		return isset($rs[0]['C']) ? $rs[0]['C'] : 0;
+	}
 }

@@ -68,10 +68,13 @@ class Mysql{
 		if($params){
 			foreach($params as $k=>$v){
 				$v = $this->escapeString($v);
+				if(!is_numeric($v)){
+					$v = "'".$v."'";
+				}
 				if(is_int($k)){
-					$str = preg_replace('/\?/', "'".$v."'", $str, 1);
+					$str = preg_replace('/\?/', $v, $str, 1);
 				}else{
-					$str = preg_replace('/:'.$k.'/', "'".$v."'", $str, 1);
+					$str = preg_replace('/:'.$k.'/', $v, $str, 1);
 				}
 			}
 		}
@@ -101,7 +104,7 @@ class Mysql{
 		return $this->query($sql);
 	}
 
-	public function update($table, $arr, $where=''){
+	public function update($table, $arr, $where='', $params=array()){
 		$sql = 'UPDATE '.$table.' SET ';
 		foreach ($arr as $k=>$v){
 			$sql .= '`'.$k.'` = \''.$this->escapeString($v).'\',';
@@ -110,7 +113,7 @@ class Mysql{
 		if($where){
 			$sql .= ' WHERE '.$where;
 		}
-		return $this->query($sql);
+		return $this->query($sql, $params);
 	}
 
 	public function delete($table, $where='', $params=array()){
@@ -131,7 +134,7 @@ class Mysql{
 
 	public function getOne($str, $params=array()){
 		$rs = $this->query($str, $params);
-		return isset($rs[0])?$rs[0]:'';
+		return isset($rs[0])?$rs[0]:array();
 	}
 
 	public function getLastId(){

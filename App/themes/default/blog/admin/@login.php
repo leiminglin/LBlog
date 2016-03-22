@@ -13,22 +13,39 @@ image{
 	border:0;
 }
 input{
-	width:350px;
+	width:200px;
 }
 .btn{
-	width:100px;
+	width:60px;
 	height:30px;
+}
+.login{
+	width:340px;
+	margin:100px auto;
+}
+table tr td, table tr th{
+	padding:10px;
+}
+table{
+	border:1px solid #eee;
+	border-collapse:collapse;
 }
 </style>
 </head>
 <body>
-<div><?php 
+<div class="login">
+<form action="<?php echo WEB_APP_PATH?>admin/<?php echo isset($login_page_uri) ? $login_page_uri : '';?>" method="post">
+<table>
+<tr>
+<td colspan="2" style="background:#f7f7f7;"><?php echo SITE_NAME;?></td>
+</tr>
+<tr>
+<td colspan="2"><?php 
 if(isset($save_status)){
 	echo $save_status;
 }
-?></div>
-<form action="<?php echo WEB_APP_PATH?>admin/login" method="post">
-<table>
+?></td>
+</tr>
 <tr>
 <td>Email：</td>
 <td><input name="email" type="text"/></td>
@@ -42,5 +59,6 @@ if(isset($save_status)){
 </tr>
 </table>
 </form>
+</div>
 </body>
 </html>
