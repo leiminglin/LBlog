@@ -23,6 +23,9 @@ class ModuleAdmin extends LmlBlog{
 	public function __call($name, $arg){
 		$mConfig = new ModelConfig();
 		$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
+		if(!$login_uri){
+			$login_uri = 'login';
+		}
 		if($name == $login_uri){
 			return $this->login($login_uri);
 		}
@@ -346,7 +349,8 @@ class ModuleAdmin extends LmlBlog{
 				$site['site_name'] = $mConfig->getConfig('SITE_NAME');
 				$site['site_keywords'] = $mConfig->getConfig('SITE_KEYWORDS');
 				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
-				$site['login_page_uri'] = $mConfig->getConfig('LOGIN_PAGE_URI');
+				$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
+				$site['login_page_uri'] = $login_uri ? $login_uri : 'login';
 				$this->assign('site', $site);
 				$this->display('', '/home.php');
 				break;
