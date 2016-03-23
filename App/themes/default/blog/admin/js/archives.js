@@ -245,10 +245,11 @@ lml.loadJs.competeLoad([
 		$.post($(this.form).attr('action'), $(this.form).serialize(), function(rs){
 			if(_this.getAttribute('data-need-refresh')==1){
 				$('.tabs_content').children(':visible').html(rs);
+			}else{
+				show_info(rs||'Save Successfully!');
 			}
 			_this.disabled = false;
 			adjust_right();
-			show_info(rs||'Save Successfully!');
 		});
 	});
 
