@@ -177,6 +177,12 @@ window.onload=function(){
 			<a href="javascript:void(0)" data-action="lblog_admin_users_page">User</a>
 			</li>
 			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_roles_page">Role</a>
+			</li>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_permissions_page">Permission</a>
+			</li>
+			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Setting</a>
 			</li>
 	</ul>
