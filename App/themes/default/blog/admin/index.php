@@ -147,6 +147,8 @@ window.onload=function(){
 
 <div class="sitewrap">
 
+
+
 <div class="top">
 	<span class="title"><?php echo SITE_NAME?></span>
 	<span class="user">
@@ -157,8 +159,9 @@ window.onload=function(){
 	<div class="clear"></div>
 </div>
 
-<div class="middle">
 
+
+<div class="middle">
 	<div class="left">
 		<ul>
 			<li>
@@ -185,7 +188,7 @@ window.onload=function(){
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Setting</a>
 			</li>
-	</ul>
+		</ul>
 	</div>
 	
 	<div class="right">
@@ -206,15 +209,17 @@ window.onload=function(){
 			
 		</div>
 
-
-
 	</div>
 	<div class="clear"></div>
 </div>
 
+
+
 <div class="bottom">
 <span>&copy; 2014-<?php echo date('Y');?> <a href="http://lblog.lmlphp.com" target="_blank">LBLOG</a></span>
 </div>
+
+
 
 </div>
 

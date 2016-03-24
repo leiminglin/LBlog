@@ -14,6 +14,7 @@ class ModuleAdmin extends LmlBlog{
 		'cats' => 'checkLogin',
 		'statistics' => 'checkLogin',
 		'settings' => 'checkLogin',
+		'users' => 'checkLogin',
 	);
 	
 	public function __construct(){
@@ -260,7 +261,7 @@ class ModuleAdmin extends LmlBlog{
 	public function cats(){
 		$matches = route_match('([\w]+)');
 		$action = arr_get($matches, 1, 'list');
-		$mCats = new ModelCat();
+		$mCat = new ModelCat();
 		switch ($action){
 			case 'list':
 				$pid = 1;
@@ -268,8 +269,8 @@ class ModuleAdmin extends LmlBlog{
 				if (isset($matches[1]) && $matches[1] > 1) {
 					$pid = $matches[1];
 				}
-				$rs = $mCats->getCats(10*($pid-1), 10);
-				$count = $mCats->getCount();
+				$rs = $mCat->getCats(10*($pid-1), 10);
+				$count = $mCat->getCount();
 				$page = new Paging($count, $pid, 10);
 				
 				$this->assign('rs', $rs);
@@ -280,14 +281,14 @@ class ModuleAdmin extends LmlBlog{
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');
 				if (!isset($matches[1])) {
-					if($mCats->addCat($_POST['name'])){
+					if($mCat->addCat($_POST['name'])){
 						echo 'Add Successfully!';
 					}else{
 						echo 'Add Failed!';
 					}
 				}else{
 					$id = $matches[1];
-					if($mCats->modifyCat($id, $_POST['name'])){
+					if($mCat->modifyCat($id, $_POST['name'])){
 						echo 'Modify Successfully!';
 					}else{
 						echo 'Modify Failed!';
@@ -356,7 +357,29 @@ class ModuleAdmin extends LmlBlog{
 				break;
 		}
 	}
-	
+
+	public function users(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		$mUser = new ModelUser();
+		switch ($action){
+			case 'list';
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $mUser->getUsers(10*($pid-1), 10);
+				$count = $mUser->getCount();
+				$page = new Paging($count, $pid, 10);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+		}
+	}
+
 	public function js(){
 		$matches = route_match('([\w]+)');
 		$action = arr_get($matches, 1, 'common');

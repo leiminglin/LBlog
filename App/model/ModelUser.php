@@ -58,5 +58,18 @@ class ModelUser extends Model{
 		}
 		return false;
 	}
+
+	public function getUsers($offset = 0, $limit = 10){
+		$offset = (int)$offset;
+		$limit = (int)$limit;
+		$sql = "SELECT * FROM {$this->dbPrefix}user order by id desc limit $offset, $limit";
+		return $this->db->query($sql);
+	}
 	
+	public function getCount(){
+		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}user";
+		$rs = $this->db->getOne($sql);
+		return isset($rs['C']) ? $rs['C'] : 0;
+	}
+
 }
