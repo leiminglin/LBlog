@@ -28,6 +28,11 @@ abstract class LmlBase{
 		extract($this->v, EXTR_OVERWRITE);
 		include $f;
 	}
+
+	public function render($f){
+		return include $f;
+	}
+
 	public function __construct(){
 		
 	}
