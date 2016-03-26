@@ -136,7 +136,7 @@ DROP TABLE IF EXISTS `lblog_user_role`;
 CREATE TABLE `lblog_user_role` (
   `id` int(11) NOT NULL auto_increment,
   `role_name` varchar(100) NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `lblog_user_role` VALUES ('1', 'Administrator');

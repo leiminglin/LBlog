@@ -133,10 +133,10 @@ class ModuleInstall extends LmlBase{
 					$statement = str_replace('`lblog_', '`'.$dbprefix, $statement);
 					$statement = str_replace('unix_timestamp()', time(), $statement);
 					$db->query($statement);
-					echo '<p>execute success!</p>';
 					$statement = '';
 				}
 			}
+			echo '<p>execute success!</p>';
 			$admin_data = array(
 					'email' => $email,
 					'passwd' => md5(md5($admin_passwd)),
