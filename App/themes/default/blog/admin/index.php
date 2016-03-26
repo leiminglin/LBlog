@@ -78,6 +78,7 @@ a:hover{
 }
 .bottom{
 	text-align:center;
+	margin:20px auto;
 }
 
 table tr td, table tr th{

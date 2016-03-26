@@ -15,7 +15,7 @@
 <td><?php echo $v['email'];?></td>
 <td><?php echo $v['nickname'];?></td>
 <td><?php echo $v['source'];?></td>
-<td><?php echo $v['createtime'];?></td>
+<td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
 <a href="javascript:void(0)" data-action="" data-id="<?php echo $v['id'];?>">Edit</a>
 </td>

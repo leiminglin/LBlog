@@ -131,6 +131,7 @@ class ModuleInstall extends LmlBase{
 				$statement .= $line;
 				if(substr($line, -1) == ';'){
 					$statement = str_replace('`lblog_', '`'.$dbprefix, $statement);
+					$statement = str_replace('unix_timestamp()', time(), $statement);
 					$db->query($statement);
 					echo '<p>execute success!</p>';
 					$statement = '';
