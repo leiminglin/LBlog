@@ -15,6 +15,7 @@ class ModuleAdmin extends LmlBlog{
 		'statistics' => 'checkLogin',
 		'settings' => 'checkLogin',
 		'users' => 'checkLogin',
+		'roles' => 'checkLogin',
 	);
 	
 	public function __construct(){

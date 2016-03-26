@@ -10,6 +10,7 @@ var save_cat_path = '<?php echo WEB_APP_PATH?>admin/cats/save';
 var statistics_list_path = '<?php echo WEB_APP_PATH?>admin/statistics/list';
 var settings_path = '<?php echo WEB_APP_PATH?>admin/settings';
 var users_path = '<?php echo WEB_APP_PATH?>admin/users/list';
+var roles_path = '<?php echo WEB_APP_PATH?>admin/roles/list';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -106,6 +107,14 @@ function get_users_page(){
 		create_tab('User', rs);
 	});
 }
+
+function get_roles_page(){
+	var path = roles_path;
+	$.get(path, function(rs){
+		create_tab('Role', rs);
+	});
+}
+
 
 
 
@@ -238,7 +247,11 @@ lml.loadJs.competeLoad([
 		},
 		'lblog_admin_users_page':function(o){
 			get_users_page(o);
+		},
+		'lblog_admin_roles_page':function(o){
+			get_roles_page(o);
 		}
+
 	};
 
 	on(document.body, 'click', function(e){
