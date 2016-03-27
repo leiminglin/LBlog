@@ -132,7 +132,7 @@ if( $relevance ){
 <div class="right">
 <!-- right -->
 <?php
-include DEFAULT_THEME_PATH.C_GROUP.'/@common/rightwidget.php';
+$this->render(DEFAULT_THEME_PATH.C_GROUP.'/@common/rightwidget.php');
 ?>
 </div>
 <div class="clear"></div>

@@ -14,7 +14,7 @@
 <td><?php echo $v['request_uri'];?></td>
 <td><?php echo $v['remote_addr'];?></td>
 <td><?php echo $v['http_referer'];?></td>
-<td><?php echo $v['request_time'];?></td>
+<td><?php echo date('Y-m-d H:i:s', $v['request_time']);?></td>
 </tr>
 <?php }?>
 </table>
