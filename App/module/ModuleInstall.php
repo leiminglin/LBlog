@@ -121,6 +121,7 @@ class ModuleInstall extends LmlBase{
 		$statement = '';
 
 		try{
+			echo '<p>';
 			while($line = fgets($fp)){
 				$line = trim($line);
 
@@ -133,17 +134,18 @@ class ModuleInstall extends LmlBase{
 					$statement = str_replace('`lblog_', '`'.$dbprefix, $statement);
 					$statement = str_replace('unix_timestamp()', time(), $statement);
 					$db->query($statement);
+					echo '-';
 					$statement = '';
 				}
 			}
-			echo '<p>execute success!</p>';
+			echo '</p><p>execute success!</p>';
 			$admin_data = array(
 					'email' => $email,
 					'passwd' => md5(md5($admin_passwd)),
 					'createtime' => time()
 				);
 			$db->update($config['dbprefix'].'user', $admin_data, "id=1");
-			echo '<p>install success!</p><p><a href="/">go home page</a></p>';
+			echo '<p>install success!</p><p><a href="'.WEB_PATH.'">go home page</a></p>';
 		}catch (Exception $e){
 			echo '<p>error!</p>';
 			$this->outputBack();
