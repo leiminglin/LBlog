@@ -381,6 +381,28 @@ class ModuleAdmin extends LmlBlog{
 		}
 	}
 
+	public function roles(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		$m = new ModelRole();
+		switch ($action){
+			case 'list';
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $m->getList(10*($pid-1), 10);
+				$count = $m->getCount();
+				$page = new Paging($count, $pid, 10);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+		}
+	}
+
 	public function js(){
 		$matches = route_match('([\w]+)');
 		$action = arr_get($matches, 1, 'common');
