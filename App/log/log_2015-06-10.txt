@@ -1,3 +1,0 @@
-[ 2015-06-10T09:24:22+08:00 ] lblog.may/admin/login, LMLPHP Notice:[8]Use of undefined constant LBLOGUSS - assumed 'LBLOGUSS' in D:\PHP\code\LBlog\App\module\blog\ModuleAdmin.php line 29
-[ 2015-06-10T09:24:22+08:00 ] lblog.may/admin/login, LMLPHP Notice:[8]Use of undefined constant LBLOGSALT - assumed 'LBLOGSALT' in D:\PHP\code\LBlog\App\lib\Tool.php line 26
-[ 2015-06-10T09:31:57+08:00 ] lblog.may/admin, LMLPHP Notice:[8]Uninitialized string offset:  0 in D:\PHP\code\LBlog\App\model\blog\ModelAccount.php line 6
