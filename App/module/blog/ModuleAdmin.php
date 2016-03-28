@@ -51,18 +51,15 @@ class ModuleAdmin extends LmlBlog{
 			if( ($userid = $mUser->checkLogin($email, $passwd)) == true ){
 				$expire_time = time()+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN);
-				header("Location:/admin");
-				exit;
+				header("Location:".WEB_APP_PATH."admin");
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
 				$this->display('admin/@login');
 			}
+		}elseif($this->checkLogin()){
+			header("Location:".WEB_APP_PATH.'admin');
 		}else{
-			if($this->checkLogin()){
-				header("Location:".WEB_APP_PATH.'admin');
-			}else{
-				$this->display('admin/@login');
-			}
+			$this->display('admin/@login');
 		}
 	}
 	
@@ -399,6 +396,23 @@ class ModuleAdmin extends LmlBlog{
 				$this->assign('page', $page);
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					if($m->add(array('role_name'=>$_POST['name']))){
+						echo 'Add Successfully!';
+					}else{
+						echo 'Add Failed!';
+					}
+				}else{
+					$id = $matches[1];
+					if($m->update(array('role_name'=>$_POST['name']), "id=$id")){
+						echo 'Modify Successfully!';
+					}else{
+						echo 'Modify Failed!';
+					}
+				}
 				break;
 		}
 	}

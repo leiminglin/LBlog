@@ -175,6 +175,9 @@ window.onload=function(){
 			<a href="javascript:void(0)" data-action="lblog_admin_cats_page">Cat</a>
 			</li>
 			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_comments_page">Comment</a>
+			</li>
+			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page">Statistic</a>
 			</li>
 			<li>
@@ -182,6 +185,9 @@ window.onload=function(){
 			</li>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_roles_page">Role</a>
+			</li>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_accounts_page">Account</a>
 			</li>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_permissions_page">Permission</a>

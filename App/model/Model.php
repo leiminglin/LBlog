@@ -28,4 +28,12 @@ abstract class Model{
 		$rs = $this->db->getOne($sql);
 		return isset($rs['C']) ? $rs['C'] : 0;
 	}
+	
+	public function add($arr){
+		return $this->db->insert($this->table, $arr);
+	}
+	
+	public function update($arr, $where='', $params=array()){
+		return $this->db->update($this->table, $arr, $where, $params);
+	}
 }
