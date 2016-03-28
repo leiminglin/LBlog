@@ -282,6 +282,9 @@ lml.loadJs.competeLoad([
 				o.flag = 1;
 			}
 		},
+		'lblog_admin_users_set_as_account':function(o){
+			
+		}
 
 	};
 
