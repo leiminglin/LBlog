@@ -142,6 +142,36 @@ CREATE TABLE `lblog_user_role` (
 INSERT INTO `lblog_user_role` VALUES ('1', 'Administrator');
 
 
+DROP TABLE IF EXISTS `lblog_permission`;
+CREATE TABLE `lblog_permission` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(100) NOT NULL,
+  `uri_regexp` varchar(100) NOT NULL,
+  `createtime` bigint(20) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `lblog_permission_user`;
+CREATE TABLE `lblog_permission_user` (
+  `id` int(11) NOT NULL auto_increment,
+  `userid` int(11) NOT NULL,
+  `permissionid` int(11) NOT NULL,
+  `createtime` bigint(20) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `lblog_permission_role`;
+CREATE TABLE `lblog_permission_role` (
+  `id` int(11) NOT NULL auto_increment,
+  `roleid` int(11) NOT NULL,
+  `permissionid` int(11) NOT NULL,
+  `createtime` bigint(20) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 DROP TABLE IF EXISTS `lblog_user_qq`;
 CREATE TABLE `lblog_user_qq` (
   `id` int(11) NOT NULL auto_increment,
