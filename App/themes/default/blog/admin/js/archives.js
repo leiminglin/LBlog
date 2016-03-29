@@ -6,11 +6,12 @@ var archives_relation_path = '<?php echo WEB_APP_PATH?>admin/archives/relation';
 var archives_relation_remove_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/remove';
 var archives_relation_set_path = '<?php echo WEB_APP_PATH?>admin/archives/relation/set';
 var cats_list_path = '<?php echo WEB_APP_PATH?>admin/cats/list';
-var save_cat_path = '<?php echo WEB_APP_PATH?>admin/cats/save';
+var cats_save_path = '<?php echo WEB_APP_PATH?>admin/cats/save';
 var statistics_list_path = '<?php echo WEB_APP_PATH?>admin/statistics/list';
 var settings_path = '<?php echo WEB_APP_PATH?>admin/settings';
 var users_path = '<?php echo WEB_APP_PATH?>admin/users/list';
 var roles_path = '<?php echo WEB_APP_PATH?>admin/roles/list';
+var roles_save_path = '<?php echo WEB_APP_PATH?>admin/roles/save';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -82,8 +83,8 @@ function get_statistics_list_page(o){
 	});
 }
 
-function add_cat(name, id){
-	var path = save_cat_path;
+function save_cat(name, id){
+	var path = cats_save_path;
 	if(id){
 		path +='/'+id;
 	}
@@ -108,14 +109,27 @@ function get_users_page(){
 	});
 }
 
-function get_roles_page(){
+function get_roles_page(o){
 	var path = roles_path;
+	if(o){
+		path += '/'+o;
+	}
 	$.get(path, function(rs){
 		create_tab('Role', rs);
 	});
 }
 
-
+function save_role(name, id){
+	var path = roles_save_path;
+	if(id){
+		path +='/'+id;
+	}
+	$.post(path, {'name':name}, function(rs){
+		show_info(rs);
+		var x = $('.tabs_content').children(':visible').find('a.current').html();
+		get_roles_page(x);
+	});
+}
 
 
 
@@ -230,12 +244,12 @@ lml.loadJs.competeLoad([
 			get_statistics_list_page(o)
 		},
 		'lblog_admin_cats_post':function(o){
-			add_cat(o.previousSibling.value);
+			save_cat(o.previousSibling.value);
 		},
 		'lblog_admin_cats_edit':function(o){
 			var td = $(o).parent().prev(), name=td.html();
 			if(o.flag){
-				add_cat(td.children('input').val(), o.getAttribute('data-id'));
+				save_cat(td.children('input').val(), o.getAttribute('data-id'));
 			}else{
 				td.html($("<input/>").val(name).attr({"type":"text"}));
 				$(o).html('Save');
@@ -249,7 +263,27 @@ lml.loadJs.competeLoad([
 			get_users_page(o);
 		},
 		'lblog_admin_roles_page':function(o){
-			get_roles_page(o);
+			if(o.getAttribute('data-id')){
+				get_roles_page(o.getAttribute('data-id'));
+			}else{
+				get_roles_page(false);
+			}
+		},
+		'lblog_admin_roles_post':function(o){
+			save_role(o.previousSibling.value);
+		},
+		'lblog_admin_roles_edit':function(o){
+			var td = $(o).parent().prev(), name=td.html();
+			if(o.flag){
+				save_role(td.children('input').val(), o.getAttribute('data-id'));
+			}else{
+				td.html($("<input/>").val(name).attr({"type":"text"}));
+				$(o).html('Save');
+				o.flag = 1;
+			}
+		},
+		'lblog_admin_users_set_as_account':function(o){
+			
 		}
 
 	};

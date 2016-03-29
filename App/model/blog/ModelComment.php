@@ -22,7 +22,7 @@ class ModelComment extends Model{
 			}elseif( isset($users[$v['userid']]['avatar_large']) ){
 				$rs[$k]['userinfo']['avatar'] = $users[$v['userid']]['avatar_large'];
 			}else{
-				$rs[$k]['userinfo']['avatar'] = '';
+				$rs[$k]['userinfo']['avatar'] = WEB_PATH.'static/resource/lbloglogo100.png';
 			}
 		}
 		return $rs;

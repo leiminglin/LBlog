@@ -17,7 +17,7 @@
 <td><?php echo $v['source'];?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
-<a href="javascript:void(0)" data-action="" data-id="<?php echo $v['id'];?>">Edit</a>
+<a href="javascript:void(0)" data-action="lblog_admin_users_set_as_account" data-id="<?php echo $v['id'];?>">Set As Account</a>
 </td>
 </tr>
 <?php }?>
