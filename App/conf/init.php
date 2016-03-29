@@ -101,3 +101,10 @@ function tag_a($text, $func){
 	return '<a href="javascript:void(0)" onclick="'.$func.'">'.$text.'</a>';
 }
 
+function lang($token, $data=array()){
+	static $lang = array();
+	if($data){
+		$lang = array_merge($lang, $data);
+	}
+	return isset($lang[$token]) ? $lang[$token] : $token;
+}
