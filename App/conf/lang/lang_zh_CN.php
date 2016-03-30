@@ -1,5 +1,5 @@
 <?php
-return $lang_en_US = array(
+return $lang_ch_CN = array(
 
 
 
