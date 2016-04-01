@@ -4,7 +4,7 @@ class ModuleArchives extends LmlBlog{
 	public $mArchives;
 	private $mComment;
 	public $conditions = array(
-		'comment' => 'checkLogin'
+		'comment' => 'checkUser'
 	);
 	
 	public function __construct(){

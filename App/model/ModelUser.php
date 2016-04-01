@@ -51,7 +51,7 @@ class ModelUser extends Model{
 		return $this->db->query($sql);
 	}
 	
-	public function checkLogin($email, $passwd){
+	public function checkEmailAndPasswd($email, $passwd){
 		$rs = $this->db->select($this->dbPrefix.'user', '*', 'email=?', array($email));
 		if(count($rs) == 1 && md5(md5($passwd)) == $rs[0]['passwd']){
 			return $rs[0]['id'];

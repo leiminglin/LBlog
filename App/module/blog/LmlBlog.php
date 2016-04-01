@@ -16,14 +16,22 @@ class LmlBlog extends LmlBase{
 		return false;
 	}
 
-	public function hasPermission(){
-		if( !($userid = Tool::checkCookie()) ) {
+	public function hasPermission() {
+		if( !($userid = $this->checkUser()) ){
 			return false;
 		}
 		$mAccount = new ModelAccount();
-		if($mAccount->checkIsAdmin($userid)){
+		if( $mAccount->checkIsAdmin($userid) ){
 			return true;
 		}
 		return false;
 	}
+
+	public function checkUser(){
+		if( !($userid = Tool::checkCookie()) ) {
+			return false;
+		}
+		return $userid;
+	}
+
 }
