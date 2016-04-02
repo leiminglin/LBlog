@@ -172,6 +172,24 @@ CREATE TABLE `lblog_permission_role` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `lblog_lang_en_US`;
+CREATE TABLE `lblog_lang_en` (
+  `id` int(11) NOT NULL auto_increment,
+  `token` varchar(150) NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `lblog_lang_zh_CN`;
+CREATE TABLE `lblog_lang_en` (
+  `id` int(11) NOT NULL auto_increment,
+  `token` varchar(150) NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 DROP TABLE IF EXISTS `lblog_user_qq`;
 CREATE TABLE `lblog_user_qq` (
   `id` int(11) NOT NULL auto_increment,

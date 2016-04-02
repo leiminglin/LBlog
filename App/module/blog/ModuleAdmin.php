@@ -35,7 +35,7 @@ class ModuleAdmin extends LmlBlog{
 	}
 	
 	public function index(){
-		if($this->checkLogin()){
+		if($this->hasPermission()){
 			$this->display();
 		}else{
 			header("Location:".WEB_PATH);
@@ -48,7 +48,7 @@ class ModuleAdmin extends LmlBlog{
 			$email = $_POST['email'];
 			$passwd = $_POST['passwd'];
 			$mUser = new ModelUser();
-			if( ($userid = $mUser->checkLogin($email, $passwd)) == true ){
+			if( ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
 				$expire_time = time()+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN);
 				header("Location:".WEB_APP_PATH."admin");
@@ -56,7 +56,7 @@ class ModuleAdmin extends LmlBlog{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
 				$this->display('admin/@login');
 			}
-		}elseif($this->checkLogin()){
+		}elseif($this->hasPermission()){
 			header("Location:".WEB_APP_PATH.'admin');
 		}else{
 			$this->display('admin/@login');
