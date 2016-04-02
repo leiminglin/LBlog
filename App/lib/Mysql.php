@@ -15,6 +15,7 @@ class Mysql{
 	private $link;
 	private $resource;
 	private static $instances;
+	public $sqls = array();
 
 	private function __construct($config){
 		if ( !extension_loaded('mysql') ) {
@@ -81,6 +82,7 @@ class Mysql{
 		if($this->resource){
 			$this->free();
 		}
+		$this->sqls[] = $str;
 		$this->resource = mysql_query($str, $this->link);
 		if( false === $this->resource) {
 			$this->error();
@@ -145,6 +147,7 @@ class Mysql{
 		if ( $this->resource ) {
 			$this->free();
 		}
+		$this->sqls[] = $str;
 		$result = mysql_query($str, $this->link) ;
 		if ( false === $result) {
 			$this->error();
@@ -207,5 +210,12 @@ class Mysql{
 		throw new LmlDbException(mysql_error($this->link));
 	}
 
+	public function getLastSql(){
+		return end($this->sqls);
+	}
+	
+	public function getSqls(){
+		return $this->sqls;
+	}
 }
 class LmlDbException extends LmlException{}

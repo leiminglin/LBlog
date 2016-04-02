@@ -3,19 +3,19 @@ class ModuleAdmin extends LmlBlog{
 	
 	private $mArchives;
 	public $conditions = array(
-		'postarticle' => 'checkLogin',
-		'editarticle' => 'checkLogin',
-		'backData' => 'checkLogin',
+		'postarticle' => 'checkPermission',
+		'editarticle' => 'checkPermission',
+		'backData' => 'checkPermission',
 
-		'addrelationarticle' => 'checkLogin',
-		'removerelationarticle' => 'checkLogin',
+		'addrelationarticle' => 'checkPermission',
+		'removerelationarticle' => 'checkPermission',
 
-		'archives' => 'checkLogin',
-		'cats' => 'checkLogin',
-		'statistics' => 'checkLogin',
-		'settings' => 'checkLogin',
-		'users' => 'checkLogin',
-		'roles' => 'checkLogin',
+		'archives' => 'checkPermission',
+		'cats' => 'checkPermission',
+		'statistics' => 'checkPermission',
+		'settings' => 'checkPermission',
+		'users' => 'checkPermission',
+		'roles' => 'checkPermission',
 	);
 	
 	public function __construct(){
