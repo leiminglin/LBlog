@@ -108,7 +108,7 @@ if( $relevance ){
 </div>
 
 <div class="lbox litem">
-<table class="commenttable">
+<table>
 <tr><td><script id="commentarea" type="text/plain"></script></td></tr>
 <tr><td><a class="linkbtn" style="display:none;" name="comment">提交评论</a></td></tr>
 </table>

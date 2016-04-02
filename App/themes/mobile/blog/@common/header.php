@@ -1,3 +1,6 @@
+<?php 
+$nickname = Tool::getUserNickName();
+?>
 <style>
 body{
 	padding:0;
@@ -248,7 +251,7 @@ a:hover{
 }
 .code{
 	background-color:#fefefe;
-	border:2px solid #ddd;
+	border:2px solid #F7F7F7;
 	color:#222;
 	padding:10px;
 	font-family:Monaco,"DejaVu Sans Mono","Courier New",monospace;
@@ -290,6 +293,10 @@ a:hover{
 .content .left .essaybottom a:hover{
 	background:#eee;
 }
+.content .left .essay p img{
+	margin:0 auto;
+	display:block;
+}
 .linkbtn{
 	display:inline-block;
 	float:left;
@@ -324,20 +331,21 @@ a.linkbtn:hover{
  */
 !function(e,t){function n(n){var o=n.offsetTop,r=n.offsetParent;if(null==r&&n.parentNode)for(var a=n.parentNode;null==r&&(r=a.offsetParent,a=a.parentNode););for(;null!==r;)o+=r.offsetTop+r.clientTop,r=r.offsetParent;var i;return"number"==typeof e.pageYOffset?i=e.pageYOffset:(docElement=t.compatMode&&"CSS1Compat"===t.compatMode?t.documentElement:t.body,i=docElement.scrollTop),o-i}function o(){return t.compatMode&&"BackCompat"==t.compatMode&&t.body?{width:t.body.clientWidth,height:t.body.clientHeight}:{width:t.documentElement.clientWidth,height:t.documentElement.clientHeight}}var r=function(){var e={};return e.queue=[],e.promise=function(){e.queue.length&&e.queue.shift()()},e.then=function(t){e.queue.push(t)},e},a=r();a.then(function(){var e,r,i=t.getElementsByTagName("IMG"),s=o(),c=0;window.onresize=function(){s=o()};var l=function(){if(c>=i.length)return void(window.addEventListener?t.removeEventListener("scroll",l,!1):window.attachEvent&&window.detachEvent(event,l));for(e=0,j=i.length;e<j;e++)if(!i[e].getAttribute("src")){var o=n(i[e]),a=i[e].getAttribute("height")||0;o>=-a&&o<s.height&&(r=i[e].getAttribute("osrc"))&&(i[e].setAttribute("src",r),i[e].onerror=function(){(r=this.getAttribute("osrc-bak"))&&(this.setAttribute("src",r),this.onerror=null)},i[e].onload=function(){c++})}};window.addEventListener?t.addEventListener("scroll",l,!1):window.attachEvent&&window.attachEvent("onscroll",l),l(),a.promise()}),"function"!=typeof t.getElementsByClassName&&(t.getElementsByClassName=function(e){for(var n=t,o=n.getElementsByTagName("*"),r=new RegExp("\\b"+e+"\\b"),a=[],i=0,s=o.length;s>i;i++){var e=o[i].className;r.test(e)&&a.push(o[i])}return a});var i=function(e){var n=t.createElement("style");n.type="text/css",n.styleSheet?n.styleSheet.cssText=e:n.innerHTML=e,t.getElementsByTagName("head")[0].appendChild(n)};a.then(function(){for(var e=t.getElementsByClassName("lazyCss"),n=0;n<e.length;n++)i(e[n].value||e[n].innerHTML);a.promise()}),a.then(function(){for(var e=t.getElementsByClassName("lazyHtml"),n=0;n<e.length;n++)if("TEXTAREA"==e[n].tagName){var o=t.createElement("DIV");o.innerHTML=e[n].value,e[n].parentNode.insertBefore(o,e[n])}a.promise()});var s=function(e,n,o,r){o=t.createElement("script"),r=t.getElementsByTagName("script")[0],o.async=1,o.src=e;try{r.parentNode.insertBefore(o,r),n=n||function(){a.promise()},window.addEventListener?o.addEventListener("load",n,!1):window.attachEvent?o.onreadystatechange=function(){this.readyState.match(/loaded|complete/i)&&n()}:o.onload=function(){n()}}catch(i){n()}},c={};c.deferred=a,c.createDeferred=r,c.loadJs=s,e.lml=c}(window,document);
 var deferred = lml.deferred;
+var G={'user':{'nickname':'<?php echo $nickname;?>'}};
 </script>
 </head>
 <body>
 <div class="sitewrap">
 <div class="header">
 <div class="login">
-<?php if( ($nickname = Tool::getUserNickName())==true ){?>
+<?php if( $nickname ){?>
 您好，<?php echo $nickname;?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>">退出</a>
 <?php }else{?>
 <div class="logintype">
-<a href="javascript:void(0)" onclick='javascript:toQzoneLogin();return false;'><img alt="Use qq login" title="使用QQ登录" osrc="<?php echo Tool::getCDNUrl('qq_login.png');?>" height="20" width="100"></a>
+<a href="javascript:void(0)" onclick="javascript:toQzoneLogin();return false;"><img alt="Use qq login" title="使用QQ登录" osrc="<?php echo Tool::getCDNUrl('qq_login.png');?>" height="20" width="100"></a>
 </div>
 <div class="logintype">
-<a href="javascript:void(0)" onclick='javascript:toWeiboLogin();return false;'><img alt="Use weibo login" title="使用新浪微博登录" osrc="<?php echo Tool::getCDNUrl('weibo_login.png');?>" height="20" width="100"></a>
+<a href="javascript:void(0)" onclick="javascript:toWeiboLogin();return false;"><img alt="Use weibo login" title="使用新浪微博登录" osrc="<?php echo Tool::getCDNUrl('weibo_login.png');?>" height="20" width="100"></a>
 </div>
 <?php }?>
 </div>

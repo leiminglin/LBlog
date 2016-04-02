@@ -10,7 +10,7 @@ foreach ($cats as $t){
 }
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/meta.php';
 ?>
-<title><?php echo $title,' - ',$current_cat['name']?> - <?php echo SITE_NAME?></title>
+<title><?php echo $title,' - ',arr_get($current_cat, 'name')?> - <?php echo SITE_NAME?></title>
 <?php
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 ?>
@@ -22,10 +22,10 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 <div class="lbox litem">
 <h2>
 <a href="<?php echo Tool::getArticleUrl($id, $article['url']);?>" name="title"><?php echo Tool::htmlspecialcharsDeep($article['title'])?></a>
-<a href="<?php echo WEB_APP_PATH?>cat/<?php echo$current_cat['id']?>">
+<a href="<?php echo WEB_APP_PATH?>cat/<?php echo arr_get($current_cat, 'id')?>">
 <span class="tag">
 <span class="arrow"></span>
-<?php echo$current_cat['name']?>
+<?php echo arr_get($current_cat, 'name')?>
 </span></a>
 </h2>
 <div class="author"><span><a><?php echo $article['nickname']?></a> 发表于<a><?php echo date("Y-m-d H:i", $article['createtime'])?></a></span></div>
@@ -108,7 +108,7 @@ if( $relevance ){
 <div class="lbox litem">
 <table>
 <tr><td><script id="commentarea" type="text/plain"></script></td></tr>
-<tr><td><a class="linkbtn" name="comment">提交评论</a></td></tr>
+<tr><td><a class="linkbtn" style="display:none;" name="comment">提交评论</a></td></tr>
 </table>
 </div>
 <div><a name="viewcomment">评论列表</a></div>
@@ -130,7 +130,7 @@ if( $relevance ){
 <div class="right">
 <!-- right -->
 <?php
-include DEFAULT_THEME_PATH.C_GROUP.'/@common/rightwidget.php';
+$this->render(DEFAULT_THEME_PATH.C_GROUP.'/@common/rightwidget.php');
 ?>
 </div>
 <div class="clear"></div>
@@ -142,9 +142,9 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/bottom.php';
 .login_template{
 	display:none;
 }
-login_template .mask{
-	width:8000px;
-	height:8000px;
+.login_template .mask{
+	width:100%;
+	height:100%;
 	position:fixed;
 	left:0;
 	top:0;
@@ -161,11 +161,14 @@ login_template .mask{
 	top:50%;
 	margin-left:-150px;
 	margin-top:-200px;
-	box-shadow:5px 3px 4px #ccc;
 	background:#FFF;
 	opacity:1;
 	filter:alpha(opacity=100);
 	z-index:10001;
+	
+	-webkit-box-shadow:0 0 8px 10px #e9d9e9;  
+	-moz-box-shadow:0 0 8px 10px #e9d9e9;  
+	box-shadow:0 0 8px 10px #e9d9e9;
 }
 .login_template .loginheader{
 	font-size:16px;
@@ -199,7 +202,7 @@ login_template .mask{
 }
 </textarea>
 <div class="login_template">
-<!-- 
+<!--
 <div class="mask"></div>
 <div class="loginpage">
 <div class="loginheader">
@@ -251,42 +254,52 @@ deferred.then(function(){
 			serverUrl:'<?php echo WEB_PATH?>static/ueditor/php/controller.php'
 		});
 
-		showInfo=function(v, f, w, s){
+		function showInfo(v, f, w, s){
 			var a = $("<div/>")
-			.attr({"style":"border:1px solid green;width:100px;height:30px;background:#fff;box-shadow:5px 3px 4px #ccc;z-index:10000;"
-				+"position:fixed;padding:5px;top:-30px;left:50%;text-align:center;margin-left:-50px;line-height:30px;border-radius:5px;"})
+			.attr({"style":"border:1px solid green;background:#fff;z-index:10000;-webkit-box-shadow:0 0 8px 10px #ccc;"
+				+"-moz-box-shadow:0 0 8px 10px #ccc;box-shadow:0 0 8px 10px #ccc;"
+				+"position:fixed;_position:absolute;_bottom:auto;padding:5px;top:-42px;left:50%;text-align:center;line-height:30px;border-radius:5px;"})
 			.css({"opacity":.5})
 			.html(v),f=f||200,s=s||1000,w=w||1000;
 			$(document.body).append(
 				a.animate({"top":"100px","opacity":1}, f)
 				.delay(w)
-				.animate({"top":"-30px","opacity":.5}, s)
+				.animate({"top":"-42px","opacity":.5}, s)
 				.queue(function(){a.remove()}));
+			a.css({'margin-left': -a.width()/2+'px'});
 		};
-		
-		var loginflag;
-		$("table a.linkbtn").click(function(){
-			if(!document.cookie.match(/<?php echo LBLOGUSS;?>=\d+_\d+_[a-z0-9]+/)){
-				var logindiv = $('.login_template');
-				if(loginflag){
-					logindiv.show();
-					return;
-				}
-				loginflag = 1;
-				logindiv.html(logindiv.html().replace(/<!--|-->/g,''));
+
+		function show_login(){
+			var logindiv = $('.login_template');
+			if(this.flag){
 				logindiv.show();
-				logindiv.children('.loginpage').append($('<div/>').css({"padding":"20px"}).html('<br/>请选择登录方式<br/>'))
-				.append($('.header .login').clone(true).css({"padding":"20px"}));
-				$('.close',logindiv).hover(function(){
-					$(this).addClass('closehover');
-				},function(){
-					$(this).removeClass('closehover');
-				}).click(function(){
-					logindiv.hide();
-				});
 				return;
 			}
-
+			this.flag = 1;
+			logindiv.html(logindiv.html().replace(/<!--|-->/g,''));
+			logindiv.show();
+			logindiv.children('.loginpage').append($('<div/>').css({"padding":"20px"}).html('<br/>请选择登录方式<br/>'))
+			.append('<div class="login" style="padding:20px;"><div class="logintype">'
+					+'<a href="javascript:void(0)" onclick="javascript:toQzoneLogin();return false;">'
+					+'<img alt="Use qq login" title="使用QQ登录" src="<?php echo Tool::getCDNUrl('qq_login.png');?>" height="20" width="100"></a>'
+					+'</div><div class="logintype">'
+					+'<a href="javascript:void(0)" onclick="javascript:toWeiboLogin();return false;">'
+					+'<img alt="Use weibo login" title="使用新浪微博登录" src="<?php echo Tool::getCDNUrl('weibo_login.png');?>" height="20" width="100">'
+					+'</a></div></div>');
+			$('.close',logindiv).hover(function(){
+				$(this).addClass('closehover');
+			},function(){
+				$(this).removeClass('closehover');
+			}).click(function(){
+				logindiv.hide();
+			});
+		}
+		
+		function postcomment(){
+			if(!G.user.nickname){
+				show_login();
+				return;
+			}
 			content=ue.getContent();
 			if( $.trim(content)=='' ){
 				if(this.tips){
@@ -315,13 +328,22 @@ deferred.then(function(){
 						showInfo(m.msg);
 					}
 				},
-				error:function(){
-					showInfo('<font color="red">评价失败！</font>');
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					if(XMLHttpRequest.status==401){
+						show_login();
+					}else{
+						showInfo('评价失败！');
+					}
 				}
 			});
-			
+		};
+		$("table a.linkbtn").click(postcomment).show();
+		ue.addListener("focus", function(){
+			if(!G.user.nickname){
+				show_login();
+			}
 		});
-		
+
 		def2.promise();
 	});
 	deferred.promise();
