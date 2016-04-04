@@ -36,4 +36,12 @@ abstract class Model{
 	public function update($arr, $where='', $params=array()){
 		return $this->db->update($this->table, $arr, $where, $params);
 	}
+	
+	public function find($id){
+		return $this->db->getOne("select * from {$this->table} where id=".(int)$id);
+	}
+
+	public function getAll(){
+		return $this->db->select($this->table);
+	}
 }

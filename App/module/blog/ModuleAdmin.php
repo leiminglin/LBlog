@@ -367,13 +367,31 @@ class ModuleAdmin extends LmlBlog{
 				if (isset($matches[1]) && $matches[1] > 1) {
 					$pid = $matches[1];
 				}
+				$mRole = new ModelRole();
+				$mAccount = new ModelAccount();
 				$rs = $mUser->getUsers(10*($pid-1), 10);
 				$count = $mUser->getCount();
 				$page = new Paging($count, $pid, 10);
 				$this->assign('rs', $rs);
+				$roles = arr2mapping($mRole->getAll(), 'id', 'role_name');
+				$this->assign('roles', $roles);
+				$accounts = arr2mapping($mAccount->getAll(), 'userid', 'roleid');
+				$this->assign('accounts', $accounts);
 				$this->assign('page', $page);
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
+				break;
+			case 'set_account':
+				$uid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 0) {
+					$uid = $matches[1];
+				}else{
+					return;
+				}
+				$user = $mUser->find($uid);
+				$this->assign('user', $user);
+				$this->display('', '/set_account.php');
 				break;
 		}
 	}

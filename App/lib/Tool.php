@@ -28,7 +28,7 @@ class Tool{
 
 	public static function checkCookie($v=''){
 		if(defined('ADMIN_FORCE') && ADMIN_FORCE){
-			return 1;
+			return ADMIN_ACCOUNT_ID;
 		}
 		if(!$v){
 			$v = isset($_COOKIE[LBLOGUSS])?$_COOKIE[LBLOGUSS]:'';

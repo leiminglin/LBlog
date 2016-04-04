@@ -10,6 +10,7 @@ var cats_save_path = '<?php echo WEB_APP_PATH?>admin/cats/save';
 var statistics_list_path = '<?php echo WEB_APP_PATH?>admin/statistics/list';
 var settings_path = '<?php echo WEB_APP_PATH?>admin/settings';
 var users_path = '<?php echo WEB_APP_PATH?>admin/users/list';
+var users_set_account_path = '<?php echo WEB_APP_PATH?>admin/users/set_account';
 var roles_path = '<?php echo WEB_APP_PATH?>admin/roles/list';
 var roles_save_path = '<?php echo WEB_APP_PATH?>admin/roles/save';
 
@@ -131,7 +132,12 @@ function save_role(name, id){
 	});
 }
 
-
+function set_account(id, o){
+	var path = users_set_account_path+'/'+id;
+	$.post(path, function(rs){
+		create_tab('Account'+id, rs);
+	});
+}
 
 
 
@@ -282,8 +288,16 @@ lml.loadJs.competeLoad([
 				o.flag = 1;
 			}
 		},
-		'lblog_admin_users_set_as_account':function(o){
-			
+		'lblog_admin_users_edit':function(o){
+			var td = $(o).parent().prev().prev(), roles=$('select.roles_select').clone();
+			if(o.flag){
+				set_account(o.getAttribute('data-id'), roles.val());
+			}else{
+				console.log(roles);
+				td.html(roles.toString());
+				$(o).html('Save');
+				o.flag = 1;
+			}
 		}
 
 	};

@@ -1,4 +1,9 @@
 
+<select class="hidden roles_select">
+<?php foreach ($roles as $k=>$v){?>
+<option value="<?php echo arr_get($v, 'id');?>"><?php echo arr_get($v, 'role_name');?></option>
+<?php }?>
+</select>
 
 <table>
 <tr>
@@ -6,18 +11,24 @@
 <th>Email</th>
 <th>NickName</th>
 <th>Source</th>
+<th>Role</th>
 <th>CreateTime</th>
 <th>Action</th>
 </tr>
-<?php foreach ($rs as $k=>$v){?>
+<?php foreach ($rs as $k=>$v){
+	$role_name = arr_get($roles, arr_get($accounts, $v['id']));
+?>
 <tr>
 <td><?php echo $v['id'];?></td>
 <td><?php echo $v['email'];?></td>
 <td><?php echo $v['nickname'];?></td>
 <td><?php echo $v['source'];?></td>
+<td><?php echo $role_name;?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
-<a href="javascript:void(0)" data-action="lblog_admin_users_set_as_account" data-id="<?php echo $v['id'];?>">Set As Account</a>
+<?php if(!$role_name){?>
+<a href="javascript:void(0)" data-action="lblog_admin_users_edit" data-id="<?php echo $v['id'];?>">Edit</a>
+<?php }?>
 </td>
 </tr>
 <?php }?>
