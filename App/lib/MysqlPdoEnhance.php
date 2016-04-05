@@ -17,7 +17,7 @@ interface MysqlPdoInterface{
 
 	public function query($sql, $params = array());
 
-	public function getOne($sql, $params = array());
+	public function getOne($table, $fields='*', $where_tail='', $params=array());
 
 	public function getLastId();
 
@@ -93,8 +93,8 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 		}
 	}
 
-	public function getOne($sql, $params = array()){
-		$rs = $this->query($sql, $params);
+	public function getOne($table, $fields='*', $where_tail='', $params=array()){
+		$rs = $this->select($table, $fields, $where_tail, $params);
 		return isset($rs[0]) ? $rs[0] : array();
 	}
 

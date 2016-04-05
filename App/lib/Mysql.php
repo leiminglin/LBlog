@@ -134,8 +134,8 @@ class Mysql{
 		return $this->query($sql, $params);
 	}
 
-	public function getOne($str, $params=array()){
-		$rs = $this->query($str, $params);
+	public function getOne($table, $fields='*', $where_tail='', $params=array()){
+		$rs = $this->select($table, $fields, $where_tail, $params);
 		return isset($rs[0])?$rs[0]:array();
 	}
 

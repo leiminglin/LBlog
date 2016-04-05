@@ -1,6 +1,8 @@
 <?php
 class ModelCat extends Model{
-	
+
+	public $table_name = 'blog_cat';
+
 	public function getCats($offset = 0, $limit = 10){
 		$offset = (int)$offset;
 		$limit = (int)$limit;
@@ -9,8 +11,7 @@ class ModelCat extends Model{
 	}
 	
 	public function getCount(){
-		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}blog_cat";
-		$rs = $this->db->getOne($sql);
+		$rs = $this->db->getOne($this->table, 'COUNT(1) C');
 		return isset($rs['C']) ? $rs['C'] : 0;
 	}
 	
@@ -29,20 +30,17 @@ class ModelCat extends Model{
 	}
 	
 	public function checkCatExistsByName($name){
-		$sql = "select COUNT(1) C from {$this->dbPrefix}blog_cat where name=?";
-		$rs = $this->db->getOne($sql, array($name));
+		$rs = $this->db->getOne($this->table, 'COUNT(1) C', 'name=?', array($name));
 		return isset($rs['C']) && $rs['C'] > 0 ? true : false;
 	}
 	
 	public function checkCatExistsById($id){
-		$sql = "select COUNT(1) C from {$this->dbPrefix}blog_cat where id=?";
-		$rs = $this->db->getOne($sql, array($id));
+		$rs = $this->db->getOne($this->table, 'COUNT(1) C', 'id=?', array($id));
 		return isset($rs['C']) && $rs['C'] > 0 ? true : false;
 	}
 	
 	public function checkCatExistsByIdName($id, $name){
-		$sql = "select COUNT(1) C from {$this->dbPrefix}blog_cat where id!=? and name=?";
-		$rs = $this->db->getOne($sql, array($id, $name));
+		$rs = $this->db->getOne($this->table, 'COUNT(1) C', 'id!=? and name=?', array($id, $name));
 		return isset($rs['C']) && $rs['C'] > 0 ? true : false;
 	}
 }

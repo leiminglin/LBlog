@@ -1,6 +1,8 @@
 <?php
 class ModelArchivesStatistic extends Model{
 
+	public $table_name = 'blog_archives_statistic';
+
 	public function addViewTimes($aid){
 		if( $this->checkExists($aid) ){
 			$sql = "UPDATE {$this->dbPrefix}blog_archives_statistic SET viewtimes = viewtimes+1 WHERE aid ='{$aid}'";
@@ -20,8 +22,7 @@ class ModelArchivesStatistic extends Model{
 	}
 	
 	public function checkExists( $aid ){
-		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}blog_archives_statistic where aid = '{$aid}'";
-		$count = $this->db->getOne($sql);
+		$count = $this->db->getOne($this->table, 'COUNT(1) C', 'aid=?', array($aid));
 		if( $count['C'] > 0 ){
 			return true;
 		}

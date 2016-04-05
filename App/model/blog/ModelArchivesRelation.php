@@ -1,10 +1,10 @@
 <?php
 class ModelArchivesRelation extends Model{
-	
+
+	public $table_name = 'blog_archives_relation';
+
 	public function checkRelationExists($aid, $aid2){
-		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}blog_archives_relation"
-		." WHERE (aid='{$aid}' AND relation_aid='{$aid2}') OR (aid='{$aid2}' AND relation_aid='{$aid}') ";
-		$rs = $this->db->getOne($sql);
+		$rs = $this->db->getOne($this->table, 'COUNT(1) C', '(aid=? AND relation_aid=?) OR (aid=? AND relation_aid=?)', array($aid, $aid2, $aid, $aid2));
 		if( $rs['C'] > 0 ){
 			return true;
 		}

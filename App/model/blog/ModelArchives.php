@@ -1,5 +1,7 @@
 <?php
 class ModelArchives extends Model{
+
+	public $table_name = 'blog_archives';
 	
 	public function getArticles($begin=0, $count=5, $is_active = 'Y'){
 		$where = '';
@@ -53,12 +55,12 @@ class ModelArchives extends Model{
 	
 	public function getCount($is_active='Y'){
 		$active_sql = '';
+		$params = array();
 		if($is_active){
-			$active_sql = "AND is_active='".$is_active."'";
+			$active_sql = 'is_active=?';
+			$params = array_merge($params, array($is_active));
 		}
-		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}blog_archives"
-		." WHERE 1=1 $active_sql";
-		$c = $this->db->getOne($sql);
+		$c = $this->db->getOne($this->table, 'COUNT(1) C', $active_sql, $params);
 		return $c['C'];
 	}
 	
