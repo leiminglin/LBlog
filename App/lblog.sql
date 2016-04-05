@@ -173,7 +173,7 @@ CREATE TABLE `lblog_permission_role` (
 
 
 DROP TABLE IF EXISTS `lblog_lang_en_US`;
-CREATE TABLE `lblog_lang_en` (
+CREATE TABLE `lblog_lang_en_US` (
   `id` int(11) NOT NULL auto_increment,
   `token` varchar(150) NOT NULL,
   `content` text NOT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE `lblog_lang_en` (
 
 
 DROP TABLE IF EXISTS `lblog_lang_zh_CN`;
-CREATE TABLE `lblog_lang_en` (
+CREATE TABLE `lblog_lang_zh_CN` (
   `id` int(11) NOT NULL auto_increment,
   `token` varchar(150) NOT NULL,
   `content` text NOT NULL,

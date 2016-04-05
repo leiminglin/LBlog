@@ -293,8 +293,7 @@ lml.loadJs.competeLoad([
 			if(o.flag){
 				set_account(o.getAttribute('data-id'), roles.val());
 			}else{
-				console.log(roles);
-				td.html(roles.toString());
+				td.html(roles.removeClass('hidden').prop('outerHTML'));
 				$(o).html('Save');
 				o.flag = 1;
 			}

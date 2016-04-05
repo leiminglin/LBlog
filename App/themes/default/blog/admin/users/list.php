@@ -1,7 +1,8 @@
 
 <select class="hidden roles_select">
 <?php foreach ($roles as $k=>$v){?>
-<option value="<?php echo arr_get($v, 'id');?>"><?php echo arr_get($v, 'role_name');?></option>
+<option value=""></option>
+<option value="<?php echo $k?>"><?php echo $v?></option>
 <?php }?>
 </select>
 
@@ -26,7 +27,7 @@
 <td><?php echo $role_name;?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
-<?php if(!$role_name){?>
+<?php if($v['id'] != ADMIN_ACCOUNT_ID){?>
 <a href="javascript:void(0)" data-action="lblog_admin_users_edit" data-id="<?php echo $v['id'];?>">Edit</a>
 <?php }?>
 </td>
