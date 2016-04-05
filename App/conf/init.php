@@ -21,6 +21,7 @@ $domain = array(
 defined('DEFAULT_THEME_NAME')||define('DEFAULT_THEME_NAME', get_theme());
 defined('LANG_ZH_CN')||define('LANG_ZH_CN', 'zh_CN');
 defined('LANG_EN_US')||define('LANG_EN_US', 'en_US');
+defined('DEFAULT_LANG')||define('DEFAULT_LANG', get_lang());
 defined('ADMIN_ACCOUNT_ID')||define('ADMIN_ACCOUNT_ID', 1);
 
 

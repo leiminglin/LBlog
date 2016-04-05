@@ -23,7 +23,7 @@ interface MysqlPdoInterface{
 
 	public function insert($table, $arrData);
 
-	public function update($table, $arrData, $where = '');
+	public function update($table, $arrData, $where = '', $wparams=array());
 
 	public function delete($table, $where='', $params=array());
 

@@ -103,8 +103,12 @@ function get_settings_page(){
 	});
 }
 
-function get_users_page(){
+function get_users_page(o){
 	var path = users_path;
+	if(o.getAttribute('data-id')){
+		path += '/'+o.getAttribute('data-id');
+	}
+
 	$.get(path, function(rs){
 		create_tab('User', rs);
 	});
@@ -132,10 +136,12 @@ function save_role(name, id){
 	});
 }
 
-function set_account(id, o){
-	var path = users_set_account_path+'/'+id;
-	$.post(path, function(rs){
-		create_tab('Account'+id, rs);
+function set_account(id, rid){
+	var path = users_set_account_path+'/'+id+'/'+rid;
+	$.post(path, {"userid":id, "roleid":rid},function(rs){
+		show_info(rs);
+		var x = $('.tabs_content').children(':visible').find('a.current').html();
+		get_users_page(x);
 	});
 }
 

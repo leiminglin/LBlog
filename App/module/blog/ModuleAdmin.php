@@ -382,6 +382,14 @@ class ModuleAdmin extends LmlBlog{
 				$this->display('', '/list.php');
 				break;
 			case 'set_account':
+				$uid = (int)$_POST['userid'];
+				$rid = (int)$_POST['roleid'];
+				if($uid && $rid){
+
+				}
+
+
+
 				$uid = 1;
 				$matches = route_match('[\w]+\/(\d+)');
 				if (isset($matches[1]) && $matches[1] > 0) {
@@ -389,9 +397,10 @@ class ModuleAdmin extends LmlBlog{
 				}else{
 					return;
 				}
+				echo 'test ok';
 				$user = $mUser->find($uid);
 				$this->assign('user', $user);
-				$this->display('', '/set_account.php');
+				//$this->display('', '/set_account.php');
 				break;
 		}
 	}
