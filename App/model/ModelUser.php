@@ -68,8 +68,7 @@ class ModelUser extends Model{
 	}
 	
 	public function getCount(){
-		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}user";
-		$rs = $this->db->getOne($sql);
+		$rs = $this->db->getOne($this->dbPrefix.'user', 'COUNT(1) C');
 		return isset($rs['C']) ? $rs['C'] : 0;
 	}
 	
