@@ -51,7 +51,7 @@ class ModuleUser extends LmlBase{
 		);
 		$mUser->addLoginLog($arrsql);
 		$expire_time = time()+86400*30;
-		setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN);
+		setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 		header('HTTP/1.1 302 Moved Temporarily');
 		header('Status:302 Moved Temporarily');
 		header('Location:'.$_SESSION['backurl']);
@@ -120,7 +120,7 @@ class ModuleUser extends LmlBase{
 			);
 			$mUser->addLoginLog($arrsql);
 			$expire_time = time()+86400*30;
-			setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN);
+			setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 			header('HTTP/1.1 302 Moved Temporarily');
 			header('Status:302 Moved Temporarily');
 			header('Location:'.$_SESSION['backurl']);

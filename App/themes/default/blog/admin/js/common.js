@@ -91,6 +91,20 @@ function modify_tab_title(origin_title, new_title){
 	$(tags_content).children('div[data-tab='+origin_title+']').attr({"data-tab":new_title});
 }
 
+function get(u,c){
+	$.ajax({
+		"method":"GET",
+		"url":u,
+	}).done(c);
+}
+
+function post(u,d,c){
+	$.ajax({
+		"method":"POST",
+		"url":u,
+		"data":d
+	}).done(c);
+}
 
 
 

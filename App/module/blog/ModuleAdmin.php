@@ -50,7 +50,7 @@ class ModuleAdmin extends LmlBlog{
 			$mUser = new ModelUser();
 			if( ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
 				$expire_time = time()+86400*30;
-				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN);
+				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				header("Location:".WEB_APP_PATH."admin");
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');

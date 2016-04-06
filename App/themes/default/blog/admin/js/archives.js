@@ -19,7 +19,7 @@ function get_list_archives_page(pid){
 	if(pid){
 		path += '/'+pid;
 	}
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab('Archive', rs);
 	});
 }
@@ -30,7 +30,7 @@ function get_post_archives_page(id){
 		path += '/'+id;
 		title = '编辑-'+id;
 	}
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab(title, rs);
 	});
 }
@@ -40,14 +40,14 @@ function get_relation_archives_list_page(pid){
 	if(pid){
 		path += '/'+pid;
 	}
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab('Relation', rs);
 	});
 }
 
 function remove_relation_archives(o){
 	var path = archives_relation_remove_path;
-	$.post(path, {'relation_ids':o.getAttribute('data-id')}, function(rs){
+	post(path, {'relation_ids':o.getAttribute('data-id')}, function(rs){
 		show_info(rs);
 		$(o).addClass('hidden');
 		$(o).siblings('a').removeClass('hidden');
@@ -56,7 +56,7 @@ function remove_relation_archives(o){
 
 function set_relation_archives(o){
 	var path = archives_relation_set_path;
-	$.post(path, {'relation_ids':o.previousSibling.value}, function(rs){
+	post(path, {'relation_ids':o.previousSibling.value}, function(rs){
 		show_info(rs);
 		var x = $('.tabs_content').children(':visible').find('a.current').html();
 		get_relation_archives_list_page(x);
@@ -68,7 +68,7 @@ function get_cats_list_page(o){
 	if(o){
 		path += '/'+o;
 	}
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab('Cat', rs);
 	});
 }
@@ -79,7 +79,7 @@ function get_statistics_list_page(o){
 		path += '/'+o.getAttribute('data-id');
 	}
 
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab('Statistic', rs);
 	});
 }
@@ -89,7 +89,7 @@ function save_cat(name, id){
 	if(id){
 		path +='/'+id;
 	}
-	$.post(path, {'name':name}, function(rs){
+	post(path, {'name':name}, function(rs){
 		show_info(rs);
 		var x = $('.tabs_content').children(':visible').find('a.current').html();
 		get_cats_list_page(x);
@@ -98,7 +98,7 @@ function save_cat(name, id){
 
 function get_settings_page(){
 	var path = settings_path;
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab('Setting', rs);
 	});
 }
@@ -109,7 +109,7 @@ function get_users_page(o){
 		path += '/'+o;
 	}
 
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab('User', rs);
 	});
 }
@@ -119,7 +119,7 @@ function get_roles_page(o){
 	if(o){
 		path += '/'+o;
 	}
-	$.get(path, function(rs){
+	get(path, function(rs){
 		create_tab('Role', rs);
 	});
 }
@@ -129,7 +129,7 @@ function save_role(name, id){
 	if(id){
 		path +='/'+id;
 	}
-	$.post(path, {'name':name}, function(rs){
+	post(path, {'name':name}, function(rs){
 		show_info(rs);
 		var x = $('.tabs_content').children(':visible').find('a.current').html();
 		get_roles_page(x);
@@ -138,7 +138,7 @@ function save_role(name, id){
 
 function set_account(id, rid){
 	var path = users_set_account_path+'/'+id+'/'+rid;
-	$.post(path, {"userid":id, "roleid":rid},function(rs){
+	post(path, {"userid":id, "roleid":rid}, function(rs){
 		show_info(rs);
 		var x = $('.tabs_content').children(':visible').find('a.current').html();
 		get_users_page(x);
@@ -320,7 +320,7 @@ lml.loadJs.competeLoad([
 	$('#result').delegate("input[type=button]", "click", function(){
 		var _this = this;
 		this.disabled = true;
-		$.post($(this.form).attr('action'), $(this.form).serialize(), function(rs){
+		post($(this.form).attr('action'), $(this.form).serialize(), function(rs){
 			if(_this.getAttribute('data-need-refresh')==1){
 				$('.tabs_content').children(':visible').html(rs);
 			}else{
@@ -339,7 +339,12 @@ lml.loadJs.competeLoad([
 			}
 		}
 	});
-	
+
+	$.ajaxSetup({global:true});
+	$(document).ajaxError(function(event, jqxhr, settings, thrownError){
+		console.log(event, jqxhr, settings, thrownError);
+	});
+
 });
 
 
