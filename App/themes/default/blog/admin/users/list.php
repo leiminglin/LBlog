@@ -1,7 +1,7 @@
 
 <select class="hidden roles_select">
+<option value="0">Please Select</option>
 <?php foreach ($roles as $k=>$v){?>
-<option value=""></option>
 <option value="<?php echo $k?>"><?php echo $v?></option>
 <?php }?>
 </select>

@@ -105,8 +105,8 @@ function get_settings_page(){
 
 function get_users_page(o){
 	var path = users_path;
-	if(o.getAttribute('data-id')){
-		path += '/'+o.getAttribute('data-id');
+	if(o){
+		path += '/'+o;
 	}
 
 	$.get(path, function(rs){
@@ -272,7 +272,7 @@ lml.loadJs.competeLoad([
 			get_settings_page(o);
 		},
 		'lblog_admin_users_page':function(o){
-			get_users_page(o);
+			get_users_page();
 		},
 		'lblog_admin_roles_page':function(o){
 			if(o.getAttribute('data-id')){
@@ -295,12 +295,13 @@ lml.loadJs.competeLoad([
 			}
 		},
 		'lblog_admin_users_edit':function(o){
-			var td = $(o).parent().prev().prev(), roles=$('select.roles_select').clone();
+			var td = $(o).parent().prev().prev(),role=td.html(),roles=$('select.roles_select').clone();
 			if(o.flag){
-				set_account(o.getAttribute('data-id'), roles.val());
+				set_account(o.getAttribute('data-id'), $('select', td).val());
 			}else{
 				td.html(roles.removeClass('hidden').prop('outerHTML'));
 				$(o).html('Save');
+				$("select option:contains('"+role+"')", td).attr("selected",true);
 				o.flag = 1;
 			}
 		}

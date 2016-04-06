@@ -6,7 +6,27 @@ class ModelAccount extends Model{
 	public function checkIsAdmin($userid){
 		$sql = "SELECT * FROM {$this->dbPrefix}blog_account WHERE userid='".$userid."'";
 		$rs = $this->db->getOne($sql);
-		if(isset($rs['roleid']) && $rs['roleid'] == 1){
+		if(isset($rs['roleid']) && $rs['roleid']){
+			return true;
+		}
+		return false;
+	}
+	
+	public function addAccount($uid, $rid){
+		if(!$this->checkExists($uid)){
+			return $this->db->insert($this->table, array(
+					'userid' => $uid,
+					'roleid' => $rid,
+			));
+		}else{
+			return $this->db->update($this->table, array('roleid' => $rid), 
+					'userid=:userid', array('userid'=>$uid));
+		}
+	}
+	
+	public function checkExists($uid){
+		$rs = $this->db->select($this->table, '*', 'userid=?', array($uid));
+		if(count($rs) > 0){
 			return true;
 		}
 		return false;

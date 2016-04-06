@@ -384,23 +384,11 @@ class ModuleAdmin extends LmlBlog{
 			case 'set_account':
 				$uid = (int)$_POST['userid'];
 				$rid = (int)$_POST['roleid'];
-				if($uid && $rid){
-
+				if($uid){
+					$mAccount = new ModelAccount();
+					$mAccount->addAccount($uid, $rid);
+					echo 'Save Successfully!';
 				}
-
-
-
-				$uid = 1;
-				$matches = route_match('[\w]+\/(\d+)');
-				if (isset($matches[1]) && $matches[1] > 0) {
-					$uid = $matches[1];
-				}else{
-					return;
-				}
-				echo 'test ok';
-				$user = $mUser->find($uid);
-				$this->assign('user', $user);
-				//$this->display('', '/set_account.php');
 				break;
 		}
 	}
