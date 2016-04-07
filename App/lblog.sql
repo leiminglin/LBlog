@@ -132,18 +132,18 @@ CREATE TABLE `lblog_user` (
 INSERT INTO `lblog_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', '老大', null, unix_timestamp());
 
 
-DROP TABLE IF EXISTS `lblog_user_role`;
-CREATE TABLE `lblog_user_role` (
+DROP TABLE IF EXISTS `lblog_blog_user_role`;
+CREATE TABLE `lblog_blog_user_role` (
   `id` int(11) NOT NULL auto_increment,
   `role_name` varchar(100) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `lblog_user_role` VALUES ('1', 'Administrator');
+INSERT INTO `lblog_blog_user_role` VALUES ('1', 'Administrator');
 
 
-DROP TABLE IF EXISTS `lblog_permission`;
-CREATE TABLE `lblog_permission` (
+DROP TABLE IF EXISTS `lblog_blog_permission`;
+CREATE TABLE `lblog_blog_permission` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(100) NOT NULL,
   `uri_regexp` varchar(100) NOT NULL,
@@ -151,9 +151,14 @@ CREATE TABLE `lblog_permission` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/list/', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/post/', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', unix_timestamp());
 
-DROP TABLE IF EXISTS `lblog_permission_user`;
-CREATE TABLE `lblog_permission_user` (
+
+DROP TABLE IF EXISTS `lblog_blog_permission_user`;
+CREATE TABLE `lblog_blog_permission_user` (
   `id` int(11) NOT NULL auto_increment,
   `userid` int(11) NOT NULL,
   `permissionid` int(11) NOT NULL,
@@ -162,8 +167,8 @@ CREATE TABLE `lblog_permission_user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `lblog_permission_role`;
-CREATE TABLE `lblog_permission_role` (
+DROP TABLE IF EXISTS `lblog_blog_permission_role`;
+CREATE TABLE `lblog_blog_permission_role` (
   `id` int(11) NOT NULL auto_increment,
   `roleid` int(11) NOT NULL,
   `permissionid` int(11) NOT NULL,

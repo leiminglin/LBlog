@@ -204,6 +204,12 @@ class ModuleUser extends LmlBase{
 			if( ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
 				$expire_time = time()+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
+				$arrsql = array(
+					'userid'=>$userid,
+					'from'=>null,
+					'createtime'=>time(),
+				);
+				$mUser->addLoginLog($arrsql);
 				header("Location:".WEB_PATH);
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
