@@ -72,5 +72,26 @@ class ModelUser extends Model{
 		$rs = $this->db->getOne($sql);
 		return isset($rs['C']) ? $rs['C'] : 0;
 	}
+	
+	public function register($email, $passwd){
+		if(!$this->checkEmailExists($email)){
+			$this->db->insert($this->table, array(
+				'email' => $email,
+				'passwd' => generate_passwd($passwd),
+				'nickname' => 'lblog_'.substr($email, 0, 4),
+				'createtime' => time(),
+			));
+			return $this->db->getLastId();
+		}
+		return false;
+	}
+	
+	public function checkEmailExists($email){
+		$rs = $this->db->select($this->table, 'id', 'email=?', array($email));
+		if(count($rs) > 0){
+			return true;
+		}
+		return false;
+	}
 
 }

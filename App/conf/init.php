@@ -152,3 +152,7 @@ function arr2mapping($arr, $f, $m=''){
 	}
 	return $retval;
 }
+
+function generate_passwd($passwd, $salt=''){
+	return md5(md5($passwd.$salt));
+}

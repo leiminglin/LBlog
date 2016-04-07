@@ -342,7 +342,10 @@ lml.loadJs.competeLoad([
 
 	$.ajaxSetup({global:true});
 	$(document).ajaxError(function(event, jqxhr, settings, thrownError){
-		console.log(event, jqxhr, settings, thrownError);
+		/*console.log(event, jqxhr, settings, thrownError);*/
+		if(jqxhr.status == 401){
+			window.location.reload();
+		}
 	});
 
 },function(){

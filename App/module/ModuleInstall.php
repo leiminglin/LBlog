@@ -141,7 +141,7 @@ class ModuleInstall extends LmlBase{
 			echo '</p><p>execute success!</p>';
 			$admin_data = array(
 					'email' => $email,
-					'passwd' => md5(md5($admin_passwd)),
+					'passwd' => generate_passwd($admin_passwd),
 					'createtime' => time()
 				);
 			$db->update($config['dbprefix'].'user', $admin_data, "id=1");

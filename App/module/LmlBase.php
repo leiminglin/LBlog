@@ -36,4 +36,20 @@ abstract class LmlBase{
 	public function __construct(){
 		
 	}
+	
+	public function hasLogin(){
+		if( !($userid = Tool::checkCookie()) ) {
+			return false;
+		}
+		return $userid;
+	}
+	
+	public function checkLogin(){
+		if(!$this->hasLogin()){
+			Tool::status(401);
+			echo json_encode(array('status'=>false, 'msg'=>'请登录！ '));
+			return false;
+		}
+		return true;
+	}
 }
