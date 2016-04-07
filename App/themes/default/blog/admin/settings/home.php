@@ -48,3 +48,12 @@ if(empty($site)){
 </tr>
 </table>
 </form>
+
+<div class="line"></div>
+
+<div>
+statistic code,
+
+QQ weibo config
+
+</div>

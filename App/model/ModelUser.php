@@ -1,7 +1,8 @@
 <?php
 class ModelUser extends Model{
-	
-	
+
+	public $table_name = 'user';
+
 	public function add($arr){
 		return $this->db->insert($this->dbPrefix.'user', $arr);
 	}

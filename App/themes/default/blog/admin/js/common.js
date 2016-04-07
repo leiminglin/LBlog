@@ -53,7 +53,8 @@ function on(o,e,c){
 
 function show_info(v, f, w, s){
 	var a = $("<div/>")
-	.attr({"style":"border:1px solid green;background:#fff;box-shadow:5px 3px 4px #ccc;z-index:10000;"
+	.attr({"style":"border:1px solid green;background:#fff;z-index:10000;-webkit-box-shadow:0 0 8px 10px #e9d9e9;"
+		+"-moz-box-shadow:0 0 8px 10px #e9d9e9;box-shadow:0 0 8px 10px #e9d9e9;"
 		+"position:fixed;_position:absolute;_bottom:auto;padding:5px;top:-42px;left:50%;text-align:center;line-height:30px;border-radius:5px;"})
 	.css({"opacity":.5})
 	.html(v),f=f||200,s=s||1000,w=w||1000;
@@ -90,6 +91,20 @@ function modify_tab_title(origin_title, new_title){
 	$(tags_content).children('div[data-tab='+origin_title+']').attr({"data-tab":new_title});
 }
 
+function get(u,c){
+	$.ajax({
+		"method":"GET",
+		"url":u,
+	}).done(c);
+}
+
+function post(u,d,c){
+	$.ajax({
+		"method":"POST",
+		"url":u,
+		"data":d
+	}).done(c);
+}
 
 
 

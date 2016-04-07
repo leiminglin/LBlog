@@ -21,6 +21,8 @@ $domain = array(
 defined('DEFAULT_THEME_NAME')||define('DEFAULT_THEME_NAME', get_theme());
 defined('LANG_ZH_CN')||define('LANG_ZH_CN', 'zh_CN');
 defined('LANG_EN_US')||define('LANG_EN_US', 'en_US');
+defined('DEFAULT_LANG')||define('DEFAULT_LANG', get_lang());
+defined('ADMIN_ACCOUNT_ID')||define('ADMIN_ACCOUNT_ID', 1);
 
 
 /**
@@ -123,6 +125,9 @@ function route_match($regexp){
 }
 
 function arr_get($arr, $k, $r=''){
+	if(!$k || !$arr){
+		return $r;
+	}
 	return isset($arr[$k]) ? $arr[$k] : $r;
 }
 
@@ -136,4 +141,14 @@ function lang($token, $data=array()){
 		$lang = array_merge($lang, $data);
 	}
 	return isset($lang[$token]) ? $lang[$token] : $token;
+}
+
+function arr2mapping($arr, $f, $m=''){
+	$retval = array();
+	foreach ($arr as $k=>$v){
+		if(isset($v[$f])){
+			$retval[$v[$f]] = arr_get($v, $m, $v);
+		}
+	}
+	return $retval;
 }

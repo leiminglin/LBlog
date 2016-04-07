@@ -3,19 +3,19 @@ class ModuleAdmin extends LmlBlog{
 	
 	private $mArchives;
 	public $conditions = array(
-		'postarticle' => 'checkLogin',
-		'editarticle' => 'checkLogin',
-		'backData' => 'checkLogin',
+		'postarticle' => 'checkPermission',
+		'editarticle' => 'checkPermission',
+		'backData' => 'checkPermission',
 
-		'addrelationarticle' => 'checkLogin',
-		'removerelationarticle' => 'checkLogin',
+		'addrelationarticle' => 'checkPermission',
+		'removerelationarticle' => 'checkPermission',
 
-		'archives' => 'checkLogin',
-		'cats' => 'checkLogin',
-		'statistics' => 'checkLogin',
-		'settings' => 'checkLogin',
-		'users' => 'checkLogin',
-		'roles' => 'checkLogin',
+		'archives' => 'checkPermission',
+		'cats' => 'checkPermission',
+		'statistics' => 'checkPermission',
+		'settings' => 'checkPermission',
+		'users' => 'checkPermission',
+		'roles' => 'checkPermission',
 	);
 	
 	public function __construct(){
@@ -50,7 +50,7 @@ class ModuleAdmin extends LmlBlog{
 			$mUser = new ModelUser();
 			if( ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
 				$expire_time = time()+86400*30;
-				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN);
+				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				header("Location:".WEB_APP_PATH."admin");
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
@@ -367,13 +367,28 @@ class ModuleAdmin extends LmlBlog{
 				if (isset($matches[1]) && $matches[1] > 1) {
 					$pid = $matches[1];
 				}
+				$mRole = new ModelRole();
+				$mAccount = new ModelAccount();
 				$rs = $mUser->getUsers(10*($pid-1), 10);
 				$count = $mUser->getCount();
 				$page = new Paging($count, $pid, 10);
 				$this->assign('rs', $rs);
+				$roles = arr2mapping($mRole->getAll(), 'id', 'role_name');
+				$this->assign('roles', $roles);
+				$accounts = arr2mapping($mAccount->getAll(), 'userid', 'roleid');
+				$this->assign('accounts', $accounts);
 				$this->assign('page', $page);
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
+				break;
+			case 'set_account':
+				$uid = (int)$_POST['userid'];
+				$rid = (int)$_POST['roleid'];
+				if($uid){
+					$mAccount = new ModelAccount();
+					$mAccount->addAccount($uid, $rid);
+					echo 'Save Successfully!';
+				}
 				break;
 		}
 	}
