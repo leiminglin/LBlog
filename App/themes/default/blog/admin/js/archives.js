@@ -345,6 +345,8 @@ lml.loadJs.competeLoad([
 		console.log(event, jqxhr, settings, thrownError);
 	});
 
+},function(){
+	$.noConflict();
 });
 
 
