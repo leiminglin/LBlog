@@ -168,6 +168,11 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'modify login page url settings', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'view users list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'users_role_operate', '/^(?:\\/index\\.php)?\\/admin\\/users\\/set_account/', 'operate users role', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_read_list', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/list/', 'view roles list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_add', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save$/', 'add new roles', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_modify', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save\\/\\d+/', 'modify posted roles', unix_timestamp());
 
 
 DROP TABLE IF EXISTS `lblog_blog_permission_user`;
