@@ -54,6 +54,8 @@ if(empty($site)){
 <div>
 statistic code,
 
-QQ weibo config
+QQ weibo config,
+
+timezone,
 
 </div>

@@ -157,6 +157,18 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_post', '/^(?
 INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', 'add new archives', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', 'modify posted archives', unix_timestamp());
 
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_read_list', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/list/', 'view cats list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_add', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save$/', 'add new cats', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_modify', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save\\/\\d+/', 'modify posted cats', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'statistics_read_list', '/^(?:\\/index\\.php)?\\/admin\\/statistics\\/list/', 'view statistics list page', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings/', 'view settings page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'modify seo settings', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'modify login page url settings', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'view users list page', unix_timestamp());
+
 
 DROP TABLE IF EXISTS `lblog_blog_permission_user`;
 CREATE TABLE `lblog_blog_permission_user` (
