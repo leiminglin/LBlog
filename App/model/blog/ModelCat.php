@@ -23,7 +23,7 @@ class ModelCat extends Model{
 	
 	public function modifyCat($id, $name){
 		if($this->checkCatExistsById($id) && !$this->checkCatExistsByIdName($id, $name) && strlen(trim($name)) > 0){
-			return $this->db->update("{$this->dbPrefix}blog_cat", array('name' => $name), 'id=?', array($id));
+			return $this->db->update("{$this->dbPrefix}blog_cat", array('name' => $name), 'id=:id', array('id'=>$id));
 		}
 		return false;
 	}
