@@ -145,16 +145,17 @@ INSERT INTO `lblog_blog_user_role` VALUES ('1', 'Administrator');
 DROP TABLE IF EXISTS `lblog_blog_permission`;
 CREATE TABLE `lblog_blog_permission` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) NOT NULL,
-  `uri_regexp` varchar(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `uri_regexp` varchar(1024) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `createtime` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/list/', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/post/', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_list', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/list/', 'view archives list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_post', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/post/', 'view archives post page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', 'add new archives', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', 'modify posted archives', unix_timestamp());
 
 
 DROP TABLE IF EXISTS `lblog_blog_permission_user`;
