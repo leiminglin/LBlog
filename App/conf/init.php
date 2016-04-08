@@ -156,3 +156,12 @@ function arr2mapping($arr, $f, $m=''){
 function generate_passwd($passwd, $salt=''){
 	return md5(md5($passwd.$salt));
 }
+
+function q($a){
+	static $q = array();
+	if(arr_get($q,$a)){
+		return $q[$a];
+	}
+	return $q[$a] = new ModelQ($a);
+}
+

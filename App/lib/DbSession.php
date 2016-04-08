@@ -9,8 +9,7 @@ class DbSession
 	
 	function open($savePath, $sessionName){
 		if(!$this->link){
-			global $dbconfig;
-			$this->dbconfig = $dbconfig;
+			$this->dbconfig = &$GLOBALS['dbconfig'];
 			$this->link = db();
 			
 			$table_name = $this->dbconfig['dbprefix'].'session';

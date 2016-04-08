@@ -7,10 +7,9 @@ abstract class Model{
 	public $table;
 
 	public function __construct(){
-		$dbconfig = $GLOBALS['dbconfig'];
-		$this->dbconfig = $dbconfig;
-		$this->db = db();
-		$this->dbPrefix = $dbconfig['dbprefix'];
+		$this->dbconfig = &$GLOBALS['dbconfig'];
+		$this->db = db($this->dbconfig);
+		$this->dbPrefix = $this->dbconfig['dbprefix'];
 		if(property_exists($this, 'table_name')){
 			$this->table = $this->dbPrefix.$this->table_name;
 		}
