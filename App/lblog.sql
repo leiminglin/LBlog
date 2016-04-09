@@ -179,6 +179,12 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_read_list', '/^(?:\\
 INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_add', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save$/', 'add new roles', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_modify', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save\\/\\d+/', 'modify posted roles', 'Y', unix_timestamp());
 
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_read_list', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/list/', 'view permissions list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/user\\/\\d+/', 'view user permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_role_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/role\\/\\d+/', 'view role permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting_save\\/user\\/\\d+/', 'modify user permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_role_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting_save\\/role\\/\\d+/', 'modify role permissions', 'Y', unix_timestamp());
+
 
 DROP TABLE IF EXISTS `lblog_blog_permission_user`;
 CREATE TABLE `lblog_blog_permission_user` (
