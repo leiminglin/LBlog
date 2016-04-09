@@ -186,7 +186,8 @@ CREATE TABLE `lblog_blog_permission_user` (
   `userid` int(11) NOT NULL,
   `permissionid` int(11) NOT NULL,
   `createtime` bigint(20) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `userid` (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -196,7 +197,8 @@ CREATE TABLE `lblog_blog_permission_role` (
   `roleid` int(11) NOT NULL,
   `permissionid` int(11) NOT NULL,
   `createtime` bigint(20) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `roleid` (`roleid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
