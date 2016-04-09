@@ -538,6 +538,62 @@ class ModuleAdmin extends LmlBlog{
 					}
 				}
 				break;
+			case 'setting':
+				$matches = route_match('[\w]+\/([\w]+)\/(\d+)');
+				if(!isset($matches[1]) || !isset($matches[2])){
+					return;
+				}
+				$type = $matches[1];
+				$rs = $m->getAll();
+				$this->assign('rs', $rs);
+
+				if($type == 'user'){
+					$mu = q('blog_permission_user');
+					$rsr = $mu->select('*', 'userid=?', array($matches[2]));
+					$this->assign('rsr', arr_get_index($rsr, 'permissionid'));
+					$this->assign('id', $matches[2]);
+					$this->assign('type', $type);
+					$this->display('', '/setting.php');
+				}elseif($type == 'role'){
+					$mr = q('blog_permission_role');
+					$rsr = $mr->select('*', 'roleid=?', array($matches[2]));
+					$this->assign('rsr', arr_get_index($rsr, 'permissionid'));
+					$this->assign('id', $matches[2]);
+					$this->assign('type', $type);
+					$this->display('', '/setting.php');
+				}
+				break;
+			case 'setting_save':
+				$matches = route_match('[\w]+\/([\w]+)\/(\d+)');
+				if(!isset($matches[1]) || !isset($matches[2])){
+					return;
+				}
+				$type = $matches[1];
+				$id = $matches[2];
+				$permissionids = $_POST['permissionids'];
+				
+				if($type == 'user'){
+					$mu = q('blog_permission_user');
+					$mu->del('userid=?', array($id));
+					foreach ($permissionids as $v){
+						$mu->add(array(
+							'userid' => $id,
+							'permissionid' => (int)$v,
+							'createtime' => time(),
+						));
+					}
+				}elseif($type == 'role'){
+					$mr = q('blog_permission_role');
+					$mr->del('roleid=?', array($id));
+					foreach ($permissionids as $v){
+						$mr->add(array(
+							'roleid' => $id,
+							'permissionid' => (int)$v,
+							'createtime' => time(),
+						));
+					}
+				}
+				break;
 		}
 	}
 
