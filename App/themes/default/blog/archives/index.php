@@ -10,7 +10,7 @@ foreach ($cats as $t){
 }
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/meta.php';
 ?>
-<title><?php echo $title,' - ',arr_get($current_cat, 'name')?> - <?php echo SITE_NAME?></title>
+<title><?php echo $title,' - ',arr_get($current_cat, 'name')?> - <?php ehtml(SITE_NAME);?></title>
 <?php
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 ?>
@@ -21,14 +21,14 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';
 
 <div class="lbox litem">
 <h2>
-<a href="<?php echo Tool::getArticleUrl($id, $article['url']);?>" name="title"><?php echo Tool::htmlspecialcharsDeep($article['title'])?></a>
+<a href="<?php echo Tool::getArticleUrl($id, $article['url']);?>" name="title"><?php ehtml($article['title']);?></a>
 <a href="<?php echo WEB_APP_PATH?>cat/<?php echo arr_get($current_cat, 'id')?>">
 <span class="tag">
 <span class="arrow"></span>
-<?php echo arr_get($current_cat, 'name')?>
+<?php ehtml(arr_get($current_cat, 'name'))?>
 </span></a>
 </h2>
-<div class="author"><span><a><?php echo $article['nickname']?></a> 发表于<a><?php echo date("Y-m-d H:i", $article['createtime'])?></a></span></div>
+<div class="author"><span><a><?php ehtml($article['nickname'])?></a> 发表于<a><?php echo date("Y-m-d H:i", $article['createtime'])?></a></span></div>
 <div class="essay">
 <div class="intro">
 <?php echo Tool::getOriginLinks(Tool::getArticleUrl($id, $article['url']))?>
@@ -87,7 +87,7 @@ if( $relevance ){
 <tr>
 <?php foreach ($relevance as $k=>$v){?>
 <?php if( $k > 0 && $k % 2 == 0 ) { echo '</tr><tr>';} ?>
-<td><a href="<?php echo Tool::getArticleUrl($v['aid'], $v['url']);?>" target="_blank"><?php $article = $this->mArchives->getArticleTitleById($v['aid']);echo $article['title']?></a></td>
+<td><a href="<?php echo Tool::getArticleUrl($v['aid'], $v['url']);?>" target="_blank"><?php $article = $this->mArchives->getArticleTitleById($v['aid']);ehtml($article['title'])?></a></td>
 <?php }?>
 </tr>
 </table>
@@ -100,7 +100,7 @@ if( $relevance ){
 <tr>
 <?php foreach ($relations as $k=>$v){?>
 <?php if( $k > 0 && $k % 2 == 0 ) { echo '</tr><tr>';} ?>
-<td><a href="<?php echo Tool::getArticleUrl($v['id'], $v['url']);?>" target="_blank"><?php echo $v['title']?></a></td>
+<td><a href="<?php echo Tool::getArticleUrl($v['id'], $v['url']);?>" target="_blank"><?php ehtml($v['title'])?></a></td>
 <?php }?>
 </tr>
 </table>
@@ -118,10 +118,10 @@ if( $relevance ){
 <?php if($comments){foreach ($comments as $k=>$v){?>
 <div class="commentitem">
 <div class="avatar"><img osrc="<?php echo $v['userinfo']['avatar']?>" width="100" height="100" alt="
-<?php echo $v['nickname']?>" title="<?php echo $v['nickname']?>"/></div>
+<?php ehtml($v['nickname'])?>" title="<?php ehtml($v['nickname'])?>"/></div>
 <div class="itext">
 <div>
-<a name="viewcomment_<?php echo $v['id']?>"><?php echo $v['nickname']?></a>:
+<a name="viewcomment_<?php echo $v['id']?>"><?php ehtml($v['nickname'])?></a>:
 </div>
 <?php echo $v['content']?></div>
 <div class="clear"></div>
@@ -209,10 +209,10 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/bottom.php';
 <div class="loginpage">
 <div class="loginheader">
 <div class="loginlogo">
-<img src="<?php echo Tool::getCDNUrl('lbloglogo100.png')?>" width="30" height="30" alt="<?php echo SITE_NAME?>" title="<?php echo SITE_NAME?>"/>
+<img src="<?php echo Tool::getCDNUrl('lbloglogo100.png')?>" width="30" height="30" alt="<?php ehtml(SITE_NAME)?>" title="<?php ehtml(SITE_NAME)?>"/>
 </div>
 <div class="close"></div>
-<span>登录<?php echo SITE_NAME?></span>
+<span>登录<?php ehtml(SITE_NAME)?></span>
 </div>
 </div>
  -->

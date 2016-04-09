@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>注册 - <?php echo SITE_NAME?></title>
+<title>注册 - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
 	font-family:Microsoft Yahei;
@@ -37,7 +37,7 @@ table{
 <form action="<?php echo WEB_APP_PATH?>user/register" method="post">
 <table>
 <tr>
-<td colspan="2" style="background:#f7f7f7;"><?php echo SITE_NAME;?></td>
+<td colspan="2" style="background:#f7f7f7;"><?php ehtml(SITE_NAME);?></td>
 </tr>
 <tr>
 <td colspan="2"><?php 

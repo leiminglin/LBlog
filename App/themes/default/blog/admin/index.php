@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>后台管理 - <?php echo SITE_NAME?></title>
+<title>后台管理 - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
 	font-family:Microsoft Yahei;
@@ -35,6 +35,9 @@ a{
 }
 a:hover{
 	color:#ff6f3d;
+}
+textarea{
+	font-size:14px;
 }
 .sitewrap{
 	min-width:960px;
@@ -151,10 +154,10 @@ window.onload=function(){
 
 
 <div class="top">
-	<span class="title"><?php echo SITE_NAME?></span>
+	<span class="title"><?php ehtml(SITE_NAME)?></span>
 	<span class="user">
 	<?php if( ($nickname = Tool::getUserNickName())==true ){?>
-您好，<?php echo $nickname;?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>">退出</a>
+您好，<?php ehtml($nickname);?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>">退出</a>
 <?php }?>
 	</span>
 	<div class="clear"></div>

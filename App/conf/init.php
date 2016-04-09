@@ -165,3 +165,7 @@ function q($a){
 	return $q[$a] = new ModelQ($a);
 }
 
+function ehtml($v){
+	echo htmlspecialchars($v);
+}
+

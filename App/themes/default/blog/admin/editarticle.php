@@ -8,7 +8,7 @@ if(empty($article)){
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>后台管理 - <?php echo SITE_NAME?></title>
+<title>后台管理 - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
 	font-family:Microsoft Yahei;
@@ -37,7 +37,7 @@ if(isset($save_status)){
 <table>
 <tr>
 <td>Title：</td>
-<td><input name="title" type="text" value="<?php echo isset($article['title'])?$article['title']:'';?>"/></td>
+<td><input name="title" type="text" value="<?php ehtml(isset($article['title'])?$article['title']:'');?>"/></td>
 </tr>
 <tr>
 <td>Catid：</td>

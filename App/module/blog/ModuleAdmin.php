@@ -16,6 +16,7 @@ class ModuleAdmin extends LmlBlog{
 		'settings' => 'checkPermission',
 		'users' => 'checkPermission',
 		'roles' => 'checkPermission',
+		'permissions' => 'checkPermission',
 	);
 	
 	public function __construct(){
@@ -342,6 +343,10 @@ class ModuleAdmin extends LmlBlog{
 						echo 'must begin with login';
 						return;
 					}
+					if(!preg_match('/^[a-zA-Z0-9_]+$/i', $_POST['login_page_uri'])){
+						echo 'must be [a-zA-Z0-9_] format';
+						return;
+					}
 					if($mConfig->checkConfigExists('LOGIN_PAGE_URI')){
 						$mConfig->updateConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
 					}else{
@@ -429,6 +434,46 @@ class ModuleAdmin extends LmlBlog{
 				}else{
 					$id = $matches[1];
 					if($m->update(array('role_name'=>$_POST['name']), "id=$id")){
+						echo 'Modify Successfully!';
+					}else{
+						echo 'Modify Failed!';
+					}
+				}
+				break;
+		}
+	}
+	
+	public function permissions(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1, 'list');
+		$m = q('blog_permission');
+		switch ($action){
+			case 'list':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $m->getList(10*($pid-1), 10);
+				$count = $m->getCount();
+				$page = new Paging($count, $pid, 10);
+		
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					if($m->add($_POST['name'])){
+						echo 'Add Successfully!';
+					}else{
+						echo 'Add Failed!';
+					}
+				}else{
+					$id = $matches[1];
+					if($m->update()){
 						echo 'Modify Successfully!';
 					}else{
 						echo 'Modify Failed!';

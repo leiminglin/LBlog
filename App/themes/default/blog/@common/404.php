@@ -3,7 +3,7 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/meta.php';
 $mCat = new ModelCat();
 $cats = $mCat->getCats();
 ?>
-<title>页面未找到 - <?php echo SITE_NAME?></title>
+<title>页面未找到 - <?php ehtml(SITE_NAME);?></title>
 <style>
 .center{
 	text-align:center;
