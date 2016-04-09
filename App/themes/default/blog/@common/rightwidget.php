@@ -19,7 +19,7 @@ $allTop = $mArticleStatistic->getArticleReadRank();
 <h3 class="widget-title">近期文章</h3>
 <ul>
 <?php foreach ($recent_articles as $t){?>
-<li><a href="<?php echo Tool::getArticleUrl($t['id'], $t['url']);?>"><?php echo $t['title']?></a></li>
+<li><a href="<?php echo Tool::getArticleUrl($t['id'], $t['url']);?>"><?php ehtml($t['title'])?></a></li>
 <?php }?>
 </ul>
 <?php }?>
@@ -34,8 +34,8 @@ $allTop = $mArticleStatistic->getArticleReadRank();
 <h3 class="widget-title">近期评论</h3>
 <ul class="recent_comments">
 <?php foreach ($recent_comments as $t){?>
-<li><a><?php echo $t['nickname'];?></a>
-《<a href="<?php echo Tool::getArticleUrl($t['aid'], $t['url']);?>#viewcomment_<?php echo $t['id']?>" target="_blank"><?php echo $t['title']?></a>》:
+<li><a><?php ehtml($t['nickname']);?></a>
+《<a href="<?php echo Tool::getArticleUrl($t['aid'], $t['url']);?>#viewcomment_<?php echo $t['id']?>" target="_blank"><?php ehtml($t['title']);?></a>》:
 <?php echo mb_substr(preg_replace('/<[^>]+>/i', '', $t['content']), 0, 20, 'utf-8');?>
 </li>
 <?php }?>
@@ -54,7 +54,7 @@ foreach ($todayTop as $k=>$t){
 		$id = $matches[1];
 		$article = $mArchives->getArticleTitleById($id);
 ?>
-<li><a href="<?php echo Tool::getArticleUrl($id, $article['url']);?>"><?php echo $article['title']?></a></li>
+<li><a href="<?php echo Tool::getArticleUrl($id, $article['url']);?>"><?php ehtml($article['title']);?></a></li>
 <?php 
 if( $i > 8 ){
 	break;
@@ -71,7 +71,7 @@ $i++;
 <?php foreach ($allTop as $t){
 	$t['article'] = $mArchives->getArticleTitleById($t['aid']);
 ?>
-<li><a href="<?php echo Tool::getArticleUrl($t['article']['id'], $t['article']['url']);?>"><?php echo $t['article']['title']?></a></li>
+<li><a href="<?php echo Tool::getArticleUrl($t['article']['id'], $t['article']['url']);?>"><?php ehtml($t['article']['title']);?></a></li>
 <?php }?>
 </ul>
 <?php }?>

@@ -24,7 +24,7 @@ CREATE TABLE `lblog_blog_archives` (
   PRIMARY KEY  (`id`),
   KEY `userid` (`userid`),
   KEY `catid` (`catid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='博客文章表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Blog archives';
 
 INSERT INTO `lblog_blog_archives` VALUES ('1', '1', '1', '欢迎使用 LBLOG！', null, '<div class=\"intro\">\r\n\r\n<p>欢迎使用 LBLOG 开始您的博客之旅！</p>\r\n\r\n<p>LBlog 是一款基于 LMLPHP 和 LMLJS 框架的开源博客兼 CMS 系统，它拥有轻量级高性能特点和更加灵活的二次开发支持。系统拥有优秀的 SEO 支持；基于 QQ 和新浪微博的账户系统；独创的异步加载让网站跑的更快！</p>\r\n\r\n<p>使用 LBLOG 可以很方便的插入代码。</p>\r\n\r\n<pre class=\"code\">\r\njava：\r\nSystem.out.println(\'hello world!\');\r\n\r\nphp：\r\necho \'hello world!\';\r\n\r\njavascript：\r\ndocument.write(\'hello world!\');\r\n</pre>\r\n\r\n<p>使用 LBLOG 可以很方便的插入视频。</p>\r\n\r\n<textarea class=\"lazyHtml hidden\">\r\n<iframe height=300 width=\"90%\" src=\"http://player.youku.com/embed/XODUzNzcwMzg4\" frameborder=0 allowfullscreen></iframe>\r\n</textarea>\r\n\r\n<p>使用 LBLOG 可以很方便的插入图片。</p>\r\n\r\n<p>\r\n<img width=\"635\" height=\"476\" src=\"http://git.oschina.net/leiminglin/images/raw/master/2014/12/IMG_20141224_122726.jpg\" osrc-bak=\"https://raw.githubusercontent.com/leiminglin/images/master/2014/12/IMG_20141224_122726.jpg\" alt=\"世纪大道午后时光-LMLPHP后院\" title=\"世纪大道午后时光-LMLPHP后院\" />\r\n</p>\r\n\r\n<p>\r\n<img width=\"635\" height=\"847\" title=\"世纪大道午后时光-LMLPHP后院\" alt=\"世纪大道午后时光-LMLPHP后院\" osrc-bak=\"https://raw.githubusercontent.com/leiminglin/images/master/2014/12/IMG_20141224_123212.jpg\" src=\"http://git.oschina.net/leiminglin/images/raw/master/2014/12/IMG_20141224_123212.jpg\">\r\n</p>\r\n\r\n<p>\r\nLBlog 将在不断的完善中，在使用过程中发现任何问题，请反馈给我们，感谢您的支持！\r\n</p>\r\n\r\n\r\n</div>', unix_timestamp(), 'Y');
 
@@ -70,9 +70,9 @@ CREATE TABLE `lblog_blog_cat` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='博客分类表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Blog cats';
 
-INSERT INTO `lblog_blog_cat` VALUES ('1', '心情随笔');
+INSERT INTO `lblog_blog_cat` VALUES ('1', 'Mood essays');
 
 
 DROP TABLE IF EXISTS `lblog_blog_comment`;
@@ -129,31 +129,54 @@ CREATE TABLE `lblog_user` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `lblog_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', '老大', null, unix_timestamp());
+INSERT INTO `lblog_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', 'Administrator', null, unix_timestamp());
 
 
-DROP TABLE IF EXISTS `lblog_user_role`;
-CREATE TABLE `lblog_user_role` (
+DROP TABLE IF EXISTS `lblog_blog_user_role`;
+CREATE TABLE `lblog_blog_user_role` (
   `id` int(11) NOT NULL auto_increment,
   `role_name` varchar(100) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `lblog_user_role` VALUES ('1', 'Administrator');
+INSERT INTO `lblog_blog_user_role` VALUES ('1', 'Administrator');
 
 
-DROP TABLE IF EXISTS `lblog_permission`;
-CREATE TABLE `lblog_permission` (
+DROP TABLE IF EXISTS `lblog_blog_permission`;
+CREATE TABLE `lblog_blog_permission` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(100) NOT NULL,
-  `uri_regexp` varchar(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `uri_regexp` varchar(1024) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `createtime` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_list', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/list/', 'view archives list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_post', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/post/', 'view archives post page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', 'add new archives', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', 'modify posted archives', unix_timestamp());
 
-DROP TABLE IF EXISTS `lblog_permission_user`;
-CREATE TABLE `lblog_permission_user` (
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_read_list', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/list/', 'view cats list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_add', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save$/', 'add new cats', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_modify', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save\\/\\d+/', 'modify posted cats', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'statistics_read_list', '/^(?:\\/index\\.php)?\\/admin\\/statistics\\/list/', 'view statistics list page', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings/', 'view settings page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'modify seo settings', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'modify login page url settings', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'view users list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'users_role_operate', '/^(?:\\/index\\.php)?\\/admin\\/users\\/set_account/', 'operate users role', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_read_list', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/list/', 'view roles list page', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_add', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save$/', 'add new roles', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_modify', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save\\/\\d+/', 'modify posted roles', unix_timestamp());
+
+
+DROP TABLE IF EXISTS `lblog_blog_permission_user`;
+CREATE TABLE `lblog_blog_permission_user` (
   `id` int(11) NOT NULL auto_increment,
   `userid` int(11) NOT NULL,
   `permissionid` int(11) NOT NULL,
@@ -162,8 +185,8 @@ CREATE TABLE `lblog_permission_user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `lblog_permission_role`;
-CREATE TABLE `lblog_permission_role` (
+DROP TABLE IF EXISTS `lblog_blog_permission_role`;
+CREATE TABLE `lblog_blog_permission_role` (
   `id` int(11) NOT NULL auto_increment,
   `roleid` int(11) NOT NULL,
   `permissionid` int(11) NOT NULL,

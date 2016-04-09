@@ -14,7 +14,7 @@ method="post">
 <table>
 <tr>
 <td>Title：</td>
-<td><input name="title" type="text" value="<?php echo arr_get($article, 'title');?>"/></td>
+<td><input name="title" type="text" value="<?php ehtml(arr_get($article, 'title'));?>"/></td>
 </tr>
 <tr>
 <td>Catid：</td>
@@ -48,7 +48,7 @@ if(arr_get($article,'is_active')=='N'){
 </tr>
 <tr>
 <td>Content：</td>
-<td><textarea cols="88" rows="20" name="content"><?php echo htmlspecialchars(arr_get($article, 'content'));?></textarea></td>
+<td><textarea cols="88" rows="20" name="content"><?php ehtml(arr_get($article, 'content'));?></textarea></td>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="button" value="Submit"<?php if(!isset($article['id'])){echo ' data-need-refresh="1"';};?>/></td>

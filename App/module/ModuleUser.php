@@ -131,7 +131,7 @@ class ModuleUser extends LmlBase{
 	 * user login
 	 * just for qq now
 	 */
-	public function login(){
+	public function qqlogin(){
 		if( !isset($_GET['backurl']) ){
 			return;
 		}
@@ -168,6 +168,62 @@ class ModuleUser extends LmlBase{
 			header('Location:'.$_SERVER['HTTP_REFERER']);
 		}else{
 			header('Location:http://'.APP_DOMAIN);
+		}
+	}
+	
+	public function register(){
+		if($_POST){
+			$email = $_POST['email'];
+			$passwd = $_POST['passwd'];
+			$repasswd = $_POST['repasswd'];
+			
+			$valid = true;
+			// todo validate
+			
+			$mUser = new ModelUser();
+			if( ($userid=$mUser->register($email, $passwd)) && $valid ){
+				$expire_time = time()+86400*30;
+				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
+				header("Location:".WEB_PATH);
+			}else{
+				$this->assign('save_status', '注册失败：邮箱已经被注册！');
+				$this->display();
+			}
+		}elseif($this->hasLogin()){
+			header("Location:".WEB_PATH);
+		}else{
+			$this->display();
+		}
+	}
+	
+	public function login(){
+		if($_POST){
+			$email = $_POST['email'];
+			$passwd = $_POST['passwd'];
+			$mUser = new ModelUser();
+			if( strlen($passwd) > 5 && ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
+				$rs = q('blog_account')->select('*', 'userid=?', array($userid));
+				if(count($rs) > 0 && $rs[0]['roleid']){
+					$this->assign('save_status', '登录失败：请在管理员入口登录！');
+					return $this->display();
+				}
+				$expire_time = time()+86400*30;
+				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
+				$arrsql = array(
+					'userid'=>$userid,
+					'from'=>null,
+					'createtime'=>time(),
+				);
+				$mUser->addLoginLog($arrsql);
+				header("Location:".WEB_PATH);
+			}else{
+				$this->assign('save_status', '登录失败：用户名或密码错误！');
+				$this->display();
+			}
+		}elseif($this->hasLogin()){
+			header("Location:".WEB_PATH);
+		}else{
+			$this->display();
 		}
 	}
 }

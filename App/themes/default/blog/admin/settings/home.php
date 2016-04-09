@@ -15,15 +15,15 @@ if(empty($site)){
 </tr>
 <tr>
 <td>Site Name</td>
-<td><input type="text" name="site_name" class="longinput" value="<?php echo arr_get($site, 'site_name');?>"/></td>
+<td><input type="text" name="site_name" class="longinput" value="<?php ehtml(arr_get($site, 'site_name'));?>"/></td>
 </tr>
 <tr>
 <td>Site Keywords</td>
-<td><input type="text" name="site_keywords" class="longinput" value="<?php echo arr_get($site, 'site_keywords');?>"/></td>
+<td><input type="text" name="site_keywords" class="longinput" value="<?php ehtml(arr_get($site, 'site_keywords'));?>"/></td>
 </tr>
 <tr>
 <td>Site Meta</td>
-<td><textarea cols="60" rows="3" name="site_description"><?php echo htmlspecialchars(arr_get($site, 'site_description'));?></textarea></td>
+<td><textarea cols="60" rows="3" name="site_description"><?php ehtml(arr_get($site, 'site_description'));?></textarea></td>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="button" value="Submit"/></td>
@@ -54,6 +54,8 @@ if(empty($site)){
 <div>
 statistic code,
 
-QQ weibo config
+QQ weibo config,
+
+timezone,
 
 </div>

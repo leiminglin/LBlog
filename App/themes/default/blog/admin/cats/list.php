@@ -15,7 +15,7 @@
 <?php foreach ($rs as $k=>$v){?>
 <tr>
 <td><?php echo $v['id'];?></td>
-<td><?php echo $v['name'];?></td>
+<td><?php ehtml($v['name']);?></td>
 <td>
 <a href="javascript:void(0)" data-action="lblog_admin_cats_edit" data-id="<?php echo $v['id'];?>">Edit</a>
 </td>

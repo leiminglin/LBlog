@@ -7,10 +7,9 @@ abstract class Model{
 	public $table;
 
 	public function __construct(){
-		$dbconfig = $GLOBALS['dbconfig'];
-		$this->dbconfig = $dbconfig;
-		$this->db = db();
-		$this->dbPrefix = $dbconfig['dbprefix'];
+		$this->dbconfig = &$GLOBALS['dbconfig'];
+		$this->db = db($this->dbconfig);
+		$this->dbPrefix = $this->dbconfig['dbprefix'];
 		if(property_exists($this, 'table_name')){
 			$this->table = $this->dbPrefix.$this->table_name;
 		}
@@ -43,5 +42,21 @@ abstract class Model{
 
 	public function getAll(){
 		return $this->db->select($this->table);
+	}
+
+	public function del($where='', $params=array()){
+		return $this->db->delete($this->table, $where, $params);
+	}
+
+	public function select($fields='*', $where_tail='', $params=array()){
+		return $this->db->select($this->table, $fields, $where_tail, $params);
+	}
+
+	public function getLastId(){
+		return $this->db->getLastId();
+	}
+
+	public function query($sql, $params=array()){
+		return $this->db->query($sql, $params);
 	}
 }

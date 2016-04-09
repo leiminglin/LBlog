@@ -1,5 +1,5 @@
 <script type="text/javascript">
-function toQzoneLogin(){window.location.href="<?php echo WEB_APP_PATH.'user/login?backurl=';?>"+encodeURIComponent(window.location.href)}
+function toQzoneLogin(){window.location.href="<?php echo WEB_APP_PATH.'user/qqlogin?backurl=';?>"+encodeURIComponent(window.location.href)}
 function toWeiboLogin(){window.location.href="<?php echo WEB_APP_PATH.'user/weibologin?backurl=';?>"+encodeURIComponent(window.location.href)}
 
 deferred.then(function(){

@@ -13,6 +13,7 @@ var users_path = '<?php echo WEB_APP_PATH?>admin/users/list';
 var users_set_account_path = '<?php echo WEB_APP_PATH?>admin/users/set_account';
 var roles_path = '<?php echo WEB_APP_PATH?>admin/roles/list';
 var roles_save_path = '<?php echo WEB_APP_PATH?>admin/roles/save';
+var permissions_list_path = '<?php echo WEB_APP_PATH?>admin/permissions/list';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -145,6 +146,15 @@ function set_account(id, rid){
 	});
 }
 
+function get_permissions_list_page(o){
+	var path = permissions_list_path;
+	if(o){
+		path += '/'+o;
+	}
+	get(path, function(rs){
+		create_tab('Permission', rs);
+	});
+}
 
 
 
@@ -304,6 +314,13 @@ lml.loadJs.competeLoad([
 				$("select option:contains('"+role+"')", td).attr("selected",true);
 				o.flag = 1;
 			}
+		},
+		'lblog_admin_permissions_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_permissions_list_page(o.getAttribute('data-id'));
+			}else{
+				get_permissions_list_page(false);
+			}
 		}
 
 	};
@@ -342,7 +359,10 @@ lml.loadJs.competeLoad([
 
 	$.ajaxSetup({global:true});
 	$(document).ajaxError(function(event, jqxhr, settings, thrownError){
-		console.log(event, jqxhr, settings, thrownError);
+		/*console.log(event, jqxhr, settings, thrownError);*/
+		if(jqxhr.status == 401){
+			window.location.reload();
+		}
 	});
 
 },function(){

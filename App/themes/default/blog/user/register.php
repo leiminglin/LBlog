@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>后台管理 - <?php ehtml(SITE_NAME)?></title>
+<title>注册 - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
 	font-family:Microsoft Yahei;
@@ -20,7 +20,7 @@ input{
 	height:30px;
 }
 .login{
-	width:340px;
+	width:360px;
 	margin:100px auto;
 }
 table tr td, table tr th{
@@ -34,7 +34,7 @@ table{
 </head>
 <body>
 <div class="login">
-<form action="<?php echo WEB_APP_PATH?>admin/<?php echo isset($login_page_uri) ? $login_page_uri : '';?>" method="post">
+<form action="<?php echo WEB_APP_PATH?>user/register" method="post">
 <table>
 <tr>
 <td colspan="2" style="background:#f7f7f7;"><?php ehtml(SITE_NAME);?></td>
@@ -53,6 +53,10 @@ if(isset($save_status)){
 <tr>
 <td>Password：</td>
 <td><input name="passwd" type="password"/></td>
+</tr>
+<tr>
+<td>Re-Password：</td>
+<td><input name="repasswd" type="password"/></td>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="submit" value="Submit"/></td>
