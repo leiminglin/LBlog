@@ -178,7 +178,7 @@ window.onload=function(){
 			<a href="javascript:void(0)" data-action="lblog_admin_cats_page">Cat</a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_comments_page">Comment</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_comments_list_page">Comment</a>
 			</li>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page">Statistic</a>
