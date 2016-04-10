@@ -397,6 +397,14 @@ lml.loadJs.competeLoad([
 			adjust_right();
 		});
 	});
+	
+	$('#result').delegate("input[type=checkbox]", "change", function(){
+		if($(this).is(':checked')){
+			$(this).next().addClass('cl');
+		}else{
+			$(this).next().removeClass('cl');
+		}
+	});
 
 	$(document).keydown(function(e){
 		if(e.keyCode==13){
