@@ -58,4 +58,6 @@ QQ weibo config,
 
 timezone,
 
+logo upload,
+
 </div>

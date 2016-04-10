@@ -156,6 +156,9 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_list', '/^(?
 INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_post', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/post/', 'view archives post page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', 'add new archives', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', 'modify posted archives', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_relation_read_list', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/relation$/', 'view archive relations list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_relation_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/relation\\/set/', 'add archive relations', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_relation_remove', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/relation$\\/remove/', 'remove archive relations', 'Y', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_read_list', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/list/', 'view cats list page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_add', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save$/', 'add new cats', 'Y', unix_timestamp());
@@ -167,7 +170,7 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_modify', '/^(?:\\
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'statistics_read_list', '/^(?:\\/index\\.php)?\\/admin\\/statistics\\/list/', 'view statistics list page', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings/', 'view settings page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings$/', 'view settings page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'modify seo settings', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'modify login page url settings', 'Y', unix_timestamp());
 

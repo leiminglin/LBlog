@@ -412,6 +412,8 @@ lml.loadJs.competeLoad([
 		/*console.log(event, jqxhr, settings, thrownError);*/
 		if(jqxhr.status == 401){
 			window.location.reload();
+		}else if(jqxhr.status==403){
+			show_info('Sorry, You don\'t have permission!');
 		}
 	});
 
