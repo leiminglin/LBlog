@@ -294,6 +294,10 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Login page uri', '登录页地�
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Previous page', '上一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
 
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives list page', '查看文章列表页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives post page', '查看文章发布页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add new archives', '添加新文章');
+
 
 DROP TABLE IF EXISTS `lblog_user_qq`;
 CREATE TABLE `lblog_user_qq` (
