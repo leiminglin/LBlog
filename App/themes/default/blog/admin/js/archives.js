@@ -24,7 +24,7 @@ function get_list_archives_page(pid){
 		path += '/'+pid;
 	}
 	get(path, function(rs){
-		create_tab('<?php elang('Archive')?>', rs);
+		create_tab('<?php elang('Article')?>', rs);
 	});
 }
 
@@ -32,7 +32,7 @@ function get_post_archives_page(id){
 	var path = archives_post_path,title='<?php elang('PostArticle')?>';
 	if(id){
 		path += '/'+id;
-		title = '<?php elang('Edit')?>-'+id;
+		title = '<?php elang('EditArticle')?>-'+id;
 	}
 	get(path, function(rs){
 		create_tab(title, rs);
@@ -45,7 +45,7 @@ function get_relation_archives_list_page(pid){
 		path += '/'+pid;
 	}
 	get(path, function(rs){
-		create_tab('<?php elang('Article');elang('Relation')?>', rs);
+		create_tab('<?php elang('Relation')?>', rs);
 	});
 }
 
@@ -170,7 +170,7 @@ function get_comments_list_page(o){
 }
 
 function get_comments_post_page(id){
-	var path = comments_post_path+'/'+id,title='<?php elang('CommentEdit')?>-'+id;
+	var path = comments_post_path+'/'+id,title='<?php elang('EditComment')?>-'+id;
 	get(path, function(rs){
 		create_tab(title, rs);
 	});
