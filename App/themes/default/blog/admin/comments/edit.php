@@ -10,10 +10,10 @@ if(isset($save_status)){
 method="post">
 <table>
 <tr>
-<td>IsActive：</td>
+<td><?php elang('IsActive')?></td>
 <td>
 <input name="is_active" type="radio" value="Y" id="active_Y" <?php if(arr_get($rs,'is_active')=='Y'){echo 'checked';}?>/>
-<label for="active_Y">Yes</label>
+<label for="active_Y"><?php elang('Yes')?></label>
 <input name="is_active" type="radio" value="N" id="active_N" <?php
 if(arr_get($rs,'is_active')=='N'){
 	echo 'checked';
@@ -22,15 +22,15 @@ if(arr_get($rs,'is_active')=='N'){
 }
 ?>
 />
-<label for="active_N">No</label>
+<label for="active_N"><?php elang('No')?></label>
 </td>
 </tr>
 <tr>
-<td>Content：</td>
+<td><?php elang('Content')?></td>
 <td><textarea cols="88" rows="20" name="content"><?php ehtml(arr_get($rs, 'content'));?></textarea></td>
 </tr>
 <tr>
-<td align="center" colspan="2"><input class="btn" type="button" value="Submit"<?php if(!isset($rs['id'])){echo ' data-need-refresh="1"';};?>/></td>
+<td align="center" colspan="2"><input class="btn" type="button" value="<?php elang('Submit')?>"<?php if(!isset($rs['id'])){echo ' data-need-refresh="1"';};?>/></td>
 </tr>
 </table>
 </form>

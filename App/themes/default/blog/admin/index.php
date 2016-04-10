@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title><?php elang('Bakend Manage')?> - <?php ehtml(SITE_NAME)?></title>
+<title><?php elang('Backstage management')?> - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
 	font-family:Microsoft Yahei;
@@ -169,19 +169,19 @@ window.onload=function(){
 	<div class="left">
 		<ul>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page" class="cl"><?php elang('Archive')?></a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page" class="cl"><?php elang('Archives')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_relation_page"><?php elang('Article');elang('Relation')?></a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_relation_page"><?php elang('Related articles')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_cats_page"><?php elang('Cat')?></a>
+			<a href="javascript:void(0)" data-action="lblog_admin_cats_page"><?php elang('Article Categories')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_comments_list_page"><?php elang('Comment')?></a>
+			<a href="javascript:void(0)" data-action="lblog_admin_comments_list_page"><?php elang('Article Comments')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page"><?php elang('Statistic')?></a>
+			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page"><?php elang('Access Record')?></a>
 			</li>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_users_page"><?php elang('User')?></a>

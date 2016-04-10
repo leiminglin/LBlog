@@ -2,13 +2,13 @@
 
 <table>
 <tr>
-<th>ID</th>
-<th>Aid</th>
-<th>Uid</th>
-<th>Content</th>
-<th>IsActive</th>
-<th>CreatedTime</th>
-<th>Action</th>
+<th><?php elang('ID')?></th>
+<th><?php elang('ArticleID')?></th>
+<th><?php elang('UserID')?></th>
+<th><?php elang('Content')?></th>
+<th><?php elang('IsActive')?></th>
+<th><?php elang('CreatedTime')?></th>
+<th><?php elang('Action')?></th>
 </tr>
 <?php foreach ($rs as $k=>$v){?>
 <tr>
@@ -19,7 +19,7 @@
 <td><?php echo $v['is_active'];?></td>
 <td><?php echo date("Y-m-d H:i:s", $v['createtime']);?></td>
 <td>
-<a href="javascript:void(0)" data-action="lblog_admin_comments_post_page" data-id="<?php echo $v['id'];?>">Edit</a>
+<a href="javascript:void(0)" data-action="lblog_admin_comments_post_page" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
 </td>
 </tr>
 <?php }?>
