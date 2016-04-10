@@ -226,7 +226,7 @@ lml.loadJs.competeLoad([
 		if(!this.close){
 			var _this = this;
 			this.close = $('<div/>').html('×').css({"display":"block","width":"16px","font-size":"16px",
-				"position":"absolute","top":"-9px","line-height":"16px","color":"#ccc",
+				"position":"absolute","top":"-9px","line-height":"16px","color":"#ccc","z-index":100,
 				"border":"1px solid #ccc","border-radius":"8px","background":"#fff",
 				"text-align":"center","left":this.offsetWidth-9+'px'})
 				.mouseover(function(){
