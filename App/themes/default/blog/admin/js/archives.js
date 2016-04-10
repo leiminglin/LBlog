@@ -196,11 +196,13 @@ function get_user_permission_settings_page(id){
 
 
 lml.loadJs.competeLoad([
-	'//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js',
-	'//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
-	'//code.jquery.com/jquery-1.11.1.min.js'], function(){
+	'//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+	'//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js',
+	'//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+	'//cdn.jsdelivr.net/jquery/1.11.0/jquery.min.js',
+	'//code.jquery.com/jquery-1.11.0.min.js'
+	], function(){
 
-	
 	get_list_archives_page(false);
 	
 	$('.left ul li a').click(function(){
