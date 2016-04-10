@@ -45,7 +45,11 @@ class LmlBlog extends LmlBase{
 			if(count($has_permissions)==0){
 				$rs_account = q('blog_account')->select('roleid', 'userid=?', array($userid));
 				$roleid = $rs_account[0]['roleid'];
-				$has_permissions = q('blog_permission_role')->select('permissionid', 'roleid=?', array($roleid));
+				if ($roleid == ADMIN_ROLE_ID) {
+					$has_permissions = $all_permissions;
+				} else {
+					$has_permissions = q('blog_permission_role')->select('permissionid', 'roleid=?', array($roleid));
+				}
 			}
 			$has_permission_ids = arr_get_index($has_permissions, 'permissionid');
 		}
