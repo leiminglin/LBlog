@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>后台管理 - <?php ehtml(SITE_NAME)?></title>
+<title><?php elang('Bakend Manage')?> - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
 	font-family:Microsoft Yahei;
@@ -157,7 +157,7 @@ window.onload=function(){
 	<span class="title"><?php ehtml(SITE_NAME)?></span>
 	<span class="user">
 	<?php if( ($nickname = Tool::getUserNickName())==true ){?>
-您好，<?php ehtml($nickname);?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>">退出</a>
+<?php elang('Hi,')?> <?php ehtml($nickname);?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>"><?php elang('Logout')?></a>
 <?php }?>
 	</span>
 	<div class="clear"></div>
@@ -169,34 +169,37 @@ window.onload=function(){
 	<div class="left">
 		<ul>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page" class="cl">Archive</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page" class="cl"><?php elang('Archive')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_archives_relation_page">Relation</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_archives_relation_page"><?php elang('Article');elang('Relation')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_cats_page">Cat</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_cats_page"><?php elang('Cat')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_comments_list_page">Comment</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_comments_list_page"><?php elang('Comment')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page">Statistic</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page"><?php elang('Statistic')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_users_page">User</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_users_page"><?php elang('User')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_roles_page">Role</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_roles_page"><?php elang('Role')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_accounts_page">Account</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_accounts_page"><?php elang('Account')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_permissions_page">Permission</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_sessions_page"><?php elang('Session')?></a>
 			</li>
 			<li>
-			<a href="javascript:void(0)" data-action="lblog_admin_settings_page">Setting</a>
+			<a href="javascript:void(0)" data-action="lblog_admin_permissions_page"><?php elang('Permission')?></a>
+			</li>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_settings_page"><?php elang('Setting')?></a>
 			</li>
 		</ul>
 	</div>
@@ -204,7 +207,7 @@ window.onload=function(){
 	<div class="right">
 		<div class="tabs_title">
 			<a data-tab="1">
-				Home
+				<?php elang('Home')?>
 			</a>
 		</div>
 		<div class="content">
@@ -212,7 +215,7 @@ window.onload=function(){
 			<div id="result">
 				<div class="tabs_content">
 					<div data-tab="1">
-						Welcome!
+						<?php elang('Welcome!')?>
 					</div>
 				</div>
 			</div>
@@ -240,8 +243,8 @@ window.onload=function(){
 <script>
 lml.loadJs(
 [
-'<?php echo WEB_APP_PATH?>admin/js/common?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/common.js');?>, 
-'<?php echo WEB_APP_PATH?>admin/js/archives?t='+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/archives.js');?>
+'<?php echo WEB_APP_PATH?>admin/js/common?t=<?php echo DEFAULT_LANG?>'+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/common.js');?>, 
+'<?php echo WEB_APP_PATH?>admin/js/archives?t=<?php echo DEFAULT_LANG?>'+<?php echo filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/archives.js');?>
 ],
 function(){});
 </script>

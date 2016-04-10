@@ -22,6 +22,12 @@ class ModuleAdmin extends LmlBlog{
 	
 	public function __construct(){
 		$this->mArchives = new ModelArchives();
+		$rs = q('lang_'.DEFAULT_LANG)->getAll();
+		$lang = array();
+		foreach ($rs as $k => $v) {
+			$lang[$v['token']] = $v['content'];
+		}
+		lang('', $lang);
 	}
 	
 	public function __call($name, $arg){

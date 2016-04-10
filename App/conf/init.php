@@ -147,6 +147,10 @@ function lang($token, $data=array()){
 	return isset($lang[$token]) ? $lang[$token] : $token;
 }
 
+function elang($t){
+	echo htmlspecialchars(lang($t), ENT_QUOTES);
+}
+
 function arr2mapping($arr, $f, $m=''){
 	$retval = array();
 	foreach ($arr as $k=>$v){

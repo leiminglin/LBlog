@@ -24,15 +24,15 @@ function get_list_archives_page(pid){
 		path += '/'+pid;
 	}
 	get(path, function(rs){
-		create_tab('Archive', rs);
+		create_tab('<?php elang('Archive')?>', rs);
 	});
 }
 
 function get_post_archives_page(id){
-	var path = archives_post_path,title='发布';
+	var path = archives_post_path,title='<?php elang('PostArticle')?>';
 	if(id){
 		path += '/'+id;
-		title = '编辑-'+id;
+		title = '<?php elang('Edit')?>-'+id;
 	}
 	get(path, function(rs){
 		create_tab(title, rs);
@@ -45,7 +45,7 @@ function get_relation_archives_list_page(pid){
 		path += '/'+pid;
 	}
 	get(path, function(rs){
-		create_tab('Relation', rs);
+		create_tab('<?php elang('Article');elang('Relation')?>', rs);
 	});
 }
 
@@ -73,7 +73,7 @@ function get_cats_list_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Cat', rs);
+		create_tab('<?php elang('Cat')?>', rs);
 	});
 }
 
@@ -84,7 +84,7 @@ function get_statistics_list_page(o){
 	}
 
 	get(path, function(rs){
-		create_tab('Statistic', rs);
+		create_tab('<?php elang('Statistic')?>', rs);
 	});
 }
 
@@ -103,7 +103,7 @@ function save_cat(name, id){
 function get_settings_page(){
 	var path = settings_path;
 	get(path, function(rs){
-		create_tab('Setting', rs);
+		create_tab('<?php elang('Setting')?>', rs);
 	});
 }
 
@@ -114,7 +114,7 @@ function get_users_page(o){
 	}
 
 	get(path, function(rs){
-		create_tab('User', rs);
+		create_tab('<?php elang('User')?>', rs);
 	});
 }
 
@@ -124,7 +124,7 @@ function get_roles_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Role', rs);
+		create_tab('<?php elang('Role')?>', rs);
 	});
 }
 
@@ -155,7 +155,7 @@ function get_permissions_list_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Permission', rs);
+		create_tab('<?php elang('Permission')?>', rs);
 	});
 }
 
@@ -165,12 +165,12 @@ function get_comments_list_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Comment', rs);
+		create_tab('<?php elang('Comment')?>', rs);
 	});
 }
 
 function get_comments_post_page(id){
-	var path = comments_post_path+'/'+id,title='CommentEdit-'+id;
+	var path = comments_post_path+'/'+id,title='<?php elang('CommentEdit')?>-'+id;
 	get(path, function(rs){
 		create_tab(title, rs);
 	});
@@ -179,14 +179,14 @@ function get_comments_post_page(id){
 function get_role_permission_settings_page(id){
 	var path = permissions_setting_path + '/role/'+id;
 	get(path, function(rs){
-		create_tab('RolePermission-'+id, rs);
+		create_tab('<?php elang('RolePermission')?>-'+id, rs);
 	});
 }
 
 function get_user_permission_settings_page(id){
 	var path = permissions_setting_path + '/user/'+id;
 	get(path, function(rs){
-		create_tab('UserPermission-'+id, rs);
+		create_tab('<?php elang('UserPermission')?>-'+id, rs);
 	});
 }
 
@@ -393,7 +393,7 @@ lml.loadJs.competeLoad([
 			if(_this.getAttribute('data-need-refresh')==1){
 				$('.tabs_content').children(':visible').html(rs);
 			}else{
-				show_info(rs||'Save Successfully!');
+				show_info(rs||'<?php elang('Save Successfully!')?>');
 			}
 			_this.disabled = false;
 			adjust_right();
@@ -423,7 +423,7 @@ lml.loadJs.competeLoad([
 		if(jqxhr.status == 401){
 			window.location.reload();
 		}else if(jqxhr.status==403){
-			show_info('Sorry, You don\'t have permission!');
+			show_info('<?php elang('Sorry, You don\'t have permission!')?>');
 		}
 	});
 
