@@ -21,7 +21,7 @@ foreach ($rs as $k=>$v){
 ?>
 </tr>
 <tr>
-<td align="center" colspan="3"><input class="btn" type="button" value="Submit"/></td>
+<td align="center" colspan="3"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
 </tr>
 </table>
 </form>

@@ -84,7 +84,7 @@ function get_statistics_list_page(o){
 	}
 
 	get(path, function(rs){
-		create_tab('<?php elang('Statistic')?>', rs);
+		create_tab('<?php elang('AccessRecord')?>', rs);
 	});
 }
 
@@ -335,7 +335,7 @@ lml.loadJs.competeLoad([
 				save_role(td.children('input').val(), o.getAttribute('data-id'));
 			}else{
 				td.html($("<input/>").val(name).attr({"type":"text"}));
-				$(o).html('Save');
+				$(o).html('<?php elang('Save')?>');
 				o.flag = 1;
 			}
 		},
@@ -345,7 +345,7 @@ lml.loadJs.competeLoad([
 				set_account(o.getAttribute('data-id'), $('select', td).val());
 			}else{
 				td.html(roles.removeClass('hidden').prop('outerHTML'));
-				$(o).html('Save');
+				$(o).html('<?php elang('Save')?>');
 				if(role){
 					$("select option:contains('"+role+"')", td).attr("selected",true);
 				}

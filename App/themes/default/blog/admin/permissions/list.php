@@ -2,12 +2,12 @@
 
 <table>
 <tr>
-<th>ID</th>
-<th>Name</th>
-<th>UriRegExp</th>
-<th>Description</th>
-<th>CreateTime</th>
-<th>Action</th>
+<th><?php elang('ID')?></th>
+<th><?php elang('Name')?></th>
+<th><?php elang('UriRegExp')?></th>
+<th><?php elang('Description')?></th>
+<th><?php elang('CreatedTime')?></th>
+<th><?php elang('Action')?></th>
 </tr>
 <?php foreach ($rs as $k=>$v){?>
 <tr>
@@ -17,7 +17,7 @@
 <td><?php ehtml($v['description']);?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
-<a href="javascript:void(0)" data-action="lblog_admin_permissions_edit" data-id="<?php echo $v['id'];?>">Edit</a>
+<a href="javascript:void(0)" data-action="lblog_admin_permissions_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
 </td>
 </tr>
 <?php }?>
