@@ -108,12 +108,12 @@ class ModuleAdmin extends LmlBlog{
 			$passwd = $_POST['passwd'];
 			$mUser = new ModelUser();
 			if( ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
-				$expire_time = time()+86400*30;
+				$expire_time = $GLOBALS['start_time']+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				$arrsql = array(
 					'userid'=>$userid,
 					'from'=>null,
-					'createtime'=>time(),
+					'createtime'=>$GLOBALS['start_time'],
 				);
 				$mUser->addLoginLog($arrsql);
 				header("Location:".WEB_APP_PATH."admin");
@@ -579,7 +579,7 @@ class ModuleAdmin extends LmlBlog{
 						$mu->add(array(
 							'userid' => $id,
 							'permissionid' => (int)$v,
-							'createtime' => time(),
+							'createtime' => $GLOBALS['start_time'],
 						));
 					}
 				}elseif($type == 'role'){
@@ -589,7 +589,7 @@ class ModuleAdmin extends LmlBlog{
 						$mr->add(array(
 							'roleid' => $id,
 							'permissionid' => (int)$v,
-							'createtime' => time(),
+							'createtime' => $GLOBALS['start_time'],
 						));
 					}
 				}
@@ -605,7 +605,7 @@ class ModuleAdmin extends LmlBlog{
 		header('Content-Type: text/javascript');
 		header('Cache-Control: public, max-age='.$cache_seconds);
 		// Sun, 05 Mar 2017 15:02:23 GMT
-		header('Expires: '.date('D, d M Y H:i:s e', time() + $cache_seconds));
+		header('Expires: '.date('D, d M Y H:i:s e', $GLOBALS['start_time'] + $cache_seconds));
 		$this->display('', '/'.$action.'.js');
 	}
 	

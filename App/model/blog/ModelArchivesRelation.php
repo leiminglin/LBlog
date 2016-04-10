@@ -18,7 +18,7 @@ class ModelArchivesRelation extends Model{
 		$arr = array(
 				'aid'=>$aid,
 				'relation_aid'=>$aid2,
-				'addtime'=>time()
+				'addtime'=>$GLOBALS['start_time']
 			);
 		return $this->db->insert($this->dbPrefix.'blog_archives_relation', $arr);
 	}

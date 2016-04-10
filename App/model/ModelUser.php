@@ -79,7 +79,7 @@ class ModelUser extends Model{
 				'email' => $email,
 				'passwd' => generate_passwd($passwd),
 				'nickname' => 'lblog_'.substr($email, 0, 4),
-				'createtime' => time(),
+				'createtime' => $GLOBALS['start_time'],
 			));
 			return $this->db->getLastId();
 		}

@@ -110,10 +110,9 @@ CREATE TABLE `lblog_statistic` (
   `http_accept_language` varchar(100) NOT NULL,
   `http_accept_encoding` varchar(50) NOT NULL,
   `http_referer` varchar(1024) NOT NULL,
-  `request_time` bigint(20) unsigned NOT NULL,
-  `add_time` bigint(20) unsigned NOT NULL,
+  `createtime` bigint(20) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `request_time` (`request_time`)
+  KEY `createtime` (`createtime`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

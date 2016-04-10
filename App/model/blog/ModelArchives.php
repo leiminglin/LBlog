@@ -133,7 +133,7 @@ class ModelArchives extends Model{
 				'catid'=>$arr['catid'],
 				'title'=>$arr['title'],
 				'content'=>$arr['content'],
-				'createtime'=>time(),
+				'createtime'=>$GLOBALS['start_time'],
 				'is_active'=>$arr['is_active'],
 		);
 		$this->db->insert($this->dbPrefix.'blog_archives', $sqlarr);

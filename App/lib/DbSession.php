@@ -37,7 +37,7 @@ class DbSession
 	{
 		$rs = $this->link->getOne('select data from ' 
 			. $this->dbconfig['dbprefix'] 
-			. 'session where id=? and expires>?', array($id, time()));
+			. 'session where id=? and expires>?', array($id, $GLOBALS['start_time']));
 		if($rs){
 			return (string)$rs['data'];
 		}
@@ -47,7 +47,7 @@ class DbSession
 	function write($id, $data)
 	{
 		$rs = $this->link->query('replace into ' . $this->dbconfig['dbprefix'] 
-				. 'session set id=?, expires=?, data=?', array($id, time()+$this->expire_time, $data));
+				. 'session set id=?, expires=?, data=?', array($id, $GLOBALS['start_time']+$this->expire_time, $data));
 		if($rs){
 			return true;
 		}
@@ -65,7 +65,7 @@ class DbSession
 
 	function gc($maxlifetime)
 	{
-		$rs = $this->link->delete($this->dbconfig['dbprefix'].'session', '(expires +'.$maxlifetime.') < '.time());
+		$rs = $this->link->delete($this->dbconfig['dbprefix'].'session', '(expires +'.$maxlifetime.') < '.$GLOBALS['start_time']);
 		if($rs){
 			return true;
 		}

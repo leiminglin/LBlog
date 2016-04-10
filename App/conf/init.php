@@ -2,7 +2,10 @@
 
 //define('ADMIN_FORCE', true);
 
-$start_time = microtime();
+$start_time = time();
+$start_microtime = microtime();
+$GLOBALS['start_time'] = time();
+$GLOBALS['start_microtime'] = $start_microtime;
 define("APP_DOMAIN", $_SERVER['HTTP_HOST']);
 
 $lastRouter = array('last');

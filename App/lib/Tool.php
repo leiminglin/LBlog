@@ -40,7 +40,7 @@ class Tool{
 		if(count($arr) != 3){
 			return false;
 		}
-		if( $arr[1] < time() ){
+		if( $arr[1] < $GLOBALS['start_time'] ){
 			return false;
 		}
 		if(sha1($arr[0].$arr[1].LBLOGSALT) == $arr[2]){
@@ -61,7 +61,7 @@ class Tool{
 	public static function convertTimeToWords($t){
 		static $now, $day, $week, $month, $year;
 		if(!$now){
-			$now = time();
+			$now = $GLOBALS['start_time'];
 			$day = 86400;
 			$week = $day * 7;
 			$month = $day * 30;

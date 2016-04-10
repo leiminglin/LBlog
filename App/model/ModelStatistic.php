@@ -14,8 +14,7 @@ class ModelStatistic extends Model{
 			'http_accept_encoding' => $http_accept_encoding,
 			'http_referer' => $http_referer,
 			'remote_addr' => $_SERVER['REMOTE_ADDR'],
-			'request_time' => $_SERVER['REQUEST_TIME'],
-			'add_time' => time(),
+			'createtime' => $GLOBALS['start_time'],
 		);
 		return $this->db->insert($this->dbPrefix.'statistic', $arr);
 	}
@@ -23,7 +22,7 @@ class ModelStatistic extends Model{
 	public function articleTodayRank(){
 		$sql = "SELECT request_uri FROM {$this->dbPrefix}statistic "
 				."WHERE request_uri like '/archives/%' "
-				."AND request_time > '".strtotime('today')."'";
+				."AND createtime > '".strtotime('today')."'";
 		$rs = $this->db->query($sql);
 		$statistic = array();
 		foreach ($rs as $t){

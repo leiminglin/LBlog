@@ -38,7 +38,7 @@ class ModelComment extends Model{
 			'aid'=>$arr['aid'],
 			'content'=>$arr['content'],
 			'uid'=>Tool::checkCookie(),
-			'createtime'=>time(),
+			'createtime'=>$GLOBALS['start_time'],
 		);
 		$this->db->insert($this->dbPrefix.'blog_comment', $sqlarr);
 		return $this->db->getLastId();
