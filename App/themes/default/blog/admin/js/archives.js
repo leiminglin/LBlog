@@ -14,6 +14,9 @@ var users_set_account_path = '<?php echo WEB_APP_PATH?>admin/users/set_account';
 var roles_path = '<?php echo WEB_APP_PATH?>admin/roles/list';
 var roles_save_path = '<?php echo WEB_APP_PATH?>admin/roles/save';
 var permissions_list_path = '<?php echo WEB_APP_PATH?>admin/permissions/list';
+var comments_list_path = '<?php echo WEB_APP_PATH?>admin/comments/list';
+var comments_post_path = '<?php echo WEB_APP_PATH?>admin/comments/post';
+var permissions_setting_path = '<?php echo WEB_APP_PATH?>admin/permissions/setting';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -156,6 +159,36 @@ function get_permissions_list_page(o){
 	});
 }
 
+function get_comments_list_page(o){
+	var path = comments_list_path;
+	if(o){
+		path += '/'+o;
+	}
+	get(path, function(rs){
+		create_tab('Comment', rs);
+	});
+}
+
+function get_comments_post_page(id){
+	var path = comments_post_path+'/'+id,title='CommentEdit-'+id;
+	get(path, function(rs){
+		create_tab(title, rs);
+	});
+}
+
+function get_role_permission_settings_page(id){
+	var path = permissions_setting_path + '/role/'+id;
+	get(path, function(rs){
+		create_tab('RolePermission-'+id, rs);
+	});
+}
+
+function get_user_permission_settings_page(id){
+	var path = permissions_setting_path + '/user/'+id;
+	get(path, function(rs){
+		create_tab('UserPermission-'+id, rs);
+	});
+}
 
 
 
@@ -311,7 +344,9 @@ lml.loadJs.competeLoad([
 			}else{
 				td.html(roles.removeClass('hidden').prop('outerHTML'));
 				$(o).html('Save');
-				$("select option:contains('"+role+"')", td).attr("selected",true);
+				if(role){
+					$("select option:contains('"+role+"')", td).attr("selected",true);
+				}
 				o.flag = 1;
 			}
 		},
@@ -321,8 +356,23 @@ lml.loadJs.competeLoad([
 			}else{
 				get_permissions_list_page(false);
 			}
+		},
+		'lblog_admin_comments_list_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_comments_list_page(o.getAttribute('data-id'));
+			}else{
+				get_comments_list_page(false);
+			}
+		},
+		'lblog_admin_comments_post_page':function(o){
+			get_comments_post_page(o.getAttribute('data-id'));
+		},
+		'lblog_admin_roles_permission':function(o){
+			get_role_permission_settings_page(o.getAttribute('data-id'));
+		},
+		'lblog_admin_users_permission':function(o){
+			get_user_permission_settings_page(o.getAttribute('data-id'));
 		}
-
 	};
 
 	on(document.body, 'click', function(e){

@@ -23,6 +23,7 @@ defined('LANG_ZH_CN')||define('LANG_ZH_CN', 'zh_CN');
 defined('LANG_EN_US')||define('LANG_EN_US', 'en_US');
 defined('DEFAULT_LANG')||define('DEFAULT_LANG', get_lang());
 defined('ADMIN_ACCOUNT_ID')||define('ADMIN_ACCOUNT_ID', 1);
+defined('ADMIN_ROLE_ID')||define('ADMIN_ROLE_ID', 1);
 
 
 /**
@@ -168,4 +169,13 @@ function q($a){
 function ehtml($v){
 	echo htmlspecialchars($v);
 }
+
+function arr_get_index($a, $i=0){
+	$ret = array();
+	foreach ($a as $v){
+		$ret[] = isset($v[$i]) ? $v[$i] : '';
+	}
+	return $ret;
+}
+
 

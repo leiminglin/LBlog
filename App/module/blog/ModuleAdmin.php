@@ -12,6 +12,7 @@ class ModuleAdmin extends LmlBlog{
 
 		'archives' => 'checkPermission',
 		'cats' => 'checkPermission',
+		'comments' => 'checkPermission',
 		'statistics' => 'checkPermission',
 		'settings' => 'checkPermission',
 		'users' => 'checkPermission',
@@ -32,6 +33,63 @@ class ModuleAdmin extends LmlBlog{
 		if($name == $login_uri){
 			return $this->login($login_uri);
 		}
+		
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1);
+		//var_dump(C_ACTION, C_GROUP, C_MODULE, $matches, $action);exit;
+		
+		$qmap = array(
+			'comments' => 'blog_comment',
+		);
+		$m = q($qmap[C_ACTION]);
+		
+		switch ($action){
+			case 'list':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $m->getList(10*($pid-1), 10, false);
+				$count = $m->getCount();
+				$page = new Paging($count, $pid, 10);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+			case 'post':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1])) {
+					$rs = $m->find($matches[1]);
+					$this->assign('rs', $rs);
+				}
+				$this->display('', '/edit.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (!isset($matches[1])) {
+					if(($id = $m->add($_POST)) == true){
+						$this->assign('save_status', '保存成功！');
+						$rs = $m->find($id);
+						$this->assign('rs', $rs);
+						$this->display('', '/edit.php');
+					}
+				}else{
+					$id = $matches[1];
+					if($m->update($_POST, "id=$id")){
+						$this->assign('save_status', '保存成功！');
+					}else{
+						$this->assign('save_status', '内容未改变！');
+					}
+				}
+				break;
+		}
+		
+		if(isset($qmap[C_ACTION])){
+			return;
+		}
+
 		return parent::__call($name, $arg);
 	}
 	
@@ -477,6 +535,62 @@ class ModuleAdmin extends LmlBlog{
 						echo 'Modify Successfully!';
 					}else{
 						echo 'Modify Failed!';
+					}
+				}
+				break;
+			case 'setting':
+				$matches = route_match('[\w]+\/([\w]+)\/(\d+)');
+				if(!isset($matches[1]) || !isset($matches[2])){
+					return;
+				}
+				$type = $matches[1];
+				$rs = $m->getAll();
+				$this->assign('rs', $rs);
+
+				if($type == 'user'){
+					$mu = q('blog_permission_user');
+					$rsr = $mu->select('*', 'userid=?', array($matches[2]));
+					$this->assign('rsr', arr_get_index($rsr, 'permissionid'));
+					$this->assign('id', $matches[2]);
+					$this->assign('type', $type);
+					$this->display('', '/setting.php');
+				}elseif($type == 'role'){
+					$mr = q('blog_permission_role');
+					$rsr = $mr->select('*', 'roleid=?', array($matches[2]));
+					$this->assign('rsr', arr_get_index($rsr, 'permissionid'));
+					$this->assign('id', $matches[2]);
+					$this->assign('type', $type);
+					$this->display('', '/setting.php');
+				}
+				break;
+			case 'setting_save':
+				$matches = route_match('[\w]+\/([\w]+)\/(\d+)');
+				if(!isset($matches[1]) || !isset($matches[2])){
+					return;
+				}
+				$type = $matches[1];
+				$id = $matches[2];
+				$permissionids = $_POST['permissionids'];
+				
+				if($type == 'user'){
+					$mu = q('blog_permission_user');
+					$mu->del('userid=?', array($id));
+					foreach ($permissionids as $v){
+						$mu->add(array(
+							'userid' => $id,
+							'permissionid' => (int)$v,
+							'createtime' => time(),
+						));
+					}
+				}elseif($type == 'role'){
+					$mr = q('blog_permission_role');
+					$mr->del('roleid=?', array($id));
+					foreach ($permissionids as $v){
+						$mr->add(array(
+							'roleid' => $id,
+							'permissionid' => (int)$v,
+							'createtime' => time(),
+						));
 					}
 				}
 				break;

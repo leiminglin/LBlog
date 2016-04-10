@@ -17,7 +17,10 @@
 <td><?php echo $v['id'];?></td>
 <td><?php ehtml($v['role_name']);?></td>
 <td>
-<a href="javascript:void(0)" data-action="lblog_admin_roles_edit" data-id="<?php echo $v['id'];?>">Edit</a>
+<a href="javascript:void(0)" data-action="lblog_admin_roles_edit" data-id="<?php echo $v['id'];?>">Edit</a> / 
+<?php if($v['id'] != ADMIN_ROLE_ID){?>
+<a href="javascript:void(0)" data-action="lblog_admin_roles_permission" data-id="<?php echo $v['id'];?>">Permission</a>
+<?php }?>
 </td>
 </tr>
 <?php }?>
