@@ -94,7 +94,7 @@ function modify_tab_title(origin_title, new_title){
 function get(u,c){
 	$.ajax({
 		"method":"GET",
-		"url":u,
+		"url":u
 	}).done(c);
 }
 

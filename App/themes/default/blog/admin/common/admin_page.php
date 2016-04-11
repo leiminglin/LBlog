@@ -45,9 +45,9 @@ if( isset($page) && ($count = $page->getPageCount()) > 1 && isset($data_action) 
 $pids = $page->getPids(9);
 if( $page->hasPrev() ){
 ?>
-<a href="javascript:void(0)" data-action="<?php echo $data_action?>" data-id="<?php echo $page->getPrev();?>" class="word leftradius">上一页</a>
+<a href="javascript:void(0)" data-action="<?php echo $data_action?>" data-id="<?php echo $page->getPrev();?>" class="word leftradius"><?php elang('Previous page')?></a>
 <?php }else{?>
-<a href="javascript:void(0)" class="gray word leftradius">上一页</a>
+<a href="javascript:void(0)" class="gray word leftradius"><?php elang('Previous page')?></a>
 <?php }?>
 <?php
 foreach ($pids as $t){
@@ -58,9 +58,9 @@ foreach ($pids as $t){
 <?php }}
 if( $page->hasNext() ){
 ?>
-<a href="javascript:void(0)" data-action="<?php echo $data_action?>" data-id="<?php echo $page->getNext()?>" class="word rightradius">下一页</a>
+<a href="javascript:void(0)" data-action="<?php echo $data_action?>" data-id="<?php echo $page->getNext()?>" class="word rightradius"><?php elang('Next page')?></a>
 <?php }else{?>
-<a href="javascript:void(0)" class="gray word rightradius">下一页</a>
+<a href="javascript:void(0)" class="gray word rightradius"><?php elang('Next page')?></a>
 <?php }?>
 </p>
 <?php }?>

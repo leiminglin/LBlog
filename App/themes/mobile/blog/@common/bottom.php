@@ -14,7 +14,7 @@
 	<div id="wechatgraph" class="wechatgraph"><img width="100" height="100" alt="LMLPHP订阅号" title="LMLPHP订阅号" osrc="<?php echo WEB_PATH?>static/resource/qrcode.jpg"/></div>
 	</a> <a href="http://www.lmlphp.com/contact">联系我们</a>
 	</div>
-	<div id="footdate"><?php echo date("Y-m-d H:i:s"),'&nbsp;',time();?></div>
+	<div id="footdate"><?php echo date("Y-m-d H:i:s"),'&nbsp;',$GLOBALS['start_time'];?></div>
 </div>
 </div><?php /*wrap end*/?>
 <script>

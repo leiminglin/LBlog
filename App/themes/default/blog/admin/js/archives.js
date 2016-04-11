@@ -24,15 +24,15 @@ function get_list_archives_page(pid){
 		path += '/'+pid;
 	}
 	get(path, function(rs){
-		create_tab('Archive', rs);
+		create_tab('<?php elang('Article')?>', rs);
 	});
 }
 
 function get_post_archives_page(id){
-	var path = archives_post_path,title='发布';
+	var path = archives_post_path,title='<?php elang('PostArticle')?>';
 	if(id){
 		path += '/'+id;
-		title = '编辑-'+id;
+		title = '<?php elang('EditArticle')?>-'+id;
 	}
 	get(path, function(rs){
 		create_tab(title, rs);
@@ -45,7 +45,7 @@ function get_relation_archives_list_page(pid){
 		path += '/'+pid;
 	}
 	get(path, function(rs){
-		create_tab('Relation', rs);
+		create_tab('<?php elang('Relation')?>', rs);
 	});
 }
 
@@ -73,7 +73,7 @@ function get_cats_list_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Cat', rs);
+		create_tab('<?php elang('Cat')?>', rs);
 	});
 }
 
@@ -84,7 +84,7 @@ function get_statistics_list_page(o){
 	}
 
 	get(path, function(rs){
-		create_tab('Statistic', rs);
+		create_tab('<?php elang('AccessRecord')?>', rs);
 	});
 }
 
@@ -103,7 +103,7 @@ function save_cat(name, id){
 function get_settings_page(){
 	var path = settings_path;
 	get(path, function(rs){
-		create_tab('Setting', rs);
+		create_tab('<?php elang('Setting')?>', rs);
 	});
 }
 
@@ -114,7 +114,7 @@ function get_users_page(o){
 	}
 
 	get(path, function(rs){
-		create_tab('User', rs);
+		create_tab('<?php elang('User')?>', rs);
 	});
 }
 
@@ -124,7 +124,7 @@ function get_roles_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Role', rs);
+		create_tab('<?php elang('Role')?>', rs);
 	});
 }
 
@@ -155,7 +155,7 @@ function get_permissions_list_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Permission', rs);
+		create_tab('<?php elang('Permission')?>', rs);
 	});
 }
 
@@ -165,12 +165,12 @@ function get_comments_list_page(o){
 		path += '/'+o;
 	}
 	get(path, function(rs){
-		create_tab('Comment', rs);
+		create_tab('<?php elang('Comment')?>', rs);
 	});
 }
 
 function get_comments_post_page(id){
-	var path = comments_post_path+'/'+id,title='CommentEdit-'+id;
+	var path = comments_post_path+'/'+id,title='<?php elang('EditComment')?>-'+id;
 	get(path, function(rs){
 		create_tab(title, rs);
 	});
@@ -179,14 +179,14 @@ function get_comments_post_page(id){
 function get_role_permission_settings_page(id){
 	var path = permissions_setting_path + '/role/'+id;
 	get(path, function(rs){
-		create_tab('RolePermission-'+id, rs);
+		create_tab('<?php elang('RolePermission')?>-'+id, rs);
 	});
 }
 
 function get_user_permission_settings_page(id){
 	var path = permissions_setting_path + '/user/'+id;
 	get(path, function(rs){
-		create_tab('UserPermission-'+id, rs);
+		create_tab('<?php elang('UserPermission')?>-'+id, rs);
 	});
 }
 
@@ -196,11 +196,13 @@ function get_user_permission_settings_page(id){
 
 
 lml.loadJs.competeLoad([
-	'//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js',
-	'//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
-	'//code.jquery.com/jquery-1.11.1.min.js'], function(){
+	'//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+	'//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js',
+	'//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+	'//cdn.jsdelivr.net/jquery/1.11.0/jquery.min.js',
+	'//code.jquery.com/jquery-1.11.0.min.js'
+	], function(){
 
-	
 	get_list_archives_page(false);
 	
 	$('.left ul li a').click(function(){
@@ -224,7 +226,7 @@ lml.loadJs.competeLoad([
 		if(!this.close){
 			var _this = this;
 			this.close = $('<div/>').html('×').css({"display":"block","width":"16px","font-size":"16px",
-				"position":"absolute","top":"-9px","line-height":"16px","color":"#ccc",
+				"position":"absolute","top":"-9px","line-height":"16px","color":"#ccc","z-index":100,
 				"border":"1px solid #ccc","border-radius":"8px","background":"#fff",
 				"text-align":"center","left":this.offsetWidth-9+'px'})
 				.mouseover(function(){
@@ -333,7 +335,7 @@ lml.loadJs.competeLoad([
 				save_role(td.children('input').val(), o.getAttribute('data-id'));
 			}else{
 				td.html($("<input/>").val(name).attr({"type":"text"}));
-				$(o).html('Save');
+				$(o).html('<?php elang('Save')?>');
 				o.flag = 1;
 			}
 		},
@@ -343,7 +345,7 @@ lml.loadJs.competeLoad([
 				set_account(o.getAttribute('data-id'), $('select', td).val());
 			}else{
 				td.html(roles.removeClass('hidden').prop('outerHTML'));
-				$(o).html('Save');
+				$(o).html('<?php elang('Save')?>');
 				if(role){
 					$("select option:contains('"+role+"')", td).attr("selected",true);
 				}
@@ -391,11 +393,19 @@ lml.loadJs.competeLoad([
 			if(_this.getAttribute('data-need-refresh')==1){
 				$('.tabs_content').children(':visible').html(rs);
 			}else{
-				show_info(rs||'Save Successfully!');
+				show_info(rs||'<?php elang('Save Successfully!')?>');
 			}
 			_this.disabled = false;
 			adjust_right();
 		});
+	});
+	
+	$('#result').delegate("input[type=checkbox]", "change", function(){
+		if($(this).is(':checked')){
+			$(this).next().addClass('cl');
+		}else{
+			$(this).next().removeClass('cl');
+		}
 	});
 
 	$(document).keydown(function(e){
@@ -412,6 +422,8 @@ lml.loadJs.competeLoad([
 		/*console.log(event, jqxhr, settings, thrownError);*/
 		if(jqxhr.status == 401){
 			window.location.reload();
+		}else if(jqxhr.status==403){
+			show_info('<?php elang('Sorry, You don\'t have permission!')?>');
 		}
 	});
 

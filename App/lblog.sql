@@ -110,10 +110,9 @@ CREATE TABLE `lblog_statistic` (
   `http_accept_language` varchar(100) NOT NULL,
   `http_accept_encoding` varchar(50) NOT NULL,
   `http_referer` varchar(1024) NOT NULL,
-  `request_time` bigint(20) unsigned NOT NULL,
-  `add_time` bigint(20) unsigned NOT NULL,
+  `createtime` bigint(20) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `request_time` (`request_time`)
+  KEY `createtime` (`createtime`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -153,37 +152,40 @@ CREATE TABLE `lblog_blog_permission` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_list', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/list/', 'view archives list page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_post', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/post/', 'view archives post page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', 'add new archives', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', 'modify posted archives', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_list', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/list/', 'View archives list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_read_post', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/post/', 'View archives post page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save$/', 'Add new archives', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_modify', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/save\\/\\d+/', 'Modify posted archives', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_relation_read_list', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/relation$/', 'View archive relations list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_relation_add', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/relation\\/set/', 'Add archive relations', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'archives_relation_remove', '/^(?:\\/index\\.php)?\\/admin\\/archives\\/relation$\\/remove/', 'Remove archive relations', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_read_list', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/list/', 'view cats list page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_add', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save$/', 'add new cats', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_modify', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save\\/\\d+/', 'modify posted cats', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_read_list', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/list/', 'View cats list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_add', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save$/', 'Add new cats', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_modify', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save\\/\\d+/', 'Modify posted cats', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_read_list', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/list/', 'view comments list page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_read_post', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/post/', 'view comments post page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_modify', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/save\\/\\d+/', 'modify posted comments', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_read_list', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/list/', 'View comments list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_read_post', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/post/', 'View comments post page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_modify', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/save\\/\\d+/', 'Modify posted comments', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'statistics_read_list', '/^(?:\\/index\\.php)?\\/admin\\/statistics\\/list/', 'view statistics list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'statistics_read_list', '/^(?:\\/index\\.php)?\\/admin\\/statistics\\/list/', 'View statistics list page', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings/', 'view settings page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'modify seo settings', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'modify login page url settings', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings$/', 'View settings page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'Modify seo settings', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'Modify login page url settings', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'view users list page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'users_role_operate', '/^(?:\\/index\\.php)?\\/admin\\/users\\/set_account/', 'operate users role', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'View users list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'users_role_operate', '/^(?:\\/index\\.php)?\\/admin\\/users\\/set_account/', 'Operate users role', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_read_list', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/list/', 'view roles list page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_add', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save$/', 'add new roles', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_modify', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save\\/\\d+/', 'modify posted roles', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_read_list', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/list/', 'View roles list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_add', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save$/', 'Add new roles', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_modify', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save\\/\\d+/', 'Modify posted roles', 'Y', unix_timestamp());
 
-INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_read_list', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/list/', 'view permissions list page', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/user\\/\\d+/', 'view user permissions', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_role_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/role\\/\\d+/', 'view role permissions', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting_save\\/user\\/\\d+/', 'modify user permissions', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_role_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting_save\\/role\\/\\d+/', 'modify role permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_read_list', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/list/', 'View permissions list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/user\\/\\d+/', 'View user permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_role_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/role\\/\\d+/', 'View role permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting_save\\/user\\/\\d+/', 'Modify user permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_role_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting_save\\/role\\/\\d+/', 'Modify role permissions', 'Y', unix_timestamp());
 
 
 DROP TABLE IF EXISTS `lblog_blog_permission_user`;
@@ -224,6 +226,77 @@ CREATE TABLE `lblog_lang_zh_CN` (
   `content` text NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Backstage management', '后台管理');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Hi,', '您好，');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Logout', '退出');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Archives', '文章归档');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Related articles', '相关文章');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Article Comments', '文章评论');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Access Record', '访问记录');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'User', '用户');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Role', '角色');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Account', '账号');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Session', '会话');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Permission', '权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Setting', '设置');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Article Categories', '文章分类');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Name', '名称');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'EditComment', '评论编辑');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'ArticleID', '文章编号');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Home', '家');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Welcome!', '欢迎！');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Post', '发布');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Edit', '编辑');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'ID', '编号');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Title', '标题');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Author', '作者');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'IsActive', '是否激活');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'CreatedTime', '创建时间');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Action', '处理');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'PostArticle', '发布文章');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'CatID', '分类编号');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'UserID', '用户编号');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Content', '内容');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Yes', '是');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'No', '否');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Submit', '提交');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Set to related', '设为相关');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add', '添加');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Article', '文章');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Remove', '移除');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Revert', '撤销');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Comment', '评论');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Domain', '域名');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'URI', '统一资源标识');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RemoteAddr', '远程地址');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Referrer', '引用');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Relation', '关系');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Cat', '分类');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Statistic', '统计');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Access', '访问');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'AccessRecord', '访问记录');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Email', '邮箱');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'NickName', '昵称');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Source', '来源');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Please select', '请选择');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Save', '保存');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'UserPermission', '用户权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RolePermission', '角色权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'UriRegExp', '统一资源标识正则');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Description', '描述');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'SEO', '搜索引擎优化');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Site name', '网站名称');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Site keywords', '网站关键词');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Site meta-infomation', '网站元信息');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Security', '安全');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Login page uri', '登录页地址');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Previous page', '上一页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
+
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives list page', '查看文章列表页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives post page', '查看文章发布页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add new archives', '添加新文章');
 
 
 DROP TABLE IF EXISTS `lblog_user_qq`;

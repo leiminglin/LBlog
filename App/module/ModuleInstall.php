@@ -3,70 +3,72 @@ class ModuleInstall extends LmlBase{
 
 	public function index(){
 
+		lang('', require APP_PATH.'conf/lang/lang_'.DEFAULT_LANG.'.php');
+		
 		if(!$_POST){
 			echo
 '
 <form action="'.WEB_APP_PATH.'install" method="post">
 <table align="center">
 <tr>
-	<th colspan="2"><h3>LBlog Install Guard</h3></th>
+	<th colspan="2"><h3>'.lang('LBlog Install Guard').'</h3></th>
 </tr>
 
 <tr>
-	<th colspan="2">db config</th>
+	<th colspan="2">'.lang('Database Config').'</th>
 </tr>
 
 <tr>
-	<td>hostname:</td>
+	<td>'.lang('HostName').':</td>
 	<td><input type="text" name="hostname" value="localhost"/></td>
 </tr>
 
 <tr>
-	<td>hostport:</td>
+	<td>'.lang('HostPort').':</td>
 	<td><input type="text" name="hostport" value="3306"/></td>
 </tr>
 
 <tr>
-	<td>username:</td>
+	<td>'.lang('UserName').':</td>
 	<td><input type="text" name="username"/></td>
 </tr>
 
 <tr>
-	<td>password:</td>
+	<td>'.lang('Password').':</td>
 	<td><input type="password" name="password"/></td>
 </tr>
 
 <tr>
-	<td>database:</td>
+	<td>'.lang('Database Name').':</td>
 	<td><input type="text" name="database"/></td>
 </tr>
 
 <tr>
-	<td>charset:</td>
+	<td>'.lang('Charset').':</td>
 	<td><input type="text" name="charset" value="utf8"/></td>
 </tr>
 
 <tr>
-	<td>dbprefix:</td>
+	<td>'.lang('Table Prefix').':</td>
 	<td><input type="text" name="dbprefix" value="lblog_"/></td>
 </tr>
 
 <tr>
-	<th colspan="2">admin</th>
+	<th colspan="2">'.lang('Admin').'</th>
 </tr>
 
 <tr>
-	<td>admin email:</td>
+	<td>'.lang('Email').':</td>
 	<td><input type="text" name="email" value="admin"/></td>
 </tr>
 
 <tr>
-	<td>admin passwd:</td>
+	<td>'.lang('Password').':</td>
 	<td><input type="password" name="admin_passwd" value=""/></td>
 </tr>
 
 <tr align="center">
-	<td colspan="2"><input type="submit" value="Submit"/></td>
+	<td colspan="2"><input type="submit" value="'.lang('Submit').'"/></td>
 </tr>
 
 </table>
@@ -79,12 +81,19 @@ class ModuleInstall extends LmlBase{
 
 		$fp = fopen($sql_file, 'r');
 
-		if( !isset($_POST['hostname']) || !isset($_POST['hostport']) ||
+		if(
+			!isset($_POST['hostname']) || !isset($_POST['hostport']) ||
 			!isset($_POST['username']) || !isset($_POST['password']) ||
 			!isset($_POST['database']) || !isset($_POST['charset']) ||
-			!isset($_POST['dbprefix'])
+			!isset($_POST['dbprefix']) ||
+
+			!$_POST['hostname'] || !$_POST['hostport'] ||
+			!$_POST['username'] || !$_POST['password'] ||
+			!$_POST['database'] || !$_POST['charset'] ||
+			!$_POST['dbprefix']
+
 		){
-			echo '<p>please input completely!</p>';
+			echo '<p>'.lang('Please input completely!').'</p>';
 			$this->outputBack();
 			return;
 		}
@@ -105,18 +114,18 @@ class ModuleInstall extends LmlBase{
 		try{
 			$db = db($config);
 		}catch(Exception $e){
-			echo '<p>connect database fail!</p>';
+			echo '<p>'.lang('Database connect fail!').'</p>';
 			$this->outputBack();
 			return;
 		}
 
 		if(!is_writeable(APP_PATH)){
-			echo '<p>app directory can\'t be writeable!</p>';
+			echo '<p>'.lang('App directory can\'t be writeable!').'</p>';
 			$this->outputBack();
 			return;
 		}
 
-		echo '<p>begin</p>';
+		echo '<p>'.lang('Begin').'</p>';
 
 		$statement = '';
 
@@ -138,16 +147,16 @@ class ModuleInstall extends LmlBase{
 					$statement = '';
 				}
 			}
-			echo '</p><p>execute success!</p>';
+			echo '</p><p>'.lang('Execute success!').'</p>';
 			$admin_data = array(
 					'email' => $email,
 					'passwd' => generate_passwd($admin_passwd),
 					'createtime' => time()
 				);
 			$db->update($config['dbprefix'].'user', $admin_data, "id=1");
-			echo '<p>install success!</p><p><a href="'.WEB_PATH.'">go home page</a></p>';
+			echo '<p>'.lang('Install success!').'</p><p><a href="'.WEB_PATH.'">'.lang('Go home page').'</a></p>';
 		}catch (Exception $e){
-			echo '<p>error!</p>';
+			echo '<p>'.lang('Cause Error!').'</p>';
 			$this->outputBack();
 			return;
 		}
@@ -167,7 +176,7 @@ class ModuleInstall extends LmlBase{
 	}
 
 	public function outputBack(){
-		echo '<p><a href="javascript:history.go(-1);">go back</a></p>';
+		echo '<p><a href="javascript:history.go(-1);">'.lang('Go back').'</a></p>';
 	}
 
 	public function generateSalt(){

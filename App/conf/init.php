@@ -2,7 +2,10 @@
 
 //define('ADMIN_FORCE', true);
 
-$start_time = microtime();
+$start_time = time();
+$start_microtime = microtime();
+$GLOBALS['start_time'] = time();
+$GLOBALS['start_microtime'] = $start_microtime;
 define("APP_DOMAIN", $_SERVER['HTTP_HOST']);
 
 $lastRouter = array('last');
@@ -142,6 +145,10 @@ function lang($token, $data=array()){
 		$lang = array_merge($lang, $data);
 	}
 	return isset($lang[$token]) ? $lang[$token] : $token;
+}
+
+function elang($t){
+	echo htmlspecialchars(lang($t), ENT_QUOTES);
 }
 
 function arr2mapping($arr, $f, $m=''){

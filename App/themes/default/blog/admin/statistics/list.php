@@ -1,11 +1,11 @@
 <table>
 <tr>
-<th>ID</th>
-<th>Host</th>
-<th>Uri</th>
-<th>RemoteAddr</th>
-<th>Referrer</th>
-<th>Time</th>
+<th><?php elang('ID')?></th>
+<th><?php elang('Domain')?></th>
+<th><?php elang('URI')?></th>
+<th><?php elang('RemoteAddr')?></th>
+<th><?php elang('Referrer')?></th>
+<th><?php elang('CreatedTime')?></th>
 </tr>
 <?php foreach ($rs as $k=>$v){?>
 <tr>
@@ -14,7 +14,7 @@
 <td><?php echo $v['request_uri'];?></td>
 <td><?php echo $v['remote_addr'];?></td>
 <td><?php echo $v['http_referer'];?></td>
-<td><?php echo date('Y-m-d H:i:s', $v['request_time']);?></td>
+<td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 </tr>
 <?php }?>
 </table>

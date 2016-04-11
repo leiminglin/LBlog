@@ -26,11 +26,11 @@ class ModuleUser extends LmlBase{
 			*/
 			$_SESSION['userinfo'] = $arr;
 			$arrsql = array(
-				'email'=>microtime().'_'.rand(0, 10000),
+				'email'=>$GLOBALS['start_microtime'].'_'.rand(0, 10000),
 				'passwd'=>'',
 				'nickname'=>$arr['nickname'],
 				'source'=>'qq',
-				'createtime'=>time(),
+				'createtime'=>$GLOBALS['start_time'],
 			);
 			$mUser->add($arrsql);
 			$userid = $mUser->db->getLastId();
@@ -39,7 +39,7 @@ class ModuleUser extends LmlBase{
 				'openid'=>$oid,
 				'accesstoken'=>$acs,
 				'userinfo'=>json_encode($arr),
-				'createtime'=>time(),
+				'createtime'=>$GLOBALS['start_time'],
 			);
 			$mUser->addQq($arrsql);
 		}
@@ -47,10 +47,10 @@ class ModuleUser extends LmlBase{
 		$arrsql = array(
 				'userid'=>$userid,
 				'from'=>'qq',
-				'createtime'=>time(),
+				'createtime'=>$GLOBALS['start_time'],
 		);
 		$mUser->addLoginLog($arrsql);
-		$expire_time = time()+86400*30;
+		$expire_time = $GLOBALS['start_time']+86400*30;
 		setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 		header('HTTP/1.1 302 Moved Temporarily');
 		header('Status:302 Moved Temporarily');
@@ -96,11 +96,11 @@ class ModuleUser extends LmlBase{
 				$user_message['nickname'] = $user_message['screen_name'];
 				$_SESSION['userinfo'] = $user_message;
 				$arrsql = array(
-						'email'=>microtime().'_'.rand(0, 10000),
+						'email'=>$GLOBALS['start_microtime'].'_'.rand(0, 10000),
 						'passwd'=>'',
 						'nickname'=>$user_message['nickname'],
 						'source'=>'weibo',
-						'createtime'=>time(),
+						'createtime'=>$GLOBALS['start_time'],
 				);
 				$mUser->add($arrsql);
 				$userid = $mUser->db->getLastId();
@@ -109,17 +109,17 @@ class ModuleUser extends LmlBase{
 						'weiboid'=>$uid_get['uid'],
 						'accesstoken'=>$_SESSION['token']['access_token'],
 						'userinfo'=>json_encode($user_message),
-						'createtime'=>time(),
+						'createtime'=>$GLOBALS['start_time'],
 				);
 				$mUser->addWeibo($arrsql);
 			}
 			$arrsql = array(
 					'userid'=>$userid,
 					'from'=>'weibo',
-					'createtime'=>time(),
+					'createtime'=>$GLOBALS['start_time'],
 			);
 			$mUser->addLoginLog($arrsql);
-			$expire_time = time()+86400*30;
+			$expire_time = $GLOBALS['start_time']+86400*30;
 			setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 			header('HTTP/1.1 302 Moved Temporarily');
 			header('Status:302 Moved Temporarily');
@@ -182,7 +182,7 @@ class ModuleUser extends LmlBase{
 			
 			$mUser = new ModelUser();
 			if( ($userid=$mUser->register($email, $passwd)) && $valid ){
-				$expire_time = time()+86400*30;
+				$expire_time = $GLOBALS['start_time']+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				header("Location:".WEB_PATH);
 			}else{
@@ -207,12 +207,12 @@ class ModuleUser extends LmlBase{
 					$this->assign('save_status', '登录失败：请在管理员入口登录！');
 					return $this->display();
 				}
-				$expire_time = time()+86400*30;
+				$expire_time = $GLOBALS['start_time']+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				$arrsql = array(
 					'userid'=>$userid,
 					'from'=>null,
-					'createtime'=>time(),
+					'createtime'=>$GLOBALS['start_time'],
 				);
 				$mUser->addLoginLog($arrsql);
 				header("Location:".WEB_PATH);
