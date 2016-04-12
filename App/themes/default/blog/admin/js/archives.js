@@ -418,13 +418,24 @@ lml.loadJs.competeLoad([
 	});
 
 	$.ajaxSetup({global:true});
-	$(document).ajaxError(function(event, jqxhr, settings, thrownError){
+	$(document).ajaxError(function(event,jqxhr,settings,thrownError){
 		/*console.log(event, jqxhr, settings, thrownError);*/
 		if(jqxhr.status == 401){
 			window.location.reload();
 		}else if(jqxhr.status==403){
 			show_info('<?php elang('Sorry, You don\'t have permission!')?>');
 		}
+	});
+	
+	var topbar = $('<div/>').attr('style','position:fixed;border:1px solid red;width:0%;height:0px;top:0;left:0;_position:absolute;_bottom:auto;_top:expression(eval(document.documentElement.scrollTop));opacity:.5;filter:alpha(opacity=50);font-size:0;overflow:hidden;')
+	.appendTo(document.body);
+	
+	$(document).ajaxStart(function(){
+		$(topbar).animate({"width":"15%","opacity":"0.5"});
+	});
+	
+	$(document).ajaxComplete(function(event,request,settings){
+		$(topbar).stop(true,true).animate({"width":"100%"}).animate({"opacity":"0"}).css({"width":"0%"});
 	});
 
 },function(){
