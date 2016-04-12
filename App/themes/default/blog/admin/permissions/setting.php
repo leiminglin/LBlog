@@ -12,8 +12,8 @@ foreach ($rs as $k=>$v){
 ?>
 
 <td>
-<input id="per<?php echo $type,$v['id']?>" name="permissionids[]" value="<?php echo $v['id']?>" type="checkbox" title="<?php echo $v['description']?>" <?php if(in_array($v['id'], $rsr)){echo 'checked';};?>/>
-<label for="per<?php echo $type,$v['id']?>" <?php if(in_array($v['id'], $rsr)){echo 'class="cl"';};?>><?php echo $v['description']?></label>
+<input id="per<?php echo $type,$v['id']?>" name="permissionids[]" value="<?php echo $v['id']?>" type="checkbox" title="<?php elang($v['description'])?>" <?php if(in_array($v['id'], $rsr)){echo 'checked';};?>/>
+<label for="per<?php echo $type,$v['id']?>" <?php if(in_array($v['id'], $rsr)){echo 'class="cl"';};?>><?php elang($v['description'])?></label>
 </td>
 
 <?php 
