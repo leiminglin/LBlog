@@ -92,18 +92,26 @@ function modify_tab_title(origin_title, new_title){
 }
 
 function get(u,c){
+	$('#topbar').animate({"width":"15%","opacity":"0.5"});
 	$.ajax({
 		"method":"GET",
 		"url":u
-	}).done(c);
+	}).done(c)
+	.done(function(){
+		$('#topbar').stop(true,true).animate({"width":"100%"}).animate({"opacity":"0"}).css({"width":"0%"});
+	});
 }
 
 function post(u,d,c){
+	$('#topbar').animate({"width":"15%","opacity":"0.5"});
 	$.ajax({
 		"method":"POST",
 		"url":u,
 		"data":d
-	}).done(c);
+	}).done(c)
+	.done(function(){
+		$('#topbar').stop(true,true).animate({"width":"100%"}).animate({"opacity":"0"}).css({"width":"0%"});
+	});
 }
 
 
