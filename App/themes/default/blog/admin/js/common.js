@@ -94,8 +94,8 @@ function modify_tab_title(origin_title, new_title){
 function get(u,c){
 	$('#topbar').stop(true,true)
 	.animate({"width":"15%","opacity":"0.5"})
-	.animate({"width":"30%","opacity":"0.8"})
-	.animate({"width":"80%","opacity":"1"}, {"duration":"10000"});
+	.animate({"width":"30%","opacity":"0.6"})
+	.animate({"width":"80%","opacity":"0.8"}, {"duration":"10000"});
 	$.ajax({
 		"method":"GET",
 		"url":u
@@ -109,8 +109,8 @@ function get(u,c){
 function post(u,d,c){
 	$('#topbar').stop(true,true)
 	.animate({"width":"15%","opacity":"0.5"})
-	.animate({"width":"30%","opacity":"0.8"})
-	.animate({"width":"80%","opacity":"1"}, {"duration":"10000"});
+	.animate({"width":"30%","opacity":"0.6"})
+	.animate({"width":"80%","opacity":"0.8"}, {"duration":"10000"});
 	$.ajax({
 		"method":"POST",
 		"url":u,
