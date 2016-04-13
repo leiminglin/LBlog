@@ -92,25 +92,33 @@ function modify_tab_title(origin_title, new_title){
 }
 
 function get(u,c){
-	$('#topbar').animate({"width":"15%","opacity":"0.5"});
+	$('#topbar').stop(true,true)
+	.animate({"width":"15%","opacity":"0.5"})
+	.animate({"width":"30%","opacity":"0.8"})
+	.animate({"width":"80%","opacity":"1"}, {"duration":"10000"});
 	$.ajax({
 		"method":"GET",
 		"url":u
 	}).done(c)
 	.done(function(){
-		$('#topbar').stop(true,true).animate({"width":"100%"}).animate({"opacity":"0"}).css({"width":"0%"});
+		$('#topbar').stop(true,true)
+		.animate({"width":"100%"}).animate({"opacity":"0"}).css({"width":"0%"});
 	});
 }
 
 function post(u,d,c){
-	$('#topbar').animate({"width":"15%","opacity":"0.5"});
+	$('#topbar').stop(true,true)
+	.animate({"width":"15%","opacity":"0.5"})
+	.animate({"width":"30%","opacity":"0.8"})
+	.animate({"width":"80%","opacity":"1"}, {"duration":"10000"});
 	$.ajax({
 		"method":"POST",
 		"url":u,
 		"data":d
 	}).done(c)
 	.done(function(){
-		$('#topbar').stop(true,true).animate({"width":"100%"}).animate({"opacity":"0"}).css({"width":"0%"});
+		$('#topbar').stop(true,true)
+		.animate({"width":"100%"}).animate({"opacity":"0"}).css({"width":"0%"});
 	});
 }
 
