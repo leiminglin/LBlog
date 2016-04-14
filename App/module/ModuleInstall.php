@@ -1,22 +1,30 @@
 <?php
 class ModuleInstall extends LmlBase{
 
+	protected function getHtmlBegin(){
+		return
+		'
+		<!DOCTYPE html>
+		<html>
+		<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<title>'.lang('LBlog Install Guard').'</title>
+		</head>
+		<body>';
+	}
+
+	protected function getHtmlend(){
+		return '</body></html>';
+	}
+
 	public function index(){
 
 		lang('', require APP_PATH.'conf/lang/lang_'.DEFAULT_LANG.'.php');
 		
 		if(!$_POST){
-			echo
+			echo $this->getHtmlBegin().
 '
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>'.lang('LBlog Install Guard').'</title>
-</head>
-<body>
-
 <form action="'.WEB_APP_PATH.'install" method="post">
 <table align="center">
 <tr>
@@ -82,9 +90,7 @@ class ModuleInstall extends LmlBase{
 
 </table>
 </form>
-
-</body></html>
-';
+'.$this->getHtmlend();
 			return;
 		}
 
@@ -104,8 +110,10 @@ class ModuleInstall extends LmlBase{
 			!$_POST['dbprefix']
 
 		){
+			echo $this->getHtmlBegin();
 			echo '<p>'.lang('Please input completely!').'</p>';
 			$this->outputBack();
+			echo $this->getHtmlend();
 			return;
 		}
 
@@ -125,17 +133,22 @@ class ModuleInstall extends LmlBase{
 		try{
 			$db = db($config);
 		}catch(Exception $e){
+			echo $this->getHtmlBegin();
 			echo '<p>'.lang('Database connect fail!').'</p>';
 			$this->outputBack();
+			echo $this->getHtmlend();
 			return;
 		}
 
 		if(!is_writeable(APP_PATH)){
+			echo $this->getHtmlBegin();
 			echo '<p>'.lang('App directory can\'t be writeable!').'</p>';
 			$this->outputBack();
+			echo $this->getHtmlend();
 			return;
 		}
 
+		echo $this->getHtmlBegin();
 		echo '<p>'.lang('Begin').'</p>';
 
 		$statement = '';
@@ -166,9 +179,12 @@ class ModuleInstall extends LmlBase{
 				);
 			$db->update($config['dbprefix'].'user', $admin_data, "id=1");
 			echo '<p>'.lang('Install success!').'</p><p><a href="'.WEB_PATH.'">'.lang('Go home page').'</a></p>';
+			echo $this->getHtmlend();
 		}catch (Exception $e){
+			echo $this->getHtmlBegin();
 			echo '<p>'.lang('Cause Error!').'</p>';
 			$this->outputBack();
+			echo $this->getHtmlend();
 			return;
 		}
 
