@@ -46,6 +46,8 @@ class ModuleAdmin extends LmlBlog{
 		
 		$qmap = array(
 			'comments' => 'blog_comment',
+			'sessions' => 'session',
+			'accounts' => 'blog_account',
 		);
 		$m = q($qmap[C_ACTION]);
 		

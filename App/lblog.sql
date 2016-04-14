@@ -292,6 +292,8 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Site keywords', '网站关键�
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Site meta-infomation', '网站元信息');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Security', '安全');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Login page uri', '登录页地址');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'ExpiresTime', '过期时间');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RoleID', '角色编号');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Previous page', '上一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
 
