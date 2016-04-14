@@ -92,18 +92,44 @@ function modify_tab_title(origin_title, new_title){
 }
 
 function get(u,c){
+	$('#topbar').stop(true,true)
+	.css({"width":"0%","opacity":"0.5"})
+	.animate({"width":"15%","opacity":"0.5"})
+	.animate({"width":"30%","opacity":"0.6"})
+	.animate({"width":"80%","opacity":"0.8"}, 10000);
 	$.ajax({
 		"method":"GET",
 		"url":u
-	}).done(c);
+	}).done(c)
+	.complete(function(){
+		$('#topbar').stop(true,true)
+		.animate({"width":"100%"}).animate({"opacity":"0"})
+		.queue(function(){
+			$(this).css({"width":"0%"});
+			$(this).dequeue();
+		});
+	});
 }
 
 function post(u,d,c){
+	$('#topbar').stop(true,true)
+	.css({"width":"0%","opacity":"0.5"})
+	.animate({"width":"15%","opacity":"0.5"})
+	.animate({"width":"30%","opacity":"0.6"})
+	.animate({"width":"80%","opacity":"0.8"}, 10000);
 	$.ajax({
 		"method":"POST",
 		"url":u,
 		"data":d
-	}).done(c);
+	}).done(c)
+	.complete(function(){
+		$('#topbar').stop(true,true)
+		.animate({"width":"100%"}).animate({"opacity":"0"})
+		.queue(function(){
+			$(this).css({"width":"0%"});
+			$(this).dequeue();
+		});
+	});
 }
 
 

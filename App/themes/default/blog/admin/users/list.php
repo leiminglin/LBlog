@@ -28,8 +28,10 @@
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
 <?php if($v['id'] != ADMIN_ACCOUNT_ID){?>
-<a href="javascript:void(0)" data-action="lblog_admin_users_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a> / 
-<a href="javascript:void(0)" data-action="lblog_admin_users_permission" data-id="<?php echo $v['id'];?>"><?php elang('Permission')?></a>
+<a href="javascript:void(0)" data-action="lblog_admin_users_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+<?php if($role_name){?>
+ / <a href="javascript:void(0)" data-action="lblog_admin_users_permission" data-id="<?php echo $v['id'];?>"><?php elang('Permission')?></a>
+<?php }?>
 <?php }?>
 </td>
 </tr>
