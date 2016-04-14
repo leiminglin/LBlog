@@ -556,14 +556,14 @@ class ModuleAdmin extends LmlBlog{
 				if($type == 'user'){
 					$mu = q('blog_permission_user');
 					$rsr = $mu->select('*', 'userid=?', array($matches[2]));
-					$this->assign('rsr', arr_get_index($rsr, 'permissionid'));
+					$this->assign('rsr', array_column($rsr, 'permissionid'));
 					$this->assign('id', $matches[2]);
 					$this->assign('type', $type);
 					$this->display('', '/setting.php');
 				}elseif($type == 'role'){
 					$mr = q('blog_permission_role');
 					$rsr = $mr->select('*', 'roleid=?', array($matches[2]));
-					$this->assign('rsr', arr_get_index($rsr, 'permissionid'));
+					$this->assign('rsr', arrry_column($rsr, 'permissionid'));
 					$this->assign('id', $matches[2]);
 					$this->assign('type', $type);
 					$this->display('', '/setting.php');
