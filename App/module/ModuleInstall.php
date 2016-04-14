@@ -8,6 +8,15 @@ class ModuleInstall extends LmlBase{
 		if(!$_POST){
 			echo
 '
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>'.lang('LBlog Install Guard').'</title>
+</head>
+<body>
+
 <form action="'.WEB_APP_PATH.'install" method="post">
 <table align="center">
 <tr>
@@ -73,6 +82,8 @@ class ModuleInstall extends LmlBase{
 
 </table>
 </form>
+
+</body></html>
 ';
 			return;
 		}
