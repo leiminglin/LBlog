@@ -170,6 +170,10 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_modify', '/^(?:\\
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'statistics_access_record_read_list', '/^(?:\\/index\\.php)?\\/admin\\/statistics\\/list/', 'View access records list page', 'Y', unix_timestamp());
 
+INSERT INTO `lblog_blog_permission` VALUES (default, 'sessions_read_list', '/^(?:\\/index\\.php)?\\/admin\\/sessions\\/list/', 'View sessions list page', 'Y', unix_timestamp());
+
+INSERT INTO `lblog_blog_permission` VALUES (default, 'accounts_read_list', '/^(?:\\/index\\.php)?\\/admin\\/accounts\\/list/', 'View accounts list page', 'Y', unix_timestamp());
+
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings$/', 'View settings page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'Modify seo settings', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'Modify login page uri settings', 'Y', unix_timestamp());
@@ -292,6 +296,8 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Site keywords', '网站关键�
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Site meta-infomation', '网站元信息');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Security', '安全');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Login page uri', '登录页地址');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'ExpiresTime', '过期时间');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RoleID', '角色编号');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Previous page', '上一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
 
@@ -322,6 +328,8 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View user permissions', '查看
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View role permissions', '查看角色权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify user permissions', '修改用户权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify role permissions', '修改角色权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View sessions list page', '查看会话列表页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View accounts list page', '查看账号列表页');
 
 
 DROP TABLE IF EXISTS `lblog_user_qq`;

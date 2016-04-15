@@ -129,7 +129,7 @@ function route_match($regexp){
 }
 
 function arr_get($arr, $k, $r=''){
-	if(!$k || !$arr){
+	if($k === '' || !$arr){
 		return $r;
 	}
 	return isset($arr[$k]) ? $arr[$k] : $r;
