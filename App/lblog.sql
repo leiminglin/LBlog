@@ -176,6 +176,7 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'accounts_read_list', '/^(?
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/index\\.php)?\\/admin\\/settings$/', 'View settings page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'Modify seo settings', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_jscode', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/jscode/', 'Modify JavaScript code settings', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'Modify login page uri settings', 'Y', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'View users list page', 'Y', unix_timestamp());
@@ -298,6 +299,7 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Security', '安全');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Login page uri', '登录页地址');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'ExpiresTime', '过期时间');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RoleID', '角色编号');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'JavaScript Code', 'JavaScript 代码');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Previous page', '上一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
 
@@ -318,6 +320,7 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View access records list page',
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View settings page', '查看设置页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify seo settings', '修改SEO设置');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify login page uri settings', '修改登录页URI');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify JavaScript code settings', '修改JavaScript代码');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View users list page', '查看用户列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Operate users role', '操作用户权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View roles list page', '查看角色列表页');
@@ -366,7 +369,7 @@ CREATE TABLE `lblog_config` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `lblog_config` VALUES ('1', 'SITE_NAME', 'LBlog');
-INSERT INTO `lblog_config` VALUES ('2', 'SITE_KEYWORDS', '开源博客系统-LBLOG');
-INSERT INTO `lblog_config` VALUES ('3', 'SITE_DESCRIPTION', 'LBLOG博客系统是一款轻量级的博客兼CMS建站系统,基于LMLPHP框架,丰富的模板和雄厚的社区技术支持,为自由快速建站而生,让网站轻盈而高速.');
-
+INSERT INTO `lblog_config` VALUES (default, 'SITE_NAME', 'LBlog');
+INSERT INTO `lblog_config` VALUES (default, 'SITE_KEYWORDS', '开源博客系统-LBLOG');
+INSERT INTO `lblog_config` VALUES (default, 'SITE_DESCRIPTION', 'LBLOG博客系统是一款轻量级的博客兼CMS建站系统,基于LMLPHP框架,丰富的模板和雄厚的社区技术支持,为自由快速建站而生,让网站轻盈而高速.');
+INSERT INTO `lblog_config` VALUES (default, 'JAVASCRIPT_CODE', 'deferred.then(function(){\r\n/*google analytics sample begin*/\r\n(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\r\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\r\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\r\n})(window,document,\'script\',\'https://www.google-analytics.com/analytics.js\',\'ga\');\r\nga(\'create\', \'UA-76336948-1\', \'auto\');\r\nga(\'send\', \'pageview\');\r\n/*cnzz statistic sample*/\r\nlml.loadJs(\'//s4.cnzz.com/z_stat.php?id=1254164850&web_id=1254164850\');\r\ndeferred.promise();\r\n});');

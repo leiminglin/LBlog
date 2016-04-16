@@ -51,52 +51,51 @@ class ModuleAdmin extends LmlBlog{
 			'sessions' => 'session',
 			'accounts' => 'blog_account',
 		);
-		$m = q($qmap[C_ACTION]);
-		
-		switch ($action){
-			case 'list':
-				$pid = 1;
-				$matches = route_match('[\w]+\/(\d+)');
-				if (isset($matches[1]) && $matches[1] > 1) {
-					$pid = $matches[1];
-				}
-				$rs = $m->getList(10*($pid-1), 10, false);
-				$count = $m->getCount();
-				$page = new Paging($count, $pid, 10);
-				$this->assign('rs', $rs);
-				$this->assign('page', $page);
-				$this->assign('pid', $pid);
-				$this->display('', '/list.php');
-				break;
-			case 'post':
-				$matches = route_match('[\w]+\/(\d+)');
-				if (isset($matches[1])) {
-					$rs = $m->find($matches[1]);
-					$this->assign('rs', $rs);
-				}
-				$this->display('', '/edit.php');
-				break;
-			case 'save':
-				$matches = route_match('[\w]+\/(\d+)');
-				if (!isset($matches[1])) {
-					if(($id = $m->add($_POST)) == true){
-						$this->assign('save_status', '保存成功！');
-						$rs = $m->find($id);
-						$this->assign('rs', $rs);
-						$this->display('', '/edit.php');
-					}
-				}else{
-					$id = $matches[1];
-					if($m->update($_POST, "id=$id")){
-						$this->assign('save_status', '保存成功！');
-					}else{
-						$this->assign('save_status', '内容未改变！');
-					}
-				}
-				break;
-		}
 		
 		if(isset($qmap[C_ACTION])){
+			$m = q($qmap[C_ACTION]);
+			switch ($action){
+				case 'list':
+					$pid = 1;
+					$matches = route_match('[\w]+\/(\d+)');
+					if (isset($matches[1]) && $matches[1] > 1) {
+						$pid = $matches[1];
+					}
+					$rs = $m->getList(10*($pid-1), 10, false);
+					$count = $m->getCount();
+					$page = new Paging($count, $pid, 10);
+					$this->assign('rs', $rs);
+					$this->assign('page', $page);
+					$this->assign('pid', $pid);
+					$this->display('', '/list.php');
+					break;
+				case 'post':
+					$matches = route_match('[\w]+\/(\d+)');
+					if (isset($matches[1])) {
+						$rs = $m->find($matches[1]);
+						$this->assign('rs', $rs);
+					}
+					$this->display('', '/edit.php');
+					break;
+				case 'save':
+					$matches = route_match('[\w]+\/(\d+)');
+					if (!isset($matches[1])) {
+						if(($id = $m->add($_POST)) == true){
+							$this->assign('save_status', '保存成功！');
+							$rs = $m->find($id);
+							$this->assign('rs', $rs);
+							$this->display('', '/edit.php');
+						}
+					}else{
+						$id = $matches[1];
+						if($m->update($_POST, "id=$id")){
+							$this->assign('save_status', '保存成功！');
+						}else{
+							$this->assign('save_status', '内容未改变！');
+						}
+					}
+					break;
+			}
 			return;
 		}
 
@@ -402,24 +401,20 @@ class ModuleAdmin extends LmlBlog{
 			case 'save';
 				$matches_save = route_match('save\/([\w]+)');
 				$type = arr_get($matches_save, 1);
-				if($type == 'seo'){
+				if(in_array($type, array('seo', 'jscode'))){
 					foreach ($_POST as $k=>$v){
-						$mConfig->updateConfig($k, $v);
+						$mConfig->updateOrAdd($k, $v);
 					}
 				}elseif($type == 'security'){
-					if(!preg_match('/^login/', $_POST['login_page_uri'])){
+					if(!preg_match('/^login/', $_POST['LOGIN_PAGE_URI'])){
 						echo 'must begin with login';
 						return;
 					}
-					if(!preg_match('/^[a-zA-Z0-9_]+$/i', $_POST['login_page_uri'])){
+					if(!preg_match('/^[a-zA-Z0-9_]+$/i', $_POST['LOGIN_PAGE_URI'])){
 						echo 'must be [a-zA-Z0-9_] format';
 						return;
 					}
-					if($mConfig->checkConfigExists('LOGIN_PAGE_URI')){
-						$mConfig->updateConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
-					}else{
-						$mConfig->saveConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
-					}
+					$mConfig->updateOrAdd('LOGIN_PAGE_URI', $_POST['LOGIN_PAGE_URI']);
 				}
 				break;
 			case '';
@@ -428,7 +423,9 @@ class ModuleAdmin extends LmlBlog{
 				$site['site_keywords'] = $mConfig->getConfig('SITE_KEYWORDS');
 				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
 				$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
-				$site['login_page_uri'] = $login_uri ? $login_uri : 'login';
+				$site['LOGIN_PAGE_URI'] = $login_uri ? $login_uri : 'login';
+				$site['javascript_code'] = $mConfig->getConfig('JAVASCRIPT_CODE');
+				
 				$this->assign('site', $site);
 				$this->display('', '/home.php');
 				break;
