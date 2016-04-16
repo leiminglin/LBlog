@@ -120,8 +120,6 @@ if(empty($site)){
 
 <div>
 
-QQ weibo config,
-
 timezone,
 
 logo upload,

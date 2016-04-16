@@ -640,7 +640,7 @@ class ModuleAdmin extends LmlBlog{
 				}
 				$type = $matches[1];
 				$id = $matches[2];
-				$permissionids = $_POST['permissionids'];
+				$permissionids = arr_get($_POST, 'permissionids', array());
 				
 				if($type == 'user'){
 					$mu = q('blog_permission_user');
