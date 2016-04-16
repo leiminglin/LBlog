@@ -398,6 +398,7 @@ class ModuleAdmin extends LmlBlog{
 		$action = arr_get($matches, 1);
 		$mConfig = new ModelConfig();
 		$qq_config_file = APP_PATH.'third/qqconnect2.1/API/comm/inc.php';
+		$weibo_config_file = APP_PATH.'third/sinaweibov2/config.php';
 		switch ($action){
 			case 'save';
 				$matches_save = route_match('save\/([\w]+)');
@@ -417,15 +418,49 @@ class ModuleAdmin extends LmlBlog{
 					}
 					$mConfig->updateOrAdd('LOGIN_PAGE_URI', $_POST['LOGIN_PAGE_URI']);
 				}elseif($type == 'openid_qq'){
-					$qq_appid = $_POST['QQ_CONFIG_APPID'];
-					$qq_appkey = $_POST['QQ_CONFIG_APPKEY'];
-					$qq_callback = $_POST['QQ_CONFIG_CALLBACK'];
+					$qq_appid = addslashes($_POST['QQ_CONFIG_APPID']);
+					$qq_appkey = addslashes($_POST['QQ_CONFIG_APPKEY']);
+					$qq_callback = addslashes($_POST['QQ_CONFIG_CALLBACK']);
 					$qq_config_contents = file_get_contents($qq_config_file);
+					if(
+						strpos('x'.$qq_appid, "'") > 0 || 
+						strpos('x'.$qq_appkey, "'") > 0 ||
+						strpos('x'.$qq_callback, "'") > 0 ||
+						strpos('x'.$qq_appid, '"') > 0 ||
+						strpos('x'.$qq_appkey, '"') > 0 ||
+						strpos('x'.$qq_callback, '"') > 0
+							
+					){
+						ehtml('It contains illegal characters " and \'');
+						return;
+					}
 					// "appid":"","appkey":"","callback":
 					$qq_config_contents = preg_replace('/"appid":"[^"]*"/', '"appid":"'.$qq_appid.'"', $qq_config_contents);
 					$qq_config_contents = preg_replace('/"appkey":"[^"]*"/', '"appkey":"'.$qq_appkey.'"', $qq_config_contents);
 					$qq_config_contents = preg_replace('/"callback":"[^"]*"/', '"callback":"'.$qq_callback.'"', $qq_config_contents);
 					file_put_contents($qq_config_file, $qq_config_contents);
+				}elseif($type == 'openid_weibo'){
+					$weibo_appkey = addslashes($_POST['WEIBO_CONFIG_APPKEY']);
+					$weibo_secretkey = addslashes($_POST['WEIBO_CONFIG_SECRETKEY']);
+					$weibo_callback = addslashes($_POST['WEIBO_CONFIG_CALLBACK']);
+					$weibo_config_contents = file_get_contents($weibo_config_file);
+					if(
+						strpos('x'.$weibo_appkey, "'") > 0 ||
+						strpos('x'.$weibo_secretkey, "'") > 0 ||
+						strpos('x'.$weibo_callback,"'") > 0 ||
+						strpos('x'.$weibo_appkey, '"') > 0 ||
+						strpos('x'.$weibo_secretkey, '"') > 0 ||
+						strpos('x'.$weibo_callback, '"') > 0
+								
+					){
+						ehtml('It contains illegal characters " and \'');
+						return;
+					}
+					// "WB_AKEY", ''
+					$weibo_config_contents = preg_replace('/"WB_AKEY",\s\'[^\']*\'/', '"WB_AKEY", \''.$weibo_appkey.'\'', $weibo_config_contents);
+					$weibo_config_contents = preg_replace('/"WB_SKEY",\s\'[^\']*\'/', '"WB_SKEY", \''.$weibo_secretkey.'\'', $weibo_config_contents);
+					$weibo_config_contents = preg_replace('/"WB_CALLBACK_URL",\s\'[^\']*\'/', '"WB_CALLBACK_URL", \''.$weibo_callback.'\'', $weibo_config_contents);
+					file_put_contents($weibo_config_file, $weibo_config_contents);
 				}
 				break;
 			case '';
@@ -442,6 +477,17 @@ class ModuleAdmin extends LmlBlog{
 				$site['qq_config_appid'] = $qq_config->appid;
 				$site['qq_config_appkey'] = $qq_config->appkey;
 				$site['qq_config_callback'] = $qq_config->callback;
+				
+				$weibo_config = file($weibo_config_file);
+				// define("WB_AKEY", '');
+				preg_match('/define\("WB_AKEY",\s\'(.*)\'\);/', $weibo_config[1], $matches_temp);
+				$site['weibo_config_appkey'] = arr_get($matches_temp, 1);
+				// define("WB_SKEY", '');
+				preg_match('/define\("WB_SKEY",\s\'(.*)\'\);/', $weibo_config[2], $matches_temp);
+				$site['weibo_config_secretkey'] = arr_get($matches_temp, 1);
+				// define("WB_CALLBACK_URL", 'http://{your_domain}/user/oauthweibo');
+				preg_match('/define\("WB_CALLBACK_URL",\s\'(.*)\'\);/', $weibo_config[3], $matches_temp);
+				$site['weibo_config_callback'] = arr_get($matches_temp, 1);
 				
 				$this->assign('site', $site);
 				$this->display('', '/home.php');

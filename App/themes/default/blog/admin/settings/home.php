@@ -36,15 +36,14 @@ if(empty($site)){
 <form action="<?php echo WEB_APP_PATH?>admin/settings/save/security" method="post">
 <table>
 <tr>
-<td colspan="3"><?php elang('Security')?></td>
+<td colspan="2"><?php elang('Security');?>(<?php elang('Admin');elang('Login page uri')?>)</td>
 </tr>
 <tr>
-<td><?php elang('Login page uri')?></td>
 <td>/admin/</td>
 <td><input type="text" name="LOGIN_PAGE_URI" class="longinput" value="<?php echo arr_get($site, 'login_page_uri', 'login');?>"/></td>
 </tr>
 <tr>
-<td align="center" colspan="3"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
+<td align="center" colspan="2"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
 </tr>
 </table>
 </form>
@@ -54,14 +53,13 @@ if(empty($site)){
 <form action="<?php echo WEB_APP_PATH?>admin/settings/save/jscode" method="post">
 <table>
 <tr>
-<td colspan="2"><?php elang('JavaScript Code')?></td>
+<td><?php elang('JavaScript Code')?></td>
 </tr>
 <tr>
-<td><?php elang('JavaScript Code')?></td>
 <td><textarea cols="80" rows="12" name="JAVASCRIPT_CODE"><?php ehtml(arr_get($site, 'javascript_code'));?></textarea></td>
 </tr>
 <tr>
-<td align="center" colspan="2"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
+<td align="center"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
 </tr>
 </table>
 </form>
@@ -84,6 +82,31 @@ if(empty($site)){
 <tr>
 <td><?php elang('Callback')?></td>
 <td><input type="text" name="QQ_CONFIG_CALLBACK" class="longinput" value="<?php echo arr_get($site, 'qq_config_callback');?>"/></td>
+</tr>
+<tr>
+<td align="center" colspan="2"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
+</tr>
+</table>
+</form>
+
+<div class="line"></div>
+
+<form action="<?php echo WEB_APP_PATH?>admin/settings/save/openid_weibo" method="post">
+<table>
+<tr>
+<td colspan="2"><?php elang('Weibo');elang('Config')?></td>
+</tr>
+<tr>
+<td><?php elang('AppKey')?></td>
+<td><input type="text" name="WEIBO_CONFIG_APPKEY" class="longinput" value="<?php echo arr_get($site, 'weibo_config_appkey');?>"/></td>
+</tr>
+<tr>
+<td><?php elang('SecretKey')?></td>
+<td><input type="text" name="WEIBO_CONFIG_SECRETKEY" class="longinput" value="<?php echo arr_get($site, 'weibo_config_secretkey');?>"/></td>
+</tr>
+<tr>
+<td><?php elang('Callback')?></td>
+<td><input type="text" name="WEIBO_CONFIG_CALLBACK" class="longinput" value="<?php echo arr_get($site, 'weibo_config_callback');?>"/></td>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
