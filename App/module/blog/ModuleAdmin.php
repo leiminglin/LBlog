@@ -463,7 +463,15 @@ class ModuleAdmin extends LmlBlog{
 					$weibo_config_contents = preg_replace('/"WB_CALLBACK_URL",\s\'[^\']*\'/', '"WB_CALLBACK_URL", \''.$weibo_callback.'\'', $weibo_config_contents);
 					file_put_contents($weibo_config_file, $weibo_config_contents);
 				}elseif($type == 'timezone'){
-					$timezone = $_POST['TIMEZONE'];
+					$timezone = addslashes($_POST['TIMEZONE']);
+					if(
+						strpos('x'.$timezone, "'") > 0 ||
+						strpos('x'.$timezone, '"') > 0
+					
+					){
+						ehtml('It contains illegal characters " and \'');
+						return;
+					}
 					$baseconfig = require APP_PATH.'conf/baseconfig.php';
 					$baseconfig['timezone'] = $timezone;
 					$str = '<?php return $baseconfig='.var_export($baseconfig, true).';';

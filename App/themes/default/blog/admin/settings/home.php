@@ -114,8 +114,6 @@ if(empty($site)){
 </table>
 </form>
 
-
-
 <div class="line"></div>
 
 <form action="<?php echo WEB_APP_PATH?>admin/settings/save/timezone" method="post">
@@ -134,7 +132,6 @@ if(empty($site)){
 
 <div>
 
-timezone,
 
 logo upload,
 
