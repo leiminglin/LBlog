@@ -118,6 +118,20 @@ if(empty($site)){
 
 <div class="line"></div>
 
+<form action="<?php echo WEB_APP_PATH?>admin/settings/save/timezone" method="post">
+<table>
+<tr>
+<td><?php elang('Timezone')?></td>
+<td><input type="text" name="TIMEZONE" value="<?php echo arr_get($site, 'timezone');?>"/></td>
+<td align="center"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
+</tr>
+</table>
+</form>
+
+
+
+<div class="line"></div>
+
 <div>
 
 timezone,

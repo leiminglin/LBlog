@@ -399,6 +399,7 @@ class ModuleAdmin extends LmlBlog{
 		$mConfig = new ModelConfig();
 		$qq_config_file = APP_PATH.'third/qqconnect2.1/API/comm/inc.php';
 		$weibo_config_file = APP_PATH.'third/sinaweibov2/config.php';
+		$base_config_file = APP_PATH.'conf/baseconfig.php';
 		switch ($action){
 			case 'save';
 				$matches_save = route_match('save\/([\w]+)');
@@ -461,6 +462,12 @@ class ModuleAdmin extends LmlBlog{
 					$weibo_config_contents = preg_replace('/"WB_SKEY",\s\'[^\']*\'/', '"WB_SKEY", \''.$weibo_secretkey.'\'', $weibo_config_contents);
 					$weibo_config_contents = preg_replace('/"WB_CALLBACK_URL",\s\'[^\']*\'/', '"WB_CALLBACK_URL", \''.$weibo_callback.'\'', $weibo_config_contents);
 					file_put_contents($weibo_config_file, $weibo_config_contents);
+				}elseif($type == 'timezone'){
+					$timezone = $_POST['TIMEZONE'];
+					$baseconfig = require APP_PATH.'conf/baseconfig.php';
+					$baseconfig['timezone'] = $timezone;
+					$str = '<?php return $baseconfig='.var_export($baseconfig, true).';';
+					file_put_contents($base_config_file, $str);
 				}
 				break;
 			case '';
@@ -488,6 +495,9 @@ class ModuleAdmin extends LmlBlog{
 				// define("WB_CALLBACK_URL", 'http://{your_domain}/user/oauthweibo');
 				preg_match('/define\("WB_CALLBACK_URL",\s\'(.*)\'\);/', $weibo_config[3], $matches_temp);
 				$site['weibo_config_callback'] = arr_get($matches_temp, 1);
+				
+				$baseconfig = require APP_PATH.'conf/baseconfig.php';
+				$site['timezone'] = $baseconfig['timezone'];
 				
 				$this->assign('site', $site);
 				$this->display('', '/home.php');
