@@ -397,6 +397,7 @@ class ModuleAdmin extends LmlBlog{
 		$matches = route_match('([\w]+)');
 		$action = arr_get($matches, 1);
 		$mConfig = new ModelConfig();
+		$qq_config_file = APP_PATH.'third/qqconnect2.1/API/comm/inc.php';
 		switch ($action){
 			case 'save';
 				$matches_save = route_match('save\/([\w]+)');
@@ -415,6 +416,16 @@ class ModuleAdmin extends LmlBlog{
 						return;
 					}
 					$mConfig->updateOrAdd('LOGIN_PAGE_URI', $_POST['LOGIN_PAGE_URI']);
+				}elseif($type == 'openid_qq'){
+					$qq_appid = $_POST['QQ_CONFIG_APPID'];
+					$qq_appkey = $_POST['QQ_CONFIG_APPKEY'];
+					$qq_callback = $_POST['QQ_CONFIG_CALLBACK'];
+					$qq_config_contents = file_get_contents($qq_config_file);
+					// "appid":"","appkey":"","callback":
+					$qq_config_contents = preg_replace('/"appid":"[^"]*"/', '"appid":"'.$qq_appid.'"', $qq_config_contents);
+					$qq_config_contents = preg_replace('/"appkey":"[^"]*"/', '"appkey":"'.$qq_appkey.'"', $qq_config_contents);
+					$qq_config_contents = preg_replace('/"callback":"[^"]*"/', '"callback":"'.$qq_callback.'"', $qq_config_contents);
+					file_put_contents($qq_config_file, $qq_config_contents);
 				}
 				break;
 			case '';
@@ -423,8 +434,14 @@ class ModuleAdmin extends LmlBlog{
 				$site['site_keywords'] = $mConfig->getConfig('SITE_KEYWORDS');
 				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
 				$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
-				$site['LOGIN_PAGE_URI'] = $login_uri ? $login_uri : 'login';
+				$site['login_page_uri'] = $login_uri ? $login_uri : 'login';
 				$site['javascript_code'] = $mConfig->getConfig('JAVASCRIPT_CODE');
+				
+				$qq_inc = file($qq_config_file);
+				$qq_config = json_decode($qq_inc[1]);
+				$site['qq_config_appid'] = $qq_config->appid;
+				$site['qq_config_appkey'] = $qq_config->appkey;
+				$site['qq_config_callback'] = $qq_config->callback;
 				
 				$this->assign('site', $site);
 				$this->display('', '/home.php');

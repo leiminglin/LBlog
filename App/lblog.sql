@@ -178,6 +178,7 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_read', '/^(?:\\/i
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_seo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/seo/', 'Modify seo settings', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_jscode', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/jscode/', 'Modify JavaScript code settings', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/security/', 'Modify login page uri settings', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_openid_qq', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/openid_qq/', 'Modify openid QQ settings', 'Y', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'View users list page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'users_role_operate', '/^(?:\\/index\\.php)?\\/admin\\/users\\/set_account/', 'Operate users role', 'Y', unix_timestamp());
@@ -300,6 +301,8 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Login page uri', '登录页地�
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'ExpiresTime', '过期时间');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RoleID', '角色编号');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'JavaScript Code', 'JavaScript 代码');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Config', '配置');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Callback', '回调');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Previous page', '上一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
 
@@ -321,6 +324,7 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View settings page', '查看设
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify seo settings', '修改SEO设置');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify login page uri settings', '修改登录页URI');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify JavaScript code settings', '修改JavaScript代码');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify openid QQ settings', '修改开放认证QQ设置');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View users list page', '查看用户列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Operate users role', '操作用户权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View roles list page', '查看角色列表页');
