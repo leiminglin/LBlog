@@ -9,13 +9,14 @@ class ModelQ extends Model{
 	}
 	
 	public function updateOrAdd($arr, $condition){
-		$where = '';
+		$wheres = array();
 		if($condition){
 			$condition = (array)$condition;
 			foreach ($condition as $k => $v){
-				$where .= $k.'=?';
+				$wheres[] = $k.'=?';
 			}
 		}
+		$where = implode(' AND ', $wheres);
 		$params = array_values($condition);
 		$rs = $this->select('COUNT(1) C', $where, $params);
 		if(isset($rs[0]) && arr_get($rs[0], 'C')>0){
@@ -25,11 +26,11 @@ class ModelQ extends Model{
 	}
 	
 	public function isExists($arr){
-		$where = '';
+		$wheres = array();
 		foreach ($arr as $k => $v) {
-			$where .= $k.'=?';
+			$wheres[] = $k.'=?';
 		}
-		$rs = $this->getOne('COUNT(1) C', $where, array_values($arr));
+		$rs = $this->getOne('COUNT(1) C', implode(' AND ', $wheres), array_values($arr));
 		if ($rs['C'] > 0){
 			return true;
 		}
@@ -37,9 +38,6 @@ class ModelQ extends Model{
 	}
 	
 	public function notExists($arr){
-		if($this->isExists($arr)){
-			return false;
-		}
-		return true;
+		return $this->isExists($arr) ? false : true;
 	}
 }

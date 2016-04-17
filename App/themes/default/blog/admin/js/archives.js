@@ -434,7 +434,7 @@ lml.loadJs.competeLoad([
 			'settings_logo_check':function(o){
 				var fileval = $('input[name=LOGO]', $(_this.form)).val();
 				if(fileval == ''){
-					show_info('请选择文件');
+					show_info('<?php elang('Please select file')?>');
 					return false;
 				}
 				return true;

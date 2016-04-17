@@ -181,6 +181,7 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_security',
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_openid_qq', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/openid_qq/', 'Modify openid QQ settings', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_openid_weibo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/openid_weibo/', 'Modify openid weibo settings', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_timezone', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/timezone/', 'Modify timezone settings', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'settings_modify_logo', '/^(?:\\/index\\.php)?\\/admin\\/settings\\/save\\/logo/', 'Modify logo settings', 'Y', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'users_read_list', '/^(?:\\/index\\.php)?\\/admin\\/users\\/list/', 'View users list page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'users_role_operate', '/^(?:\\/index\\.php)?\\/admin\\/users\\/set_account/', 'Operate users role', 'Y', unix_timestamp());
@@ -309,6 +310,7 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Previous page', '上一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Admin', '管理员');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Timezone', '时区');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Please select file', '请选择文件');
 
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives list page', '查看文章列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives post page', '查看文章发布页');
@@ -331,6 +333,7 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify JavaScript code settings
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify openid QQ settings', '修改开放认证QQ设置');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify openid weibo settings', '修改开放认证微博设置');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify timezone settings', '修改时区设置');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify logo settings', '修改LOGO设置');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View users list page', '查看用户列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Operate users role', '操作用户权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View roles list page', '查看角色列表页');

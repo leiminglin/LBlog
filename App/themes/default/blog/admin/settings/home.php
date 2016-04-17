@@ -150,6 +150,5 @@ width="<?php echo $site['logo_width']?>" height="<?php echo $site['logo_height']
 <div>
 
 
-logo upload,
 
 </div>
