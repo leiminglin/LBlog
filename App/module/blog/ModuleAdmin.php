@@ -476,6 +476,45 @@ class ModuleAdmin extends LmlBlog{
 					$baseconfig['timezone'] = $timezone;
 					$str = '<?php return $baseconfig='.var_export($baseconfig, true).';';
 					file_put_contents($base_config_file, $str);
+				}elseif($type == 'logo'){
+					$file = arr_get($_FILES, 'LOGO');
+					if(!arr_get($file, 'tmp_name') || $file['size'] == 0){
+						return;
+					}
+					$hash = md5(file_get_contents($file['tmp_name']));
+					$file_name = $hash.'.'.strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+					$repository_image_path = 'master/'.date('Y/m/d').'/';
+					
+					$q_image = q('file_image');
+					
+					if($q_image->notExists(array('hash'=>$hash))){
+						$store_path = APP_PATH.'repository/image/'.$repository_image_path;
+						if(!file_exists($store_path)){
+							LmlUtils::mkdirDeep($store_path);
+						}
+						move_uploaded_file($file['tmp_name'], $store_path.$file_name);
+					}else{
+						return ;
+					}
+					
+					$source_info   = getimagesize($store_path.$file_name);
+					$source_width  = $source_info[0];
+					$source_height = $source_info[1];
+					
+					$q_image->add(array(
+						'hash' => $hash,
+						'path' => $repository_image_path.$file_name,
+						'type' => $file['type'],
+						'size' => $file['size'],
+						'width' => $source_width,
+						'height' => $source_height,
+						'origin_name' => $file['name'],
+						'createtime' => $GLOBALS['start_time'],
+					));
+					$insert_id = $q_image->getLastId();
+					$mConfig->updateOrAdd('LOGO_IMG_ID', $q_image->getLastId());
+					echo WEB_PATH.'file/image/'.$insert_id;
+					return;
 				}
 				break;
 			case '';
@@ -506,6 +545,12 @@ class ModuleAdmin extends LmlBlog{
 				
 				$baseconfig = require APP_PATH.'conf/baseconfig.php';
 				$site['timezone'] = $baseconfig['timezone'];
+				
+				$site['logo_url'] = WEB_PATH.'static/resource/lbloglogo100.png';
+				$logo_image_id = $mConfig->getConfig('LOGO_IMG_ID');
+				if ($logo_image_id) {
+					$site['logo_url'] = WEB_PATH.'file/image/'.$logo_image_id;
+				}
 				
 				$this->assign('site', $site);
 				$this->display('', '/home.php');

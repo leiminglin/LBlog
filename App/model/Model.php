@@ -59,4 +59,9 @@ abstract class Model{
 	public function query($sql, $params=array()){
 		return $this->db->query($sql, $params);
 	}
+	
+	public function getOne($fields, $where_tail='', $params=array()){
+		$rs = $this->db->select($this->table, $fields, $where_tail, $params);
+		return isset($rs[0]) ? $rs[0] : array();
+	}
 }

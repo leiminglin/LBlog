@@ -126,6 +126,22 @@ if(empty($site)){
 </table>
 </form>
 
+<div class="line"></div>
+
+<form action="<?php echo WEB_APP_PATH?>admin/settings/save/logo" method="post" enctype="multipart/form-data" target="iframeFile">
+<table>
+<tr>
+<td><?php elang('Logo')?></td>
+<td><input type="file" name="LOGO"/></td>
+<td align="center"><input class="btn" type="submit" value="<?php elang('Submit')?>" data-id="settings_logo"/></td>
+</tr>
+<tr>
+<td colspan="3"><img src="<?php echo $site['logo_url']?>" id="logo_img"/></td>
+</tr>
+</table>
+</form>
+<iframe id="iframeFile" name="iframeFile" class="hidden"></iframe>
+
 
 
 <div class="line"></div>
