@@ -426,6 +426,36 @@ lml.loadJs.competeLoad([
 		});
 	});
 	
+	$('#result').delegate("input[type=submit]", "click", function(){
+		var _this = this;
+		var data_id = $(this).attr('data-id');
+		
+		var submit_actions = {
+			'settings_logo_check':function(o){
+				var fileval = $('input[name=LOGO]', $(_this.form)).val();
+				if(fileval == ''){
+					show_info('<?php elang('Please select file')?>');
+					return false;
+				}
+				return true;
+			},
+			'settings_logo':function(o){
+				$('#logo_img_td').html(o);
+			}
+		};
+		if(!submit_actions[data_id+'_check']()){
+			return false;
+		}
+		if(this.form.target){
+			$("#"+this.form.target).load(function(){
+				_this.disabled = false;
+				var content = $(this).contents().find("body").html();
+				submit_actions[data_id](content);
+			});
+		}
+		return true;
+	});
+	
 	$('#result').delegate("input[type=checkbox]", "change", function(){
 		if($(this).is(':checked')){
 			$(this).next().addClass('cl');

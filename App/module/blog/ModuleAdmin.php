@@ -51,52 +51,51 @@ class ModuleAdmin extends LmlBlog{
 			'sessions' => 'session',
 			'accounts' => 'blog_account',
 		);
-		$m = q($qmap[C_ACTION]);
-		
-		switch ($action){
-			case 'list':
-				$pid = 1;
-				$matches = route_match('[\w]+\/(\d+)');
-				if (isset($matches[1]) && $matches[1] > 1) {
-					$pid = $matches[1];
-				}
-				$rs = $m->getList(10*($pid-1), 10, false);
-				$count = $m->getCount();
-				$page = new Paging($count, $pid, 10);
-				$this->assign('rs', $rs);
-				$this->assign('page', $page);
-				$this->assign('pid', $pid);
-				$this->display('', '/list.php');
-				break;
-			case 'post':
-				$matches = route_match('[\w]+\/(\d+)');
-				if (isset($matches[1])) {
-					$rs = $m->find($matches[1]);
-					$this->assign('rs', $rs);
-				}
-				$this->display('', '/edit.php');
-				break;
-			case 'save':
-				$matches = route_match('[\w]+\/(\d+)');
-				if (!isset($matches[1])) {
-					if(($id = $m->add($_POST)) == true){
-						$this->assign('save_status', '保存成功！');
-						$rs = $m->find($id);
-						$this->assign('rs', $rs);
-						$this->display('', '/edit.php');
-					}
-				}else{
-					$id = $matches[1];
-					if($m->update($_POST, "id=$id")){
-						$this->assign('save_status', '保存成功！');
-					}else{
-						$this->assign('save_status', '内容未改变！');
-					}
-				}
-				break;
-		}
 		
 		if(isset($qmap[C_ACTION])){
+			$m = q($qmap[C_ACTION]);
+			switch ($action){
+				case 'list':
+					$pid = 1;
+					$matches = route_match('[\w]+\/(\d+)');
+					if (isset($matches[1]) && $matches[1] > 1) {
+						$pid = $matches[1];
+					}
+					$rs = $m->getList(10*($pid-1), 10, false);
+					$count = $m->getCount();
+					$page = new Paging($count, $pid, 10);
+					$this->assign('rs', $rs);
+					$this->assign('page', $page);
+					$this->assign('pid', $pid);
+					$this->display('', '/list.php');
+					break;
+				case 'post':
+					$matches = route_match('[\w]+\/(\d+)');
+					if (isset($matches[1])) {
+						$rs = $m->find($matches[1]);
+						$this->assign('rs', $rs);
+					}
+					$this->display('', '/edit.php');
+					break;
+				case 'save':
+					$matches = route_match('[\w]+\/(\d+)');
+					if (!isset($matches[1])) {
+						if(($id = $m->add($_POST)) == true){
+							$this->assign('save_status', '保存成功！');
+							$rs = $m->find($id);
+							$this->assign('rs', $rs);
+							$this->display('', '/edit.php');
+						}
+					}else{
+						$id = $matches[1];
+						if($m->update($_POST, "id=$id")){
+							$this->assign('save_status', '保存成功！');
+						}else{
+							$this->assign('save_status', '内容未改变！');
+						}
+					}
+					break;
+			}
 			return;
 		}
 
@@ -398,28 +397,130 @@ class ModuleAdmin extends LmlBlog{
 		$matches = route_match('([\w]+)');
 		$action = arr_get($matches, 1);
 		$mConfig = new ModelConfig();
+		$qq_config_file = APP_PATH.'third/qqconnect2.1/API/comm/inc.php';
+		$weibo_config_file = APP_PATH.'third/sinaweibov2/config.php';
+		$base_config_file = APP_PATH.'conf/baseconfig.php';
 		switch ($action){
 			case 'save';
 				$matches_save = route_match('save\/([\w]+)');
 				$type = arr_get($matches_save, 1);
-				if($type == 'seo'){
+				if(in_array($type, array('seo', 'jscode'))){
 					foreach ($_POST as $k=>$v){
-						$mConfig->updateConfig($k, $v);
+						$mConfig->updateOrAdd($k, $v);
 					}
 				}elseif($type == 'security'){
-					if(!preg_match('/^login/', $_POST['login_page_uri'])){
+					if(!preg_match('/^login/', $_POST['LOGIN_PAGE_URI'])){
 						echo 'must begin with login';
 						return;
 					}
-					if(!preg_match('/^[a-zA-Z0-9_]+$/i', $_POST['login_page_uri'])){
+					if(!preg_match('/^[a-zA-Z0-9_]+$/i', $_POST['LOGIN_PAGE_URI'])){
 						echo 'must be [a-zA-Z0-9_] format';
 						return;
 					}
-					if($mConfig->checkConfigExists('LOGIN_PAGE_URI')){
-						$mConfig->updateConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
-					}else{
-						$mConfig->saveConfig('LOGIN_PAGE_URI', $_POST['login_page_uri']);
+					$mConfig->updateOrAdd('LOGIN_PAGE_URI', $_POST['LOGIN_PAGE_URI']);
+				}elseif($type == 'openid_qq'){
+					$qq_appid = addslashes($_POST['QQ_CONFIG_APPID']);
+					$qq_appkey = addslashes($_POST['QQ_CONFIG_APPKEY']);
+					$qq_callback = addslashes($_POST['QQ_CONFIG_CALLBACK']);
+					$qq_config_contents = file_get_contents($qq_config_file);
+					if(
+						strpos('x'.$qq_appid, "'") > 0 || 
+						strpos('x'.$qq_appkey, "'") > 0 ||
+						strpos('x'.$qq_callback, "'") > 0 ||
+						strpos('x'.$qq_appid, '"') > 0 ||
+						strpos('x'.$qq_appkey, '"') > 0 ||
+						strpos('x'.$qq_callback, '"') > 0
+							
+					){
+						ehtml('It contains illegal characters " and \'');
+						return;
 					}
+					// "appid":"","appkey":"","callback":
+					$qq_config_contents = preg_replace('/"appid":"[^"]*"/', '"appid":"'.$qq_appid.'"', $qq_config_contents);
+					$qq_config_contents = preg_replace('/"appkey":"[^"]*"/', '"appkey":"'.$qq_appkey.'"', $qq_config_contents);
+					$qq_config_contents = preg_replace('/"callback":"[^"]*"/', '"callback":"'.$qq_callback.'"', $qq_config_contents);
+					file_put_contents($qq_config_file, $qq_config_contents);
+				}elseif($type == 'openid_weibo'){
+					$weibo_appkey = addslashes($_POST['WEIBO_CONFIG_APPKEY']);
+					$weibo_secretkey = addslashes($_POST['WEIBO_CONFIG_SECRETKEY']);
+					$weibo_callback = addslashes($_POST['WEIBO_CONFIG_CALLBACK']);
+					$weibo_config_contents = file_get_contents($weibo_config_file);
+					if(
+						strpos('x'.$weibo_appkey, "'") > 0 ||
+						strpos('x'.$weibo_secretkey, "'") > 0 ||
+						strpos('x'.$weibo_callback,"'") > 0 ||
+						strpos('x'.$weibo_appkey, '"') > 0 ||
+						strpos('x'.$weibo_secretkey, '"') > 0 ||
+						strpos('x'.$weibo_callback, '"') > 0
+								
+					){
+						ehtml('It contains illegal characters " and \'');
+						return;
+					}
+					// "WB_AKEY", ''
+					$weibo_config_contents = preg_replace('/"WB_AKEY",\s\'[^\']*\'/', '"WB_AKEY", \''.$weibo_appkey.'\'', $weibo_config_contents);
+					$weibo_config_contents = preg_replace('/"WB_SKEY",\s\'[^\']*\'/', '"WB_SKEY", \''.$weibo_secretkey.'\'', $weibo_config_contents);
+					$weibo_config_contents = preg_replace('/"WB_CALLBACK_URL",\s\'[^\']*\'/', '"WB_CALLBACK_URL", \''.$weibo_callback.'\'', $weibo_config_contents);
+					file_put_contents($weibo_config_file, $weibo_config_contents);
+				}elseif($type == 'timezone'){
+					$timezone = addslashes($_POST['TIMEZONE']);
+					if(
+						strpos('x'.$timezone, "'") > 0 ||
+						strpos('x'.$timezone, '"') > 0
+					
+					){
+						ehtml('It contains illegal characters " and \'');
+						return;
+					}
+					$baseconfig = require APP_PATH.'conf/baseconfig.php';
+					$baseconfig['timezone'] = $timezone;
+					$str = '<?php return $baseconfig='.var_export($baseconfig, true).';';
+					file_put_contents($base_config_file, $str);
+				}elseif($type == 'logo'){
+					$file = arr_get($_FILES, 'LOGO');
+					if(!arr_get($file, 'tmp_name') || $file['size'] == 0){
+						return;
+					}
+					$hash = md5(file_get_contents($file['tmp_name']));
+					
+					$q_image = q('file_image');
+					
+					if($q_image->isExists(array('hash'=>$hash))){
+						$image = $q_image->getOne('*', 'hash=?', array($hash));
+						$mConfig->updateOrAdd('LOGO_IMG_ID', $image['id']);
+						$image_wh = image_wh($image['width'], $image['height']);
+						echo '<img src="'.WEB_PATH.'file/image/'.$image['id'].'" width="'.$image_wh['w'].'" height="'.$image_wh['h'].'"/>';
+						return ;
+					}
+					
+					$file_name = $hash.'.'.strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+					$repository_image_path = 'master/'.date('Y/m/d').'/';
+					$store_path = APP_PATH.'repository/image/'.$repository_image_path;
+					if(!file_exists($store_path)){
+						LmlUtils::mkdirDeep($store_path);
+					}
+					move_uploaded_file($file['tmp_name'], $store_path.$file_name);
+					
+					$source_info = getimagesize($store_path.$file_name);
+					$source_width = $source_info[0];
+					$source_height = $source_info[1];
+					
+					$q_image->add(array(
+						'hash' => $hash,
+						'path' => $repository_image_path.$file_name,
+						'type' => $file['type'],
+						'size' => $file['size'],
+						'width' => $source_width,
+						'height' => $source_height,
+						'origin_name' => $file['name'],
+						'createtime' => $GLOBALS['start_time'],
+					));
+					$insert_id = $q_image->getLastId();
+					$mConfig->updateOrAdd('LOGO_IMG_ID', $insert_id);
+					$image = $q_image->find($insert_id);
+					$image_wh = image_wh($image['width'], $image['height']);
+					echo '<img src="'.WEB_PATH.'file/image/'.$insert_id.'" width="'.$image_wh['w'].'" height="'.$image_wh['h'].'"/>';
+					return;
 				}
 				break;
 			case '';
@@ -429,6 +530,40 @@ class ModuleAdmin extends LmlBlog{
 				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
 				$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
 				$site['login_page_uri'] = $login_uri ? $login_uri : 'login';
+				$site['javascript_code'] = $mConfig->getConfig('JAVASCRIPT_CODE');
+				
+				$qq_inc = file($qq_config_file);
+				$qq_config = json_decode($qq_inc[1]);
+				$site['qq_config_appid'] = $qq_config->appid;
+				$site['qq_config_appkey'] = $qq_config->appkey;
+				$site['qq_config_callback'] = $qq_config->callback;
+				
+				$weibo_config = file($weibo_config_file);
+				// define("WB_AKEY", '');
+				preg_match('/define\("WB_AKEY",\s\'(.*)\'\);/', $weibo_config[1], $matches_temp);
+				$site['weibo_config_appkey'] = arr_get($matches_temp, 1);
+				// define("WB_SKEY", '');
+				preg_match('/define\("WB_SKEY",\s\'(.*)\'\);/', $weibo_config[2], $matches_temp);
+				$site['weibo_config_secretkey'] = arr_get($matches_temp, 1);
+				// define("WB_CALLBACK_URL", 'http://{your_domain}/user/oauthweibo');
+				preg_match('/define\("WB_CALLBACK_URL",\s\'(.*)\'\);/', $weibo_config[3], $matches_temp);
+				$site['weibo_config_callback'] = arr_get($matches_temp, 1);
+				
+				$baseconfig = require APP_PATH.'conf/baseconfig.php';
+				$site['timezone'] = $baseconfig['timezone'];
+				
+				$site['logo_url'] = WEB_PATH.'static/resource/lbloglogo100.png';
+				$site['logo_width'] = 100;
+				$site['logo_height'] = 100;
+				$logo_image_id = $mConfig->getConfig('LOGO_IMG_ID');
+				if ($logo_image_id) {
+					$site['logo_url'] = WEB_PATH.'file/image/'.$logo_image_id;
+					$image = q('file_image')->find($logo_image_id);
+					$image_wh = image_wh($image['width'], $image['height']);
+					$site['logo_width'] = $image_wh['w'];
+					$site['logo_height'] = $image_wh['h'];
+				}
+				
 				$this->assign('site', $site);
 				$this->display('', '/home.php');
 				break;
@@ -580,7 +715,7 @@ class ModuleAdmin extends LmlBlog{
 				}
 				$type = $matches[1];
 				$id = $matches[2];
-				$permissionids = $_POST['permissionids'];
+				$permissionids = arr_get($_POST, 'permissionids', array());
 				
 				if($type == 'user'){
 					$mu = q('blog_permission_user');

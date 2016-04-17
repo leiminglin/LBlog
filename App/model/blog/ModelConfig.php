@@ -21,4 +21,12 @@ class ModelConfig extends Model{
 	public function updateConfig($name, $data){
 		return $this->db->update($this->table, array('data'=>$data), 'name=:name', array('name'=>$name));
 	}
+	
+	public function updateOrAdd($name, $data){
+		if($this->checkConfigExists($name)){
+			return $this->updateConfig($name, $data);
+		}else{
+			return $this->saveConfig($name, $data);
+		}
+	}
 }
