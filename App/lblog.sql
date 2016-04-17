@@ -387,6 +387,8 @@ INSERT INTO `lblog_config` VALUES (default, 'SITE_KEYWORDS', '开源博客系统
 INSERT INTO `lblog_config` VALUES (default, 'SITE_DESCRIPTION', 'LBLOG博客系统是一款轻量级的博客兼CMS建站系统,基于LMLPHP框架,丰富的模板和雄厚的社区技术支持,为自由快速建站而生,让网站轻盈而高速.');
 INSERT INTO `lblog_config` VALUES (default, 'JAVASCRIPT_CODE', 'deferred.then(function(){\r\n/*google analytics sample begin*/\r\n(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\r\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\r\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\r\n})(window,document,\'script\',\'https://www.google-analytics.com/analytics.js\',\'ga\');\r\nga(\'create\', \'UA-76336948-1\', \'auto\');\r\nga(\'send\', \'pageview\');\r\n/*cnzz statistic sample*/\r\nlml.loadJs(\'//s4.cnzz.com/z_stat.php?id=1254164850&web_id=1254164850\');\r\ndeferred.promise();\r\n});');
 
+
+DROP TABLE IF EXISTS `lblog_file_image`;
 CREATE TABLE `lblog_file_image` (
   `id` int(11) NOT NULL auto_increment,
   `hash` varchar(50) collate utf8_unicode_ci NOT NULL,
@@ -398,6 +400,6 @@ CREATE TABLE `lblog_file_image` (
   `height` int(11) NOT NULL default '0',
   `createtime` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  KEY `userid` (`hash`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+  KEY `hash` (`hash`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

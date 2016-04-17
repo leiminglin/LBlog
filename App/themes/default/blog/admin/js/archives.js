@@ -441,12 +441,11 @@ lml.loadJs.competeLoad([
 			},
 			'settings_logo':function(o){
 				$('#logo_img_td').html(o);
-			},
+			}
 		};
 		if(!submit_actions[data_id+'_check']()){
 			return false;
 		}
-		this.disabled = true;
 		if(this.form.target){
 			$("#"+this.form.target).load(function(){
 				_this.disabled = false;
