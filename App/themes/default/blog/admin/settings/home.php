@@ -136,7 +136,8 @@ if(empty($site)){
 <td align="center"><input class="btn" type="submit" value="<?php elang('Submit')?>" data-id="settings_logo"/></td>
 </tr>
 <tr>
-<td colspan="3"><img src="<?php echo $site['logo_url']?>" id="logo_img"/></td>
+<td colspan="3" id="logo_img_td"><img src="<?php echo $site['logo_url']?>" 
+width="<?php echo $site['logo_width']?>" height="<?php echo $site['logo_height']?>"/></td>
 </tr>
 </table>
 </form>

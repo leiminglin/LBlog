@@ -428,15 +428,25 @@ lml.loadJs.competeLoad([
 	
 	$('#result').delegate("input[type=submit]", "click", function(){
 		var _this = this;
-		this.disabled = true;
 		var data_id = $(this).attr('data-id');
 		
 		var submit_actions = {
+			'settings_logo_check':function(o){
+				var fileval = $('input[name=LOGO]', $(_this.form)).val();
+				if(fileval == ''){
+					show_info('请选择文件');
+					return false;
+				}
+				return true;
+			},
 			'settings_logo':function(o){
-				$('#logo_img').attr({"src":o});
+				$('#logo_img_td').html(o);
 			},
 		};
-		
+		if(!submit_actions[data_id+'_check']()){
+			return false;
+		}
+		this.disabled = true;
 		if(this.form.target){
 			$("#"+this.form.target).load(function(){
 				_this.disabled = false;

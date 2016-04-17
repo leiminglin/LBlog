@@ -482,23 +482,27 @@ class ModuleAdmin extends LmlBlog{
 						return;
 					}
 					$hash = md5(file_get_contents($file['tmp_name']));
-					$file_name = $hash.'.'.strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-					$repository_image_path = 'master/'.date('Y/m/d').'/';
 					
 					$q_image = q('file_image');
 					
-					if($q_image->notExists(array('hash'=>$hash))){
-						$store_path = APP_PATH.'repository/image/'.$repository_image_path;
-						if(!file_exists($store_path)){
-							LmlUtils::mkdirDeep($store_path);
-						}
-						move_uploaded_file($file['tmp_name'], $store_path.$file_name);
-					}else{
+					if($q_image->isExists(array('hash'=>$hash))){
+						$image = $q_image->getOne('*', 'hash=?', array($hash));
+						$mConfig->updateOrAdd('LOGO_IMG_ID', $image['id']);
+						$image_wh = image_wh($image['width'], $image['height']);
+						echo '<img src="'.WEB_PATH.'file/image/'.$image['id'].'" width="'.$image_wh['w'].'" height="'.$image_wh['h'].'"/>';
 						return ;
 					}
 					
-					$source_info   = getimagesize($store_path.$file_name);
-					$source_width  = $source_info[0];
+					$file_name = $hash.'.'.strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+					$repository_image_path = 'master/'.date('Y/m/d').'/';
+					$store_path = APP_PATH.'repository/image/'.$repository_image_path;
+					if(!file_exists($store_path)){
+						LmlUtils::mkdirDeep($store_path);
+					}
+					move_uploaded_file($file['tmp_name'], $store_path.$file_name);
+					
+					$source_info = getimagesize($store_path.$file_name);
+					$source_width = $source_info[0];
 					$source_height = $source_info[1];
 					
 					$q_image->add(array(
@@ -512,8 +516,10 @@ class ModuleAdmin extends LmlBlog{
 						'createtime' => $GLOBALS['start_time'],
 					));
 					$insert_id = $q_image->getLastId();
-					$mConfig->updateOrAdd('LOGO_IMG_ID', $q_image->getLastId());
-					echo WEB_PATH.'file/image/'.$insert_id;
+					$mConfig->updateOrAdd('LOGO_IMG_ID', $insert_id);
+					$image = $q_image->find($insert_id);
+					$image_wh = image_wh($image['width'], $image['height']);
+					echo '<img src="'.WEB_PATH.'file/image/'.$insert_id.'" width="'.$image_wh['w'].'" height="'.$image_wh['h'].'"/>';
 					return;
 				}
 				break;
@@ -547,9 +553,15 @@ class ModuleAdmin extends LmlBlog{
 				$site['timezone'] = $baseconfig['timezone'];
 				
 				$site['logo_url'] = WEB_PATH.'static/resource/lbloglogo100.png';
+				$site['logo_width'] = 100;
+				$site['logo_height'] = 100;
 				$logo_image_id = $mConfig->getConfig('LOGO_IMG_ID');
 				if ($logo_image_id) {
 					$site['logo_url'] = WEB_PATH.'file/image/'.$logo_image_id;
+					$image = q('file_image')->find($logo_image_id);
+					$image_wh = image_wh($image['width'], $image['height']);
+					$site['logo_width'] = $image_wh['w'];
+					$site['logo_height'] = $image_wh['h'];
 				}
 				
 				$this->assign('site', $site);

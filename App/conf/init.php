@@ -193,4 +193,69 @@ function arr_get_index($a, $i=0){
 	return $ret;
 }
 
+function image_wh($w, $h, $rw=640, $rh=2000){
+	if($w/$h > 1){
+		if($w > $rw){
+			$rate = $w/$rw;
+			return array(
+				'w' => $rw,
+				'h' => round($h/$rate)
+			);
+		}
+	}else{
+		if($h > $rh){
+			$rate = $h/$rh;
+			return array(
+				'w' => round($w/$rate),
+				'h' => $rh
+			);
+		}
+	}
+	return array(
+			'w' => $w,
+			'h' => $h,
+	);
+}
 
+function imagecropper($source_path)
+{
+	$source_info   = getimagesize($source_path);
+	$source_width  = $source_info[0];
+	$source_height = $source_info[1];
+	$source_mime   = $source_info['mime'];
+	$source_ratio  = $source_height / $source_width;
+	$source_x = 0;
+	$source_y = 0;
+	if ($source_width > 640)
+	{
+		$target_width = 640;
+		$target_height = round(635 * $source_height / $source_width);
+	}else{
+		return;
+	}
+
+	switch ($source_mime)
+	{
+		case 'image/gif':
+			$source_image = imagecreatefromgif($source_path);
+			break;
+
+		case 'image/jpeg':
+			$source_image = imagecreatefromjpeg($source_path);
+			break;
+
+		case 'image/png':
+			$source_image = imagecreatefrompng($source_path);
+			break;
+
+		default:
+			return false;
+			break;
+	}
+	$target_image  = imagecreatetruecolor($target_width, $target_height);
+	imagecopyresampled($target_image, $source_image, 0, 0, 0, 0, $target_width, $target_height, $source_width, $source_height);
+
+	ob_start();
+	imagejpeg( $target_image );
+	return ob_get_clean();
+}
