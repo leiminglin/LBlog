@@ -14,9 +14,10 @@ var users_set_account_path = '<?php echo WEB_APP_PATH?>admin/users/set_account';
 var roles_path = '<?php echo WEB_APP_PATH?>admin/roles/list';
 var roles_save_path = '<?php echo WEB_APP_PATH?>admin/roles/save';
 var permissions_list_path = '<?php echo WEB_APP_PATH?>admin/permissions/list';
+var permissions_post_path = '<?php echo WEB_APP_PATH?>admin/permissions/post';
 var comments_list_path = '<?php echo WEB_APP_PATH?>admin/comments/list';
 var comments_post_path = '<?php echo WEB_APP_PATH?>admin/comments/post';
-var permissions_setting_path = '<?php echo WEB_APP_PATH?>admin/permissions/setting';
+var permissions_setting_path = '<?php echo WEB_APP_PATH?>admin/permissions/setting';/*for user & role*/
 var lblog_admin_sessions_path = '<?php echo WEB_APP_PATH?>admin/sessions/list';
 var lblog_admin_accounts_path = '<?php echo WEB_APP_PATH?>admin/accounts/list';
 
@@ -158,6 +159,17 @@ function get_permissions_list_page(o){
 	}
 	get(path, function(rs){
 		create_tab('<?php elang('Permission')?>', rs);
+	});
+}
+
+function get_permissions_post_page(o){
+	var path = permissions_post_path,title='<?php elang('PostPermission')?>';
+	if(o){
+		path += '/'+o;
+		title = '<?php elang('EditPermission')?>-'+o;
+	}
+	get(path, function(rs){
+		create_tab(title, rs);
 	});
 }
 
@@ -377,6 +389,13 @@ lml.loadJs.competeLoad([
 				get_permissions_list_page(o.getAttribute('data-id'));
 			}else{
 				get_permissions_list_page(false);
+			}
+		},
+		'lblog_admin_permissions_post':function(o){
+			if(o.getAttribute('data-id')){
+				get_permissions_post_page(o.getAttribute('data-id'));
+			}else{
+				get_permissions_post_page(false);
 			}
 		},
 		'lblog_admin_comments_list_page':function(o){

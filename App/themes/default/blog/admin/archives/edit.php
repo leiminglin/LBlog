@@ -17,11 +17,11 @@ method="post">
 <td><input name="title" type="text" value="<?php ehtml(arr_get($article, 'title'));?>"/></td>
 </tr>
 <tr>
-<td><?php elang('Catid')?></td>
+<td><?php elang('CatID')?></td>
 <td><input name="catid" type="text" value="<?php echo arr_get($article, 'catid', 1);?>"/></td>
 </tr>
 <tr>
-<td><?php elang('Userid')?></td>
+<td><?php elang('UserID')?></td>
 <td><input name="userid" type="text" value="<?php echo arr_get($article, 'userid', 1);?>"/></td>
 </tr>
 <tr>

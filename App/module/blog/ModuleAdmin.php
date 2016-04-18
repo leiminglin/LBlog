@@ -666,17 +666,36 @@ class ModuleAdmin extends LmlBlog{
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
 				break;
+			case 'post':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1])) {
+					$rs = $m->find($matches[1]);
+					$this->assign('rs', $rs);
+				}
+				$this->display('', '/edit.php');
+				break;
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');
 				if (!isset($matches[1])) {
-					if($m->add($_POST['name'])){
-						echo 'Add Successfully!';
-					}else{
-						echo 'Add Failed!';
+					if($m->add(array(
+						'name' => $_POST['name'],
+						'uri_regexp' => $_POST['uri_regexp'],
+						'description' => $_POST['description'],
+						'is_system' => 'N',
+						'createtime' => $GLOBALS['start_time'],
+					))){
+						$rs = $m->find($m->getLastId());
+						$this->assign('rs', $rs);
+						$this->assign('save_status', '保存成功！');
+						$this->display('', '/edit.php');
 					}
 				}else{
 					$id = $matches[1];
-					if($m->update()){
+					if($m->update(array(
+						'name' => $_POST['name'],
+						'uri_regexp' => $_POST['uri_regexp'],
+						'description' => $_POST['description'],
+					), "id=$id")){
 						echo 'Modify Successfully!';
 					}else{
 						echo 'Modify Failed!';
