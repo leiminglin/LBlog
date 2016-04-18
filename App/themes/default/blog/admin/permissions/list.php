@@ -24,7 +24,7 @@
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
 <?php if($v['is_system'] === 'N'){?>
-	<a href="javascript:void(0)" data-action="lblog_admin_permissions_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+	<a href="javascript:void(0)" data-action="lblog_admin_permissions_post" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
 <?php }?>
 </td>
 </tr>

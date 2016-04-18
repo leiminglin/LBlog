@@ -684,9 +684,10 @@ class ModuleAdmin extends LmlBlog{
 						'is_system' => 'N',
 						'createtime' => $GLOBALS['start_time'],
 					))){
-						echo 'Add Successfully!';
-					}else{
-						echo 'Add Failed!';
+						$rs = $m->find($m->getLastId());
+						$this->assign('rs', $rs);
+						$this->assign('save_status', '保存成功！');
+						$this->display('', '/edit.php');
 					}
 				}else{
 					$id = $matches[1];
