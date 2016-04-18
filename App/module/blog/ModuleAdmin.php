@@ -677,14 +677,24 @@ class ModuleAdmin extends LmlBlog{
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');
 				if (!isset($matches[1])) {
-					if($m->add($_POST['name'])){
+					if($m->add(array(
+						'name' => $_POST['name'],
+						'uri_regexp' => $_POST['uri_regexp'],
+						'description' => $_POST['description'],
+						'is_system' => 'N',
+						'createtime' => $GLOBALS['start_time'],
+					))){
 						echo 'Add Successfully!';
 					}else{
 						echo 'Add Failed!';
 					}
 				}else{
 					$id = $matches[1];
-					if($m->update()){
+					if($m->update(array(
+						'name' => $_POST['name'],
+						'uri_regexp' => $_POST['uri_regexp'],
+						'description' => $_POST['description'],
+					), "id=$id")){
 						echo 'Modify Successfully!';
 					}else{
 						echo 'Modify Failed!';
