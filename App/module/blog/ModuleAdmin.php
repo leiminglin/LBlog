@@ -666,6 +666,14 @@ class ModuleAdmin extends LmlBlog{
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
 				break;
+			case 'post':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1])) {
+					$rs = $m->find($matches[1]);
+					$this->assign('rs', $rs);
+				}
+				$this->display('', '/edit.php');
+				break;
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');
 				if (!isset($matches[1])) {
