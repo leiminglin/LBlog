@@ -14,7 +14,7 @@
 <td><?php echo $v['id'];?></td>
 <td><?php ehtml($v['name']);?></td>
 <td><?php ehtml($v['uri_regexp']);?></td>
-<td><?php ehtml($v['description']);?></td>
+<td><?php elang($v['description']);?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
 <a href="javascript:void(0)" data-action="lblog_admin_permissions_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
