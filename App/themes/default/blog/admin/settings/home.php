@@ -148,10 +148,12 @@ width="<?php echo $site['logo_width']?>" height="<?php echo $site['logo_height']
 <div class="line"></div>
 
 <div>
-permissions edit add, 
+
 pages ...,
-cookie 
+cookie ,admin nav
 salt
+function p
+statistic task onshow event
 table 
 
 

@@ -191,6 +191,8 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_add', '/^(?:\\/index
 INSERT INTO `lblog_blog_permission` VALUES (default, 'roles_modify', '/^(?:\\/index\\.php)?\\/admin\\/roles\\/save\\/\\d+/', 'Modify posted roles', 'Y', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_read_list', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/list/', 'View permissions list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_add', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/save$/', 'Add new permissions', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/save\\/\\d+/', 'Modify posted permissions', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/user\\/\\d+/', 'View user permissions', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_role_read', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting\\/role\\/\\d+/', 'View role permissions', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'permissions_user_modify', '/^(?:\\/index\\.php)?\\/admin\\/permissions\\/setting_save\\/user\\/\\d+/', 'Modify user permissions', 'Y', unix_timestamp());
@@ -345,6 +347,8 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View user permissions', '查看
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View role permissions', '查看角色权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify user permissions', '修改用户权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify role permissions', '修改角色权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add new permissions', '添加新权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify posted permissions', '修改已有权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View sessions list page', '查看会话列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View accounts list page', '查看账号列表页');
 
