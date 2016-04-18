@@ -303,6 +303,7 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Security', '安全');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Login page uri', '登录页地址');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'ExpiresTime', '过期时间');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RoleID', '角色编号');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'RoleName', '角色名称');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'JavaScript Code', 'JavaScript 代码');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Config', '配置');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Callback', '回调');
