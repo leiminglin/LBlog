@@ -97,6 +97,14 @@ function get_lang(){
  * last router
  */
 function last(){
+	
+	$rs = q('page')->getAll();
+	foreach ($rs as $k=>$v){
+		if(preg_match($v['uri_regexp'], LML_REQUEST_URI)){
+			echo eval('?>'.$v['content']);
+			return;
+		}
+	}
 	Tool::notFoundPage();
 }
 
