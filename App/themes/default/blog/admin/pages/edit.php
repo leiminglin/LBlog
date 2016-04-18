@@ -15,7 +15,10 @@ method="post">
 <table>
 <tr>
 <td><?php elang('Name')?></td>
-<td><input name="name" type="text" value="<?php ehtml(arr_get($rs, 'name'));?>" class="longinput"/></td>
+<td>
+<input name="name" type="text" value="<?php ehtml(arr_get($rs, 'name'));?>" class="longinput"/>
+<input name="createtime" type="hidden" value=""/>
+</td>
 </tr>
 <tr>
 <td><?php elang('UriRegExp')?></td>
