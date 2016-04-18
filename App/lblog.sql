@@ -164,6 +164,10 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_read_list', '/^(?:\\/
 INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_add', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save$/', 'Add new cats', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'cats_modify', '/^(?:\\/index\\.php)?\\/admin\\/cats\\/save\\/\\d+/', 'Modify posted cats', 'Y', unix_timestamp());
 
+INSERT INTO `lblog_blog_permission` VALUES (default, 'pages_read_list', '/^(?:\\/index\\.php)?\\/admin\\/pages\\/list/', 'View pages list page', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'pages_add', '/^(?:\\/index\\.php)?\\/admin\\/pages\\/save$/', 'Add new pages', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'pages_modify', '/^(?:\\/index\\.php)?\\/admin\\/pages\\/save\\/\\d+/', 'Modify posted pages', 'Y', unix_timestamp());
+
 INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_read_list', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/list/', 'View comments list page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_read_post', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/post/', 'View comments post page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'comments_modify', '/^(?:\\/index\\.php)?\\/admin\\/comments\\/save\\/\\d+/', 'Modify posted comments', 'Y', unix_timestamp());
@@ -314,6 +318,7 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Next page', '下一页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Admin', '管理员');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Timezone', '时区');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Please select file', '请选择文件');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Page', '页面');
 
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives list page', '查看文章列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives post page', '查看文章发布页');
@@ -325,6 +330,9 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Remove archive relations', '移
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View cats list page', '查看分类列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add new cats', '添加新分类');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify posted cats', '修改已有分类');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View pages list page', '查看页面列表页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add new pages', '添加新页面');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify posted pages', '修改已有页面');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View comments list page', '查看评论列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View comments post page', '查看评论发布页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify posted comments', '修改已有评论');
@@ -382,8 +390,8 @@ CREATE TABLE `lblog_user_weibo` (
 DROP TABLE IF EXISTS `lblog_config`;
 CREATE TABLE `lblog_config` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  `data` text collate utf8_unicode_ci NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `data` text NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -396,11 +404,11 @@ INSERT INTO `lblog_config` VALUES (default, 'JAVASCRIPT_CODE', 'deferred.then(fu
 DROP TABLE IF EXISTS `lblog_file_image`;
 CREATE TABLE `lblog_file_image` (
   `id` int(11) NOT NULL auto_increment,
-  `hash` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `path` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `type` varchar(50) collate utf8_unicode_ci NOT NULL,
-  `size` int(11) unsigned NOT NULL,
-  `origin_name` varchar(100) collate utf8_unicode_ci NOT NULL,
+  `hash` varchar(50) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `size` int(11) unsigned NOT NULL default '0',
+  `origin_name` varchar(100) NOT NULL default '',
   `width` int(11) NOT NULL default '0',
   `height` int(11) NOT NULL default '0',
   `createtime` bigint(20) unsigned NOT NULL default '0',
@@ -408,3 +416,13 @@ CREATE TABLE `lblog_file_image` (
   KEY `hash` (`hash`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
+DROP TABLE IF EXISTS `lblog_page`;
+CREATE TABLE `lblog_page` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(100) NOT NULL,
+  `uri_regexp` varchar(255) NOT NULL default '',
+  `content` text NOT NULL default '',
+  `createtime` bigint(20) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -20,6 +20,8 @@ var comments_post_path = '<?php echo WEB_APP_PATH?>admin/comments/post';
 var permissions_setting_path = '<?php echo WEB_APP_PATH?>admin/permissions/setting';/*for user & role*/
 var lblog_admin_sessions_path = '<?php echo WEB_APP_PATH?>admin/sessions/list';
 var lblog_admin_accounts_path = '<?php echo WEB_APP_PATH?>admin/accounts/list';
+var lblog_admin_pages_path = '<?php echo WEB_APP_PATH?>admin/pages/list';
+var pages_post_path = '<?php echo WEB_APP_PATH?>admin/pages/post';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -224,6 +226,30 @@ function lblog_admin_accounts_page(id){
 	});
 }
 
+function get_pages_list_page(o){
+	var path = lblog_admin_pages_path;
+	if(o){
+		path += '/'+o;
+	}
+	get(path, function(rs){
+		create_tab('<?php elang('Page')?>', rs);
+	});
+}
+
+function get_pages_post_page(o){
+	var path = pages_post_path,title='<?php elang('PostPage')?>';
+	if(o){
+		path += '/'+o;
+		title = '<?php elang('EditPage')?>-'+o;
+	}
+	get(path, function(rs){
+		create_tab(title, rs);
+	});
+}
+
+
+
+
 
 
 
@@ -419,6 +445,20 @@ lml.loadJs.competeLoad([
 		},
 		'lblog_admin_accounts_page':function(o){
 			lblog_admin_accounts_page(o.getAttribute('data-id'));
+		},
+		'lblog_admin_pages_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_pages_list_page(o.getAttribute('data-id'));
+			}else{
+				get_pages_list_page(false);
+			}
+		},
+		'lblog_admin_pages_post':function(o){
+			if(o.getAttribute('data-id')){
+				get_pages_post_page(o.getAttribute('data-id'));
+			}else{
+				get_pages_post_page(false);
+			}
 		}
 	};
 

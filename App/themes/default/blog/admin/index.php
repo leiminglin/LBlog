@@ -184,6 +184,9 @@ window.onload=function(){
 			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page"><?php elang('Access Record')?></a>
 			</li>
 			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_pages_page"><?php elang('Page')?></a>
+			</li>
+			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_users_page"><?php elang('User')?></a>
 			</li>
 			<li>
