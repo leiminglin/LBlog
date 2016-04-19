@@ -204,6 +204,17 @@ function r($p, $d=array()){
 	return eval('?>'.$p);
 }
 
+function s($name, $data=array()){
+	static $store = array();
+	if(is_array($data)){
+		if(!isset($store[$name])){
+			$store[$name] = array();
+		}
+		$store[$name] = array_merge($store[$name], $data);
+	}
+	return isset($store[$name]) ? arr_get($store[$name], $data) : '';
+}
+
 function image_wh($w, $h, $rw=640, $rh=2000){
 	if($w/$h > 1){
 		if($w > $rw){
