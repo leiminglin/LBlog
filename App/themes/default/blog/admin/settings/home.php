@@ -149,7 +149,6 @@ width="<?php echo $site['logo_width']?>" height="<?php echo $site['logo_height']
 
 <div>
 
-pages ...,
 cookie ,admin nav
 salt
 function p
