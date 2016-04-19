@@ -76,10 +76,6 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/rightwidget.php';
 </div>
 <?php
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/bottom.php';
-?>
-<script type="text/javascript">
-window.onload=function(){deferred.promise()}
-</script>
-<?php
+
 include DEFAULT_THEME_PATH.C_GROUP.'/@common/foot.php';
 ?>
