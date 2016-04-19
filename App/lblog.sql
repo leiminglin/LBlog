@@ -319,6 +319,10 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Admin', '管理员');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Timezone', '时区');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Please select file', '请选择文件');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Page', '页面');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'PostPage', '新建页面');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'EditPage', '编辑页面');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'PostPermission', '新建权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'EditPermission', '编辑权限');
 
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives list page', '查看文章列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives post page', '查看文章发布页');
