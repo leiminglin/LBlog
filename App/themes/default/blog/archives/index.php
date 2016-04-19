@@ -218,7 +218,6 @@ include DEFAULT_THEME_PATH.C_GROUP.'/@common/bottom.php';
  -->
 </div>
 <script type="text/javascript">
-window.onload=function(){deferred.promise()};
 deferred.then(function(){
 	var def2 = lml.createDeferred();
 	def2.then(function(){
