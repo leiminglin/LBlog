@@ -97,6 +97,12 @@ function get_lang(){
  * last router
  */
 function last(){
+	$rs = q('page')->getAll();
+	foreach ($rs as $k=>$v){
+		if(preg_match($v['uri_regexp'], LML_REQUEST_URI)){
+			return r($v['content']);
+		}
+	}
 	Tool::notFoundPage();
 }
 
@@ -191,6 +197,22 @@ function arr_get_index($a, $i=0){
 		$ret[] = isset($v[$i]) ? $v[$i] : '';
 	}
 	return $ret;
+}
+
+function r($p, $d=array()){
+	extract($d, EXTR_OVERWRITE);
+	return eval('?>'.$p);
+}
+
+function s($name, $data=array()){
+	static $store = array();
+	if(is_array($data)){
+		if(!isset($store[$name])){
+			$store[$name] = array();
+		}
+		$store[$name] = array_merge($store[$name], $data);
+	}
+	return arr_get($store[$name], $data);
 }
 
 function image_wh($w, $h, $rw=640, $rh=2000){

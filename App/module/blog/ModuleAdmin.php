@@ -50,6 +50,7 @@ class ModuleAdmin extends LmlBlog{
 			'comments' => 'blog_comment',
 			'sessions' => 'session',
 			'accounts' => 'blog_account',
+			'pages' => 'page',
 		);
 		
 		if(isset($qmap[C_ACTION])){
@@ -80,9 +81,12 @@ class ModuleAdmin extends LmlBlog{
 				case 'save':
 					$matches = route_match('[\w]+\/(\d+)');
 					if (!isset($matches[1])) {
-						if(($id = $m->add($_POST)) == true){
+						if(isset($_POST['createtime'])){
+							$_POST['createtime'] = $GLOBALS['start_time'];
+						}
+						if($m->add($_POST)){
 							$this->assign('save_status', '保存成功！');
-							$rs = $m->find($id);
+							$rs = $m->find($m->getLastId());
 							$this->assign('rs', $rs);
 							$this->display('', '/edit.php');
 						}
