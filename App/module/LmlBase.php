@@ -11,17 +11,36 @@ abstract class LmlBase{
 	public function display($t='', $suffix='.php'){
 		$s = DIRECTORY_SEPARATOR;
 		$d = DEFAULT_THEME_PATH;
+		$g = '';
 		if( defined('C_GROUP') ){
-			$d .= C_GROUP.$s;
+			$g = C_GROUP.$s;
+			$d .= $g;
 		}
+		
 		if($t){
 			$arr = explode('/', $t, 2);
 			if(count($arr) == 1){
 				array_unshift($arr, C_MODULE);
 			}
-			$this->fetch($d.$arr[0].$s.$arr[1].$suffix);
+			$theme_uri = $arr[0].$s.$arr[1].$suffix;
 		}else{
-			$this->fetch($d.C_MODULE.$s.C_ACTION.$suffix);
+			$theme_uri = C_MODULE.$s.C_ACTION.$suffix;
+		}
+		
+		$f = $d.$theme_uri;
+		if (file_exists($f)) {
+			$this->fetch($f);
+		}else{
+			$identifier = DEFAULT_THEME_NAME.$s.$g.$theme_uri;
+			$identifier = str_replace($s, '/', $identifier);
+			$db_page = s('page', $identifier);
+			
+			if($db_page){
+				r($db_page, $this->v);
+			}else{
+// 				var_dump(APP_PATH.'themes/default/'.$g.$theme_uri);
+// 				$this->fetch(APP_PATH.'themes/default/'.$g.$theme_uri);
+			}
 		}
 	}
 	private function fetch($f){

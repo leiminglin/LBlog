@@ -99,7 +99,7 @@ function get_lang(){
 function last(){
 	$rs = q('page')->getAll();
 	foreach ($rs as $k=>$v){
-		if(preg_match($v['uri_regexp'], LML_REQUEST_URI)){
+		if($v['uri_regexp'] && preg_match($v['uri_regexp'], LML_REQUEST_URI)){
 			return r($v['content']);
 		}
 	}
@@ -211,8 +211,9 @@ function s($name, $data=array()){
 			$store[$name] = array();
 		}
 		$store[$name] = array_merge($store[$name], $data);
+	}else{
+		return arr_get($store[$name], $data);
 	}
-	return arr_get($store[$name], $data);
 }
 
 function image_wh($w, $h, $rw=640, $rh=2000){

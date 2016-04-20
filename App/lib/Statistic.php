@@ -31,6 +31,8 @@ class Statistic{
 				session_name('LBLOGSID');
 				session_start();
 			}
+			s('config', arr2mapping(q('config')->getAll(), 'name', 'data'));
+			s('page', arr2mapping(q('page')->getAll(), 'name', 'content'));
 			
 		}else{
 			if(LML_REQUEST_URI != '/install'){
