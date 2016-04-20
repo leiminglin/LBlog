@@ -212,7 +212,7 @@ function s($name, $data=array()){
 		}
 		$store[$name] = array_merge($store[$name], $data);
 	}
-	return isset($store[$name]) ? arr_get($store[$name], $data) : '';
+	return arr_get($store[$name], $data);
 }
 
 function image_wh($w, $h, $rw=640, $rh=2000){
