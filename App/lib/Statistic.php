@@ -8,6 +8,8 @@ class Statistic{
 			$GLOBALS['dbconfig'] = $dbconfig;
 			$mStatistic = new ModelStatistic();
 			$mStatistic->save();
+			s('config', arr2mapping(q('config')->getAll(), 'name', 'data'));
+			s('page', arr2mapping(q('page')->getAll(), 'name', 'content'));
 			require APP_PATH.'conf/siteconfig.php';
 			
 			ini_set('session.cookie_domain', APP_DOMAIN);
@@ -31,9 +33,6 @@ class Statistic{
 				session_name('LBLOGSID');
 				session_start();
 			}
-			s('config', arr2mapping(q('config')->getAll(), 'name', 'data'));
-			s('page', arr2mapping(q('page')->getAll(), 'name', 'content'));
-			
 		}else{
 			if(LML_REQUEST_URI != '/install'){
 				header('HTTP/1.1 301 Moved Permanently');

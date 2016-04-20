@@ -43,7 +43,10 @@ if(($timezone = arr_get($basecofig, 'timezone')) !== ''){
  */
 function get_theme() {
 
-	$themes = array('mobile', 'default');
+	$themes = array('mobile', 'default', 'new');
+	if(preg_match('/^(?:\/index\.php)?\/admin/', arr_get($_SERVER, 'REQUEST_URI'))){
+		$themes = array('mobile', 'default');
+	}
 	if( isset($_GET['theme']) && in_array($_GET['theme'], $themes ) ) {
 		isset($_GET['switch_theme_once']) || setcookie('theme', $_GET['theme'], 0, '/');
 		return $_GET['theme'];
