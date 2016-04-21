@@ -208,6 +208,19 @@ class ModuleInstall extends LmlBase{
 	}
 
 	public function generateSalt(){
+		$str = $this->randStr();
+		q('config')->add(array(
+			'name' => 'LBLOGSALT',
+			'data' => $str.'_'.md5($str.$GLOBALS['start_time']),
+		));
+		$str2 = $this->randStr();
+		q('config')->add(array(
+			'name' => 'LBLOGASALT',
+			'data' => $str2.'_'.md5($str2.$GLOBALS['start_time']),
+		));
+	}
+	
+	public function randStr(){
 		$str = '';
 		for( $i=0; $i<200; $i++ ) {
 			$char = chr(mt_rand(33, 126));
@@ -216,9 +229,6 @@ class ModuleInstall extends LmlBase{
 			}
 			$str .= $char;
 		}
-		q('config')->add(array(
-			'name' => 'LBLOGSALT',
-			'data' => $str.'_'.md5($str.$GLOBALS['start_time']),
-		));
+		return $str;
 	}
 }

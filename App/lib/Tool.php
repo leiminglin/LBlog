@@ -25,8 +25,8 @@ class Tool{
 	}
 
 
-	public static function getCookieValue($v, $e){
-		return $v.'_'.$e.'_'.sha1($v.$e.LBLOGSALT);
+	public static function getCookieValue($v, $e, $s=LBLOGSALT){
+		return $v.'_'.$e.'_'.sha1($v.$e.$s);
 	}
 
 	public static function checkCookie($v=''){
