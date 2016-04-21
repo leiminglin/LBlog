@@ -52,8 +52,40 @@ class Tool{
 		return false;
 	}
 
+	public static function checkAdminCookie($v=''){
+		if(defined('ADMIN_FORCE') && ADMIN_FORCE){
+			return ADMIN_ACCOUNT_ID;
+		}
+		if(!$v){
+			$v = isset($_COOKIE[LBLOGASS])?$_COOKIE[LBLOGASS]:'';
+			if(!$v){
+				return false;
+			}
+		}
+		$arr = explode('_', $v);
+		if(count($arr) != 3){
+			return false;
+		}
+		if( $arr[1] < $GLOBALS['start_time'] ){
+			return false;
+		}
+		if(sha1($arr[0].$arr[1].LBLOGASALT) == $arr[2]){
+			return $arr[0];
+		}
+		return false;
+	}
+
 	public static function getUserNickName(){
 		if( ($userid = self::checkCookie())==true ){
+			$m = new ModelUser();
+			$rs = $m->getUserNickName($userid);
+			return isset($rs[0]['nickname'])?$rs[0]['nickname']:false;
+		}
+		return false;
+	}
+
+	public static function getAdminNickName(){
+		if( ($userid = self::checkAdminCookie())==true ){
 			$m = new ModelUser();
 			$rs = $m->getUserNickName($userid);
 			return isset($rs[0]['nickname'])?$rs[0]['nickname']:false;

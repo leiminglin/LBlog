@@ -202,11 +202,6 @@ class ModuleUser extends LmlBase{
 			$passwd = $_POST['passwd'];
 			$mUser = new ModelUser();
 			if( strlen($passwd) > 5 && ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
-				$rs = q('blog_account')->select('*', 'userid=?', array($userid));
-				if(count($rs) > 0 && $rs[0]['roleid']){
-					$this->assign('save_status', '登录失败：请在管理员入口登录！');
-					return $this->display();
-				}
 				$expire_time = $GLOBALS['start_time']+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				$arrsql = array(

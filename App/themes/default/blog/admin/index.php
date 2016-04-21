@@ -156,8 +156,8 @@ window.onload=function(){
 <div class="top">
 	<span class="title"><?php ehtml(SITE_NAME)?></span>
 	<span class="user">
-	<?php if( ($nickname = Tool::getUserNickName())==true ){?>
-<?php elang('Hi,')?> <?php ehtml($nickname);?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>"><?php elang('Logout')?></a>
+	<?php if( ($nickname = Tool::getAdminNickName())==true ){?>
+<?php elang('Hi,')?> <?php ehtml($nickname);?>&nbsp;<a href="<?php echo WEB_APP_PATH.'admin/logout'?>"><?php elang('Logout')?></a>
 <?php }?>
 	</span>
 	<div class="clear"></div>

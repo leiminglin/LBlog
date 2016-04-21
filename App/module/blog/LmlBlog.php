@@ -24,6 +24,13 @@ class LmlBlog extends LmlBase{
 		}
 		return $userid;
 	}
+	
+	public function hasLogin(){
+		if( !($userid = Tool::checkAdminCookie()) ) {
+			return false;
+		}
+		return $userid;
+	}
 
 	public function hasPermission() {
 		if( !($userid = $this->isAdminLogin()) ){
