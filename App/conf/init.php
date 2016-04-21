@@ -182,6 +182,15 @@ function generate_passwd($passwd, $salt=''){
 	return md5(md5($passwd.$salt));
 }
 
+function p($k, $d=array()){
+	static $p=array();
+	if($d){
+		$p = array_merge($p, $d);
+	}else{
+		return isset($p[$k]) ? true : false;
+	}
+}
+
 function q($a){
 	static $q = array();
 	if(arr_get($q,$a)){

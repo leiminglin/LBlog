@@ -67,6 +67,16 @@ class LmlBlog extends LmlBase{
 				return false;
 			}
 		}
+		
+		$has_permission_names = array();
+		foreach ($all_permissions as $k => $v) {
+			if(in_array($v['id'], $has_permission_ids)){
+				$has_permission_names[$v['name']] = '';
+			}
+		}
+
+		p('', $has_permission_names);
+		
 		return true;
 	}
 }

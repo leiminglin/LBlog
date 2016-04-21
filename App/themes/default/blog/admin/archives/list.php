@@ -1,11 +1,19 @@
 <div class="line">
+
+<?php if(p('archives_add')){?>
 <span>
 <a href="javascript:void(0)" data-action="lblog_admin_archives_post_page"><?php elang('Post')?></a>
 </span>
+<?php }?>
+
+<?php if(p('archives_read_post')){?>
 <span>
 <input type="text" placeholder=" <?php elang('ID')?>" style="width:40px;border:1px solid #edeff2;"/>
 <a href="javascript:void(0)" data-action="edit_specified_archives"><?php elang('Edit')?></a>
 </span>
+<?php }?>
+
+
 </div>
 
 
@@ -26,7 +34,9 @@
 <td><?php echo $v['is_active'];?></td>
 <td><?php echo date("Y-m-d H:i:s", $v['createtime']);?></td>
 <td>
+<?php if(p('archives_read_post')){?>
 <a href="javascript:void(0)" data-action="lblog_admin_archives_post_page" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+<?php }?>
 </td>
 </tr>
 <?php }?>

@@ -1,10 +1,14 @@
 
+
+<?php if(p('users_role_operate')){?>
 <select class="hidden roles_select">
 <option value="0"><?php elang('Please select')?></option>
 <?php foreach ($roles as $k=>$v){?>
 <option value="<?php echo $k?>"><?php ehtml($v)?></option>
 <?php }?>
 </select>
+<?php }?>
+
 
 <table>
 <tr>
@@ -27,12 +31,24 @@
 <td><?php ehtml($role_name);?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
+
+
+
 <?php if($v['id'] != ADMIN_ACCOUNT_ID){?>
-<a href="javascript:void(0)" data-action="lblog_admin_users_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
-<?php if($role_name){?>
- / <a href="javascript:void(0)" data-action="lblog_admin_users_permission" data-id="<?php echo $v['id'];?>"><?php elang('Permission')?></a>
+
+	<?php if(p('users_role_operate')){?>
+	<a href="javascript:void(0)" data-action="lblog_admin_users_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+	<?php }?>
+	
+	<?php if($role_name){?>
+		<?php if(p('permissions_user_read')){?>
+		<?php if(p('users_role_operate')){?> / <?php }?><a href="javascript:void(0)" data-action="lblog_admin_users_permission" data-id="<?php echo $v['id'];?>"><?php elang('Permission')?></a>
+		<?php }?>
+	<?php }?>
 <?php }?>
-<?php }?>
+
+
+
 </td>
 </tr>
 <?php }?>

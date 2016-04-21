@@ -1,8 +1,12 @@
 <div class="line">
+
+<?php if(p('cats_add')){?>
 <span>
 <input type="text" placeholder=" cat name" style="width:80px;border:1px solid #edeff2;"/>
 <a href="javascript:void(0)" data-action="lblog_admin_cats_post"><?php elang('Add')?></a>
 </span>
+<?php }?>
+
 </div>
 
 
@@ -17,7 +21,11 @@
 <td><?php echo $v['id'];?></td>
 <td><?php ehtml($v['name']);?></td>
 <td>
+
+<?php if(p('cats_modify')){?>
 <a href="javascript:void(0)" data-action="lblog_admin_cats_edit" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+<?php }?>
+
 </td>
 </tr>
 <?php }?>

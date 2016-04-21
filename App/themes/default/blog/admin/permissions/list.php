@@ -1,7 +1,11 @@
 <div class="line">
+
+<?php if(p('permissions_add')){?>
 <span>
 <a href="javascript:void(0)" data-action="lblog_admin_permissions_post"><?php elang('Add')?></a>
 </span>
+<?php }?>
+
 </div>
 
 
@@ -24,7 +28,9 @@
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
 <?php if($v['is_system'] === 'N'){?>
-	<a href="javascript:void(0)" data-action="lblog_admin_permissions_post" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+	<?php if(p('permissions_modify')){?>
+		<a href="javascript:void(0)" data-action="lblog_admin_permissions_post" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+	<?php }?>
 <?php }?>
 </td>
 </tr>
