@@ -50,10 +50,14 @@ if(arr_get($article,'is_active')=='N'){
 <td><?php elang('Content')?></td>
 <td><textarea cols="88" rows="20" name="content"><?php ehtml(arr_get($article, 'content'));?></textarea></td>
 </tr>
+
+<?php if(p('archives_modify')){?>
 <tr>
 <td align="center" colspan="2">
 <input class="btn" type="button" value="<?php elang('Submit')?>"<?php if(!isset($article['id'])){echo ' data-need-refresh="1"';};?>/>
 </td>
 </tr>
+<?php }?>
+
 </table>
 </form>

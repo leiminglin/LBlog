@@ -191,6 +191,7 @@ class ModuleInstall extends LmlBase{
 		// save to config file
 		$config['persist'] = false;
 		$this->saveConfig($config);
+		$GLOBALS['dbconfig'] = $config;
 		$this->generateSalt();
 
 		// rename this file
@@ -207,17 +208,27 @@ class ModuleInstall extends LmlBase{
 	}
 
 	public function generateSalt(){
-		$config_file = APP_PATH.'conf/siteconfig.php';
-		$config_str = file_get_contents($config_file);
+		$str = $this->randStr();
+		q('config')->add(array(
+			'name' => 'LBLOGSALT',
+			'data' => $str.'_'.md5($str.$GLOBALS['start_time']),
+		));
+		$str2 = $this->randStr();
+		q('config')->add(array(
+			'name' => 'LBLOGASALT',
+			'data' => $str2.'_'.md5($str2.$GLOBALS['start_time']),
+		));
+	}
+	
+	public function randStr(){
 		$str = '';
-		for( $i=0; $i<100; $i++ ) {
+		for( $i=0; $i<200; $i++ ) {
 			$char = chr(mt_rand(33, 126));
 			if ($char == "'" || $char == '\\') {
 				$char = '\\'.$char;
 			}
 			$str .= $char;
 		}
-		$config_str = str_replace("'salt_need_install_to_generate'", "'".$str.'_'.md5($str.time())."'", $config_str);
-		file_put_contents($config_file, $config_str);
+		return $str;
 	}
 }

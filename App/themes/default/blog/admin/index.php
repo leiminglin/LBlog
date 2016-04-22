@@ -156,8 +156,8 @@ window.onload=function(){
 <div class="top">
 	<span class="title"><?php ehtml(SITE_NAME)?></span>
 	<span class="user">
-	<?php if( ($nickname = Tool::getUserNickName())==true ){?>
-<?php elang('Hi,')?> <?php ehtml($nickname);?>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/logout'?>"><?php elang('Logout')?></a>
+	<?php if( ($nickname = Tool::getAdminNickName())==true ){?>
+<?php elang('Hi,')?> <?php ehtml($nickname);?>&nbsp;<a href="<?php echo WEB_APP_PATH.'admin/logout'?>"><?php elang('Logout')?></a>
 <?php }?>
 	</span>
 	<div class="clear"></div>
@@ -168,42 +168,79 @@ window.onload=function(){
 <div class="middle">
 	<div class="left">
 		<ul>
+		
+			<?php if(p('archives_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_archives_list_page" class="cl"><?php elang('Archives')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('archives_relation_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_archives_relation_page"><?php elang('Related articles')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('cats_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_cats_page"><?php elang('Article Categories')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('comments_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_comments_list_page"><?php elang('Article Comments')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('statistics_access_record_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_statistics_page"><?php elang('Access Record')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('pages_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_pages_page"><?php elang('Page')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('users_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_users_page"><?php elang('User')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('roles_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_roles_page"><?php elang('Role')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('accounts_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_accounts_page"><?php elang('Account')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('sessions_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_sessions_page"><?php elang('Session')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('permissions_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_permissions_page"><?php elang('Permission')?></a>
 			</li>
+			<?php }?>
+			
+			<?php if(p('settings_read')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_settings_page"><?php elang('Setting')?></a>
 			</li>
+			<?php }?>
+			
 		</ul>
 	</div>
 	

@@ -12,9 +12,9 @@ method="post">
 <tr>
 <td><?php elang('IsActive')?></td>
 <td>
-<input name="is_active" type="radio" value="Y" id="active_Y" <?php if(arr_get($rs,'is_active')=='Y'){echo 'checked';}?>/>
-<label for="active_Y"><?php elang('Yes')?></label>
-<input name="is_active" type="radio" value="N" id="active_N" <?php
+<input name="is_active" type="radio" value="Y" id="comments_active_Y" <?php if(arr_get($rs,'is_active')=='Y'){echo 'checked';}?>/>
+<label for="comments_active_Y"><?php elang('Yes')?></label>
+<input name="is_active" type="radio" value="N" id="comments_active_N" <?php
 if(arr_get($rs,'is_active')=='N'){
 	echo 'checked';
 }elseif(!arr_get($rs,'is_active')){
@@ -22,15 +22,21 @@ if(arr_get($rs,'is_active')=='N'){
 }
 ?>
 />
-<label for="active_N"><?php elang('No')?></label>
+<label for="comments_active_N"><?php elang('No')?></label>
 </td>
 </tr>
 <tr>
 <td><?php elang('Content')?></td>
 <td><textarea cols="88" rows="20" name="content"><?php ehtml(arr_get($rs, 'content'));?></textarea></td>
+
+
+<?php if(p('comments_modify')){?>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="button" value="<?php elang('Submit')?>"<?php if(!isset($rs['id'])){echo ' data-need-refresh="1"';};?>/></td>
 </tr>
+<?php }?>
+
+
 </table>
 </form>

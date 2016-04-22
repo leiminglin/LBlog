@@ -1,8 +1,12 @@
 <div class="line">
+
+<?php if(p('archives_relation_add')){?>
 <span>
 <input type="text" placeholder=" <?php elang('ID')?> <?php elang('ID')?>" style="width:70px;border:1px solid #edeff2;"/>
 <a href="javascript:void(0)" data-action="lblog_admin_set_relation_archives"><?php elang('Set to related')?></a>
 </span>
+<?php }?>
+
 </div>
 
 
@@ -19,9 +23,13 @@
 <td><?php echo $v['relation_aid'];?></td>
 <td><?php echo date("Y-m-d H:i:s", $v['addtime']);?></td>
 <td>
+
+<?php if(p('archives_relation_remove')){?>
 <a href="javascript:void(0)" data-action="lblog_admin_archives_relation_remove" data-id="<?php echo $v['aid'].' '.$v['relation_aid'];?>"><?php elang('Remove')?></a>
 <input type="hidden" value="<?php echo $v['aid'].' '.$v['relation_aid'];?>"/>
 <a href="javascript:void(0)" data-action="lblog_admin_set_relation_archives" class="hidden"><?php elang('Revert')?></a>
+<?php }?>
+
 </td>
 </tr>
 <?php }?>

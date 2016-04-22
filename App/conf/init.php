@@ -43,7 +43,10 @@ if(($timezone = arr_get($basecofig, 'timezone')) !== ''){
  */
 function get_theme() {
 
-	$themes = array('mobile', 'default');
+	$themes = array('mobile', 'default', 'new');
+	if(preg_match('/^(?:\/index\.php)?\/admin/', arr_get($_SERVER, 'REQUEST_URI'))){
+		$themes = array('mobile', 'default');
+	}
 	if( isset($_GET['theme']) && in_array($_GET['theme'], $themes ) ) {
 		isset($_GET['switch_theme_once']) || setcookie('theme', $_GET['theme'], 0, '/');
 		return $_GET['theme'];
@@ -99,7 +102,7 @@ function get_lang(){
 function last(){
 	$rs = q('page')->getAll();
 	foreach ($rs as $k=>$v){
-		if(preg_match($v['uri_regexp'], LML_REQUEST_URI)){
+		if($v['uri_regexp'] && preg_match($v['uri_regexp'], LML_REQUEST_URI)){
 			return r($v['content']);
 		}
 	}
@@ -179,6 +182,15 @@ function generate_passwd($passwd, $salt=''){
 	return md5(md5($passwd.$salt));
 }
 
+function p($k, $d=array()){
+	static $p=array();
+	if($d){
+		$p = array_merge($p, $d);
+	}else{
+		return isset($p[$k]) ? true : false;
+	}
+}
+
 function q($a){
 	static $q = array();
 	if(arr_get($q,$a)){
@@ -211,8 +223,9 @@ function s($name, $data=array()){
 			$store[$name] = array();
 		}
 		$store[$name] = array_merge($store[$name], $data);
+	}else{
+		return arr_get($store[$name], $data);
 	}
-	return arr_get($store[$name], $data);
 }
 
 function image_wh($w, $h, $rw=640, $rh=2000){

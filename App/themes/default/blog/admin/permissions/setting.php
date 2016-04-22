@@ -21,7 +21,11 @@ foreach ($rs as $k=>$v){
 ?>
 </tr>
 <tr>
+
+<?php if( (p('permissions_user_modify') && $type=='user') || (p('permissions_role_modify') && $type=='role') ){?>
 <td align="center" colspan="3"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
+<?php }?>
+
 </tr>
 </table>
 </form>

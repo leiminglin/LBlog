@@ -1,7 +1,11 @@
 <div class="line">
+
+<?php if(p('pages_add')){?>
 <span>
 <a href="javascript:void(0)" data-action="lblog_admin_pages_post"><?php elang('Add')?></a>
 </span>
+<?php }?>
+
 </div>
 
 
@@ -21,7 +25,14 @@
 <td><?php ehtml($v['uri_regexp']);?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 <td>
+
+
+
+<?php if(p('pages_modify')){?>
 <a href="javascript:void(0)" data-action="lblog_admin_pages_post" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
+<?php }?>
+
+
 </td>
 </tr>
 <?php }?>
