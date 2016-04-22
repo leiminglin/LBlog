@@ -403,6 +403,10 @@ INSERT INTO `lblog_config` VALUES (default, 'SITE_NAME', 'LBlog');
 INSERT INTO `lblog_config` VALUES (default, 'SITE_KEYWORDS', '开源博客系统-LBLOG');
 INSERT INTO `lblog_config` VALUES (default, 'SITE_DESCRIPTION', 'LBLOG博客系统是一款轻量级的博客兼CMS建站系统,基于LMLPHP框架,丰富的模板和雄厚的社区技术支持,为自由快速建站而生,让网站轻盈而高速.');
 INSERT INTO `lblog_config` VALUES (default, 'JAVASCRIPT_CODE', 'deferred.then(function(){\r\n/*google analytics sample begin*/\r\n(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\r\n(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\r\nm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\r\n})(window,document,\'script\',\'https://www.google-analytics.com/analytics.js\',\'ga\');\r\nga(\'create\', \'UA-76336948-1\', \'auto\');\r\nga(\'send\', \'pageview\');\r\n/*cnzz statistic sample*/\r\nlml.loadJs(\'//s4.cnzz.com/z_stat.php?id=1254164850&web_id=1254164850\');\r\ndeferred.promise();\r\n});');
+INSERT INTO `lblog_config` VALUES (default, 'OPENID_QQ_CONFIG', '{\"appid\":\"\",\"appkey\":\"\",\"callback\":\"http://{your_domain}/user/oauth\",\"scope\":\"get_user_info,add_share,list_album,add_album,upload_pic,add_topic,add_one_blog,add_weibo,check_page_fans,add_t,add_pic_t,del_t,get_repost_list,get_info,get_other_info,get_fanslist,get_idolist,add_idol,del_idol,get_tenpay_addr\",\"errorReport\":true,\"storageType\":\"file\",\"host\":\"localhost\",\"user\":\"root\",\"password\":\"root\",\"database\":\"test\"}');
+INSERT INTO `lblog_config` VALUES (default, 'OPENID_WEIBO_CONFIG_APPKEY', '');
+INSERT INTO `lblog_config` VALUES (default, 'OPENID_WEIBO_CONFIG_SECRETKEY', '');
+INSERT INTO `lblog_config` VALUES (default, 'OPENID_WEIBO_CONFIG_CALLBACK', 'http://{your_domain}/user/oauthweibo');
 
 
 DROP TABLE IF EXISTS `lblog_file_image`;
