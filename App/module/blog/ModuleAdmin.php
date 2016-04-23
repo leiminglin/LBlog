@@ -20,6 +20,7 @@ class ModuleAdmin extends LmlBlog{
 		'permissions' => 'checkPermission',
 		'sessions' => 'checkPermission',
 		'accounts' => 'checkPermission',
+		'pages' => 'checkPermission',
 	);
 	
 	public function __construct(){
