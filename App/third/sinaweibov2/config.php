@@ -1,4 +1,4 @@
 <?php
-define("WB_AKEY", '');
-define("WB_SKEY", '');
-define("WB_CALLBACK_URL", 'http://{your_domain}/user/oauthweibo');
+define("WB_AKEY", s('config', 'OPENID_WEIBO_CONFIG_APPKEY'));
+define("WB_SKEY", s('config', 'OPENID_WEIBO_CONFIG_SECRETKEY'));
+define("WB_CALLBACK_URL", s('config', 'OPENID_WEIBO_CONFIG_CALLBACK'));

@@ -407,8 +407,6 @@ class ModuleAdmin extends LmlBlog{
 		$matches = route_match('([\w]+)');
 		$action = arr_get($matches, 1);
 		$mConfig = new ModelConfig();
-		$qq_config_file = APP_PATH.'third/qqconnect2.1/API/comm/inc.php';
-		$weibo_config_file = APP_PATH.'third/sinaweibov2/config.php';
 		$base_config_file = APP_PATH.'conf/baseconfig.php';
 		switch ($action){
 			case 'save';
@@ -432,7 +430,7 @@ class ModuleAdmin extends LmlBlog{
 					$qq_appid = addslashes($_POST['QQ_CONFIG_APPID']);
 					$qq_appkey = addslashes($_POST['QQ_CONFIG_APPKEY']);
 					$qq_callback = addslashes($_POST['QQ_CONFIG_CALLBACK']);
-					$qq_config_contents = file_get_contents($qq_config_file);
+					$qq_config_contents = s('config', 'OPENID_QQ_CONFIG');
 					if(
 						strpos('x'.$qq_appid, "'") > 0 || 
 						strpos('x'.$qq_appkey, "'") > 0 ||
@@ -449,12 +447,11 @@ class ModuleAdmin extends LmlBlog{
 					$qq_config_contents = preg_replace('/"appid":"[^"]*"/', '"appid":"'.$qq_appid.'"', $qq_config_contents);
 					$qq_config_contents = preg_replace('/"appkey":"[^"]*"/', '"appkey":"'.$qq_appkey.'"', $qq_config_contents);
 					$qq_config_contents = preg_replace('/"callback":"[^"]*"/', '"callback":"'.$qq_callback.'"', $qq_config_contents);
-					file_put_contents($qq_config_file, $qq_config_contents);
+					$mConfig->updateOrAdd('OPENID_QQ_CONFIG', $qq_config_contents);
 				}elseif($type == 'openid_weibo'){
 					$weibo_appkey = addslashes($_POST['WEIBO_CONFIG_APPKEY']);
 					$weibo_secretkey = addslashes($_POST['WEIBO_CONFIG_SECRETKEY']);
 					$weibo_callback = addslashes($_POST['WEIBO_CONFIG_CALLBACK']);
-					$weibo_config_contents = file_get_contents($weibo_config_file);
 					if(
 						strpos('x'.$weibo_appkey, "'") > 0 ||
 						strpos('x'.$weibo_secretkey, "'") > 0 ||
@@ -462,16 +459,14 @@ class ModuleAdmin extends LmlBlog{
 						strpos('x'.$weibo_appkey, '"') > 0 ||
 						strpos('x'.$weibo_secretkey, '"') > 0 ||
 						strpos('x'.$weibo_callback, '"') > 0
-								
 					){
 						ehtml('It contains illegal characters " and \'');
 						return;
 					}
-					// "WB_AKEY", ''
-					$weibo_config_contents = preg_replace('/"WB_AKEY",\s\'[^\']*\'/', '"WB_AKEY", \''.$weibo_appkey.'\'', $weibo_config_contents);
-					$weibo_config_contents = preg_replace('/"WB_SKEY",\s\'[^\']*\'/', '"WB_SKEY", \''.$weibo_secretkey.'\'', $weibo_config_contents);
-					$weibo_config_contents = preg_replace('/"WB_CALLBACK_URL",\s\'[^\']*\'/', '"WB_CALLBACK_URL", \''.$weibo_callback.'\'', $weibo_config_contents);
-					file_put_contents($weibo_config_file, $weibo_config_contents);
+					
+					$mConfig->updateOrAdd('OPENID_WEIBO_CONFIG_APPKEY', $weibo_appkey);
+					$mConfig->updateOrAdd('OPENID_WEIBO_CONFIG_SECRETKEY', $weibo_secretkey);
+					$mConfig->updateOrAdd('OPENID_WEIBO_CONFIG_CALLBACK', $weibo_callback);
 				}elseif($type == 'timezone'){
 					$timezone = addslashes($_POST['TIMEZONE']);
 					if(
@@ -535,29 +530,21 @@ class ModuleAdmin extends LmlBlog{
 				break;
 			case '';
 				$site = array();
-				$site['site_name'] = $mConfig->getConfig('SITE_NAME');
-				$site['site_keywords'] = $mConfig->getConfig('SITE_KEYWORDS');
-				$site['site_description'] = $mConfig->getConfig('SITE_DESCRIPTION');
-				$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
+				$site['site_name'] = s('config', 'SITE_NAME');
+				$site['site_keywords'] = s('config', 'SITE_KEYWORDS');
+				$site['site_description'] = s('config', 'SITE_DESCRIPTION');
+				$login_uri = s('config', 'LOGIN_PAGE_URI');
 				$site['login_page_uri'] = $login_uri ? $login_uri : 'login';
-				$site['javascript_code'] = $mConfig->getConfig('JAVASCRIPT_CODE');
+				$site['javascript_code'] = s('config', 'JAVASCRIPT_CODE');
 				
-				$qq_inc = file($qq_config_file);
-				$qq_config = json_decode($qq_inc[1]);
+				$qq_config = json_decode(s('config', 'OPENID_QQ_CONFIG'));
 				$site['qq_config_appid'] = $qq_config->appid;
 				$site['qq_config_appkey'] = $qq_config->appkey;
 				$site['qq_config_callback'] = $qq_config->callback;
 				
-				$weibo_config = file($weibo_config_file);
-				// define("WB_AKEY", '');
-				preg_match('/define\("WB_AKEY",\s\'(.*)\'\);/', $weibo_config[1], $matches_temp);
-				$site['weibo_config_appkey'] = arr_get($matches_temp, 1);
-				// define("WB_SKEY", '');
-				preg_match('/define\("WB_SKEY",\s\'(.*)\'\);/', $weibo_config[2], $matches_temp);
-				$site['weibo_config_secretkey'] = arr_get($matches_temp, 1);
-				// define("WB_CALLBACK_URL", 'http://{your_domain}/user/oauthweibo');
-				preg_match('/define\("WB_CALLBACK_URL",\s\'(.*)\'\);/', $weibo_config[3], $matches_temp);
-				$site['weibo_config_callback'] = arr_get($matches_temp, 1);
+				$site['weibo_config_appkey'] = s('config', 'OPENID_WEIBO_CONFIG_APPKEY');
+				$site['weibo_config_secretkey'] = s('config', 'OPENID_WEIBO_CONFIG_SECRETKEY');
+				$site['weibo_config_callback'] = s('config', 'OPENID_WEIBO_CONFIG_CALLBACK');
 				
 				$baseconfig = require APP_PATH.'conf/baseconfig.php';
 				$site['timezone'] = $baseconfig['timezone'];

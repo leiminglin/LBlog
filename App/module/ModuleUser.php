@@ -164,7 +164,8 @@ class ModuleUser extends LmlBase{
 		setcookie(LBLOGUSS, '', 0, '/', APP_DOMAIN);
 		header('HTTP/1.1 302 Moved Temporarily');
 		header('Status:302 Moved Temporarily');
-		if( isset($_SERVER['HTTP_REFERER']) ){
+		$referrer = arr_get($_SERVER, 'HTTP_REFERER');
+		if($referrer && preg_match('/'.APP_DOMAIN.'$/i', parse_url($referrer, PHP_URL_HOST))){
 			header('Location:'.$_SERVER['HTTP_REFERER']);
 		}else{
 			header('Location:http://'.APP_DOMAIN);

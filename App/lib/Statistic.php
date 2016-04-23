@@ -31,6 +31,7 @@ class Statistic{
 					);
 				}
 				session_name('LBLOGSID');
+				session_set_cookie_params(0, '/', APP_DOMAIN, false, true);
 				session_start();
 			}
 		}else{
