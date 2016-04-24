@@ -375,7 +375,11 @@ lml.loadJs.competeLoad([
 			get_settings_page(o);
 		},
 		'lblog_admin_users_page':function(o){
-			get_users_page();
+			if(o.getAttribute('data-id')){
+				get_users_page(o.getAttribute('data-id'));
+			}else{
+				get_users_page(false);
+			}
 		},
 		'lblog_admin_roles_page':function(o){
 			if(o.getAttribute('data-id')){
