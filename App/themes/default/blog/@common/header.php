@@ -263,7 +263,7 @@ a:hover{
 }
 .code{
 	background-color:#fefefe;
-	border:2px solid #f7f7f7;
+	border:2px solid #F7F7F7;
 	color:#222;
 	padding:10px;
 	font-family:Monaco,"DejaVu Sans Mono","Courier New",monospace;
