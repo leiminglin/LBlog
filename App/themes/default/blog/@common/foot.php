@@ -35,8 +35,7 @@ function getShareImg(){
 }
 
 <?php 
-$rs = q('config')->getOne('data', 'name=?', array('JAVASCRIPT_CODE'));
-echo arr_get($rs, 'data');
+echo s('config', 'JAVASCRIPT_CODE');
 ?>
 </script>
 
