@@ -285,7 +285,7 @@ lml.loadJs.competeLoad([
 			var _this = this;
 			this.close = $('<div/>').html('×').css({"display":"block","width":"16px","font-size":"16px",
 				"position":"absolute","top":"-9px","line-height":"16px","color":"#ccc","z-index":100,
-				"border":"1px solid #ccc","border-radius":"8px","background":"#fff",
+				"border":"1px solid #ccc","border-radius":"50%","background":"#fff",
 				"text-align":"center","left":this.offsetWidth-9+'px'})
 				.mouseover(function(){
 					$(this).css({"color":"#ff6f3d","border":"1px solid #ff6f3d"});
