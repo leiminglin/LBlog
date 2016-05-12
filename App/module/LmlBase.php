@@ -13,8 +13,8 @@ abstract class LmlBase{
 		$d = DEFAULT_THEME_PATH;
 		$g = '';
 		if( defined('C_GROUP') ){
-			$g = C_GROUP.$s;
-			$d .= $g;
+			$g = C_GROUP;
+			$d .= C_GROUP.$s;
 		}
 		
 		if($t){
@@ -31,15 +31,13 @@ abstract class LmlBase{
 		if (file_exists($f)) {
 			$this->fetch($f);
 		}else{
-			$identifier = DEFAULT_THEME_NAME.$s.$g.$theme_uri;
-			$identifier = str_replace($s, '/', $identifier);
+			$identifier = DEFAULT_THEME_NAME.'/'.$g.'/'.$theme_uri;
 			$db_page = s('page', $identifier);
 			
 			if($db_page){
 				r($db_page, $this->v);
 			}else{
-// 				var_dump(APP_PATH.'themes/default/'.$g.$theme_uri);
-// 				$this->fetch(APP_PATH.'themes/default/'.$g.$theme_uri);
+
 			}
 		}
 	}
