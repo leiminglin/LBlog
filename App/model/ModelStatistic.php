@@ -6,7 +6,7 @@ class ModelStatistic extends Model{
 		$http_accept_encoding =  isset($_SERVER['HTTP_ACCEPT_ENCODING'])?$_SERVER['HTTP_ACCEPT_ENCODING']:'';
 		$http_referer =  isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
 		$arr = array(
-			'http_host' => $_SERVER['HTTP_HOST'],
+			'http_host' => APP_DOMAIN,
 			'request_uri' => $_SERVER['REQUEST_URI'],
 			'http_user_agent' => isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'',
 			'http_accept' => isset($_SERVER['HTTP_ACCEPT'])?$_SERVER['HTTP_ACCEPT']:'',
