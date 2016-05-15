@@ -32,6 +32,6 @@ echo s('config', 'JAVASCRIPT_CODE');
 </script>
 
 
-<script type="text/javascript">deferred.then(function(){var def2 = lml.createDeferred();def2.then(function(){lml.loadJs('https://rawgit.com/leiminglin/LMLJS/master/lib/highlight.js', function(){def2.promise();});});deferred.promise();def2.promise();});</script>
+<script type="text/javascript">deferred.then(function(){var def2 = lml.createDeferred();def2.then(function(){lml.loadJs('//rawgit.com/leiminglin/LMLJS/master/lib/highlight.js', function(){def2.promise();});});deferred.promise();def2.promise();});</script>
 </body>
 </html>

@@ -22,6 +22,8 @@ var lblog_admin_sessions_path = '<?php echo WEB_APP_PATH?>admin/sessions/list';
 var lblog_admin_accounts_path = '<?php echo WEB_APP_PATH?>admin/accounts/list';
 var lblog_admin_pages_path = '<?php echo WEB_APP_PATH?>admin/pages/list';
 var pages_post_path = '<?php echo WEB_APP_PATH?>admin/pages/post';
+var lblog_admin_images_path = '<?php echo WEB_APP_PATH?>admin/images/list';
+var images_post_path = '<?php echo WEB_APP_PATH?>admin/images/post';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -247,6 +249,26 @@ function get_pages_post_page(o){
 	});
 }
 
+function get_images_list_page(o){
+	var path = lblog_admin_images_path;
+	if(o){
+		path += '/'+o;
+	}
+	get(path, function(rs){
+		create_tab('<?php elang('Image')?>', rs);
+	});
+}
+
+function get_images_post_page(o){
+	var path = images_post_path,title='<?php elang('PostImage')?>';
+	if(o){
+		path += '/'+o;
+		title = '<?php elang('EditImage')?>-'+o;
+	}
+	get(path, function(rs){
+		create_tab(title, rs);
+	});
+}
 
 
 
@@ -463,6 +485,20 @@ lml.loadJs.competeLoad([
 			}else{
 				get_pages_post_page(false);
 			}
+		},
+		'lblog_admin_images_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_images_list_page(o.getAttribute('data-id'));
+			}else{
+				get_images_list_page(false);
+			}
+		},
+		'lblog_admin_images_post_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_images_post_page(o.getAttribute('data-id'));
+			}else{
+				get_images_post_page(false);
+			}
 		}
 	};
 
@@ -492,7 +528,10 @@ lml.loadJs.competeLoad([
 	$('#result').delegate("input[type=submit]", "click", function(){
 		var _this = this;
 		var data_id = $(this).attr('data-id');
-		
+		if(_this.flag){
+			show_info('<?php elang('Please wait')?>');
+			return false;
+		}
 		var submit_actions = {
 			'settings_logo_check':function(o){
 				var fileval = $('input[name=LOGO]', $(_this.form)).val();
@@ -504,6 +543,21 @@ lml.loadJs.competeLoad([
 			},
 			'settings_logo':function(o){
 				$('#logo_img_td').html(o);
+			},
+			
+			
+			'images_upload_check':function(o){
+				var file=$('input[name=images\\[\\]]', $(_this.form)),fileval=file.val();
+				if(fileval == ''){
+					show_info('<?php elang('Please select file')?>');
+					return false;
+				}
+				_this.flag=true;
+				$('td.preview', $(_this.form)).html('<?php elang('Please wait...')?>');
+				return true;
+			},
+			'images_upload':function(o){
+				$('td.preview', $(_this.form)).html(o);
 			}
 		};
 		if(!submit_actions[data_id+'_check']()){
@@ -511,9 +565,9 @@ lml.loadJs.competeLoad([
 		}
 		if(this.form.target){
 			$("#"+this.form.target).load(function(){
-				_this.disabled = false;
 				var content = $(this).contents().find("body").html();
 				submit_actions[data_id](content);
+				_this.flag=false;
 			});
 		}
 		return true;

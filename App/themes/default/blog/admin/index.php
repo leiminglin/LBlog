@@ -199,6 +199,12 @@ window.onload=function(){
 			</li>
 			<?php }?>
 			
+			<?php if(p('images_read_list')||true){?>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_images_page"><?php elang('Image')?></a>
+			</li>
+			<?php }?>
+			
 			<?php if(p('pages_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_pages_page"><?php elang('Page')?></a>
