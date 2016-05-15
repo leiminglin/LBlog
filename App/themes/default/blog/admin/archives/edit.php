@@ -48,7 +48,7 @@ if(arr_get($article,'is_active')=='N'){
 </tr>
 <tr>
 <td><?php elang('Content')?></td>
-<td><textarea cols="88" rows="20" name="content"><?php ehtml(arr_get($article, 'content'));?></textarea></td>
+<td><textarea cols="88" rows="20" name="content"><?php ehtml(arr_get($article, 'content', '<div class="intro"><p>content here</p></div>'));?></textarea></td>
 </tr>
 
 <?php if(p('archives_modify')){?>
@@ -58,6 +58,11 @@ if(arr_get($article,'is_active')=='N'){
 </td>
 </tr>
 <?php }?>
-
 </table>
 </form>
+
+<script>
+lml.loadJs('<?php echo WEB_APP_PATH.'admin/js/lmledit?t='.DEFAULT_LANG.filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/lmledit.js');?>', function(){
+	lmledit();
+});
+</script>

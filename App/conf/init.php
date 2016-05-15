@@ -216,16 +216,126 @@ function r($p, $d=array()){
 	return eval('?>'.$p);
 }
 
-function s($name, $data=array()){
+function s($name, $data=null){
 	static $store = array();
 	if(is_array($data)){
 		if(!isset($store[$name])){
 			$store[$name] = array();
 		}
 		$store[$name] = array_merge($store[$name], $data);
-	}else{
+	}elseif(!empty($data)){
 		return arr_get($store[$name], $data);
+	}else{
+		return arr_get($store, $name, array());
 	}
+}
+
+function template_interpreter($o, $title=''){
+	$matches = null;
+	preg_match_all('/<LBLOG(a|article|image)\s[\s\S]*?\/?>/i', $o, $matches, PREG_OFFSET_CAPTURE);
+	
+	if( isset($matches[0][0][1]) ){
+		$str = '';
+		$pos = 0;
+		foreach($matches[0] as $k => $v){
+			$str .= substr($o, $pos, $v[1]-$pos);
+			$tag_str = $v[0];
+			$matches_id = null;
+			preg_match('/id="(\d+)"/i', $tag_str, $matches_id);
+			if(!isset($matches_id[1])){
+				return;
+			}
+			$id = $matches_id[1];
+			switch ($matches[1][$k][0]){
+				case 'a':
+					$article = q('blog_archives')->getOne('title', "id=$id and is_active='Y'");
+					if(!$article){
+						continue;
+					}
+					$article_url = q('blog_archives_url')->getOne('url', "aid=$id");
+					$url = arr_get($article_url, 'url');
+					$str .= '<a href="'.Tool::getArticleUrl($id, $url).'" title="'.$article['title'].'">'.$article['title'].'</a>';
+					break;
+				case 'article':
+					break;
+				case 'image':
+					$image = q('file_image')->find($id);
+					if(!$image){
+						continue;
+					}
+					$str .= '<img src="'.WEB_APP_PATH.'file/image/'.$id.'?'.$image['hash']
+					.'" alt="'.$title.'" title="'.$title.'" width="'.$image['width'].'" height="'.$image['height'].'" />';
+					
+					break;
+			}
+			$pos = $v[1] + strlen($v[0]);
+		}
+		$str .= substr($o, $pos);
+		return $str;
+	}
+	return $o;
+}
+
+function is_ssl(){
+	if(isset($_SERVER['HTTPS'])){
+		$https = arr_get($_SERVER, 'HTTPS');
+		if($https === 1 || $https === 'on'){
+			return true;
+		}
+		if(arr_get($_SERVER, 'SERVER_PORT')){
+			return true;
+		}
+	}
+	return false;
+}
+
+function upload_file($file, $r='image')
+{
+	$status = array();
+	if (!$file) {
+		return 1;
+	}
+	if ($file['error']) {
+		return 2;
+	} else if (!file_exists($file['tmp_name'])) {
+		return 3;
+	} else if (!is_uploaded_file($file['tmp_name'])) {
+		return 4;
+	}
+	$ext=strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+	$hash = md5(file_get_contents($file['tmp_name']));
+	$file_name = $hash.'.'.$ext;
+	$path = 'master/'.date('Y/m/d').'/';
+	$store_path = APP_PATH.'repository/'.$r.'/'.$path;
+	if(!file_exists($store_path)){
+		LmlUtils::mkdirDeep($store_path);
+	}
+	move_uploaded_file($file['tmp_name'], $store_path.$file_name);
+	$status['hash'] = $hash;
+	$status['path'] = $path.$file_name;
+	$status['type'] = $file['type'];
+	$status['size'] = $file['size'];
+	$status['origin_name'] = $file['name'];
+	$status['createtime'] = $GLOBALS['start_time'];
+	return $status;
+}
+
+function upload_image($file)
+{
+	$ext=strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+	if(!in_array($ext, array('png', 'jpg', 'jpeg', 'gif', 'bmp'))){
+		return 5;
+	}
+	$status = upload_file($file, 'image');
+	if(!is_array($status)){
+		return $status;
+	}
+	$filename = APP_PATH.'repository/image/'.$status['path'];
+	$source_info = getimagesize($filename);
+	$status['width'] = $source_info[0];
+	$status['height'] = $source_info[1];
+	return $status;
 }
 
 function image_wh($w, $h, $rw=640, $rh=2000){
@@ -247,12 +357,12 @@ function image_wh($w, $h, $rw=640, $rh=2000){
 		}
 	}
 	return array(
-			'w' => $w,
-			'h' => $h,
+		'w' => $w,
+		'h' => $h,
 	);
 }
 
-function imagecropper($source_path)
+function imagecropper($source_path, $width=640)
 {
 	$source_info   = getimagesize($source_path);
 	$source_width  = $source_info[0];
@@ -261,36 +371,67 @@ function imagecropper($source_path)
 	$source_ratio  = $source_height / $source_width;
 	$source_x = 0;
 	$source_y = 0;
-	if ($source_width > 640)
+	if ($source_width > $width)
 	{
-		$target_width = 640;
-		$target_height = round(635 * $source_height / $source_width);
+		$target_width = $width;
+		$target_height = round($width * $source_height / $source_width);
 	}else{
-		return;
+		return false;
 	}
 
 	switch ($source_mime)
 	{
 		case 'image/gif':
 			$source_image = imagecreatefromgif($source_path);
+			
+// 			$image = new Imagick('old.gif');
+// 			$image = $image->coalesceImages();
+// 			foreach ($image as $frame) {
+// 				$frame->thumbnailImage($target_width, $target_height);
+// 			}
+// 			$image = $image->optimizeImageLayers();
+// 			$image->writeImages($source_path, true);
+// 			return file_get_contents($source_path);
+			
 			break;
-
 		case 'image/jpeg':
 			$source_image = imagecreatefromjpeg($source_path);
 			break;
-
 		case 'image/png':
 			$source_image = imagecreatefrompng($source_path);
+			imagesavealpha($source_image, true);
 			break;
-
 		default:
 			return false;
 			break;
 	}
-	$target_image  = imagecreatetruecolor($target_width, $target_height);
+	$target_image = imagecreatetruecolor($target_width, $target_height);
+	imagealphablending($target_image, false);
+	imagesavealpha($target_image, true);
 	imagecopyresampled($target_image, $source_image, 0, 0, 0, 0, $target_width, $target_height, $source_width, $source_height);
 
 	ob_start();
-	imagejpeg( $target_image );
+	switch ($source_mime)
+	{
+		case 'image/gif':
+			imagegif($target_image);
+			break;
+		case 'image/jpeg':
+			imagejpeg($target_image);
+			break;
+		case 'image/png':
+			imagepng($target_image);
+			break;
+		default:
+			imagejpeg($target_image);
+			break;
+	}
 	return ob_get_clean();
+}
+
+function use_time(){
+	$t = microtime();
+	list($m, $s) = explode(' ', $GLOBALS['start_microtime']);
+	list($m2, $s2) = explode(' ', $t);
+	return number_format( ($s2.'.'.substr($m2, 2)) - ($s.'.'.substr($m, 2)), 6);
 }

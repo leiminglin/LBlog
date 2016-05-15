@@ -173,16 +173,45 @@ class ModuleUser extends LmlBase{
 	}
 	
 	public function register(){
+		
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1);
+		
+		if($action == 'captcha'){
+			require APP_PATH.'third/captcha/captcha.php';
+			$captcha = new SimpleCaptcha();
+			$captcha->session_var = 'captcha_register';
+			$captcha->width = 180;
+			$captcha->height = 60;
+			$captcha->shadowColor = true;
+			$captcha->CreateImage();
+			lml()->app()->setOneSloc(false);
+			return;
+		}
+		
 		if($_POST){
 			$email = $_POST['email'];
 			$passwd = $_POST['passwd'];
 			$repasswd = $_POST['repasswd'];
+			$captcha = $_POST['captcha'];
 			
-			$valid = true;
-			// todo validate
+			$is_valid = false;
+			if(strlen($passwd)>5 && strlen($email)>5 && $passwd==$repasswd 
+					&& preg_match('/[\w\-\.]+@[\w\-\.]+/', $email)
+					&& trim(strtolower($captcha)) == $_SESSION['captcha_register']
+					){
+				$is_valid = true;
+			}
+			unset($_SESSION['captcha_register']);
+			
+			if(!$is_valid){
+				$this->assign('save_status', '注册失败：请正确填写邮箱且密码长度至少6个字符！');
+				$this->display();
+				return;
+			}
 			
 			$mUser = new ModelUser();
-			if( ($userid=$mUser->register($email, $passwd)) && $valid ){
+			if( $is_valid && ($userid=$mUser->register($email, $passwd)) ){
 				$expire_time = $GLOBALS['start_time']+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				header("Location:".WEB_PATH);
@@ -201,8 +230,14 @@ class ModuleUser extends LmlBase{
 		if($_POST){
 			$email = $_POST['email'];
 			$passwd = $_POST['passwd'];
+			
+			$is_valid = false;
+			if(strlen($email)>5 && strlen($passwd)>5){
+				$is_valid = true;
+			}
+			
 			$mUser = new ModelUser();
-			if( strlen($passwd) > 5 && ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
+			if( $is_valid && ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
 				$expire_time = $GLOBALS['start_time']+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
 				$arrsql = array(

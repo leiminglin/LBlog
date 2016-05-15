@@ -33,7 +33,7 @@ class ModelArchives extends Model{
 		$ids = Tool::getArrayFieldList($archives, 'id');
 		$urls = $this->getArchivesUrlByIds($ids);
 		foreach ($archives as &$v){
-		$v['url'] = isset($urls[$v['id']]) ? $urls[$v['id']] : '';
+			$v['url'] = isset($urls[$v['id']]) ? $urls[$v['id']] : '';
 		}
 		return $archives;
 	}

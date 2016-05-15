@@ -5,7 +5,7 @@ class ModuleAdmin extends LmlBlog{
 	public $conditions = array(
 		'postarticle' => 'checkPermission',
 		'editarticle' => 'checkPermission',
-		'backData' => 'checkPermission',
+		'bakData' => 'checkPermission',
 
 		'addrelationarticle' => 'checkPermission',
 		'removerelationarticle' => 'checkPermission',
@@ -21,6 +21,8 @@ class ModuleAdmin extends LmlBlog{
 		'sessions' => 'checkPermission',
 		'accounts' => 'checkPermission',
 		'pages' => 'checkPermission',
+		'images' => 'checkPermission',
+		'js' => 'checkPermission',
 	);
 	
 	public function __construct(){
@@ -525,7 +527,8 @@ class ModuleAdmin extends LmlBlog{
 					$mConfig->updateOrAdd('LOGO_IMG_ID', $insert_id);
 					$image = $q_image->find($insert_id);
 					$image_wh = image_wh($image['width'], $image['height']);
-					echo '<img src="'.WEB_PATH.'file/image/'.$insert_id.'" width="'.$image_wh['w'].'" height="'.$image_wh['h'].'"/>';
+					echo '<img src="'.WEB_PATH.'file/image/'.$insert_id.'?'.$image['hash']
+						.'" width="'.$image_wh['w'].'" height="'.$image_wh['h'].'"/>';
 					return;
 				}
 				break;
@@ -555,11 +558,13 @@ class ModuleAdmin extends LmlBlog{
 				$site['logo_height'] = 100;
 				$logo_image_id = $mConfig->getConfig('LOGO_IMG_ID');
 				if ($logo_image_id) {
-					$site['logo_url'] = WEB_PATH.'file/image/'.$logo_image_id;
 					$image = q('file_image')->find($logo_image_id);
-					$image_wh = image_wh($image['width'], $image['height']);
-					$site['logo_width'] = $image_wh['w'];
-					$site['logo_height'] = $image_wh['h'];
+					if($image){
+						$image_wh = image_wh($image['width'], $image['height']);
+						$site['logo_width'] = $image_wh['w'];
+						$site['logo_height'] = $image_wh['h'];
+						$site['logo_url'] = WEB_PATH.'file/image/'.$logo_image_id.'?'.$image['hash'];
+					}
 				}
 				
 				$this->assign('site', $site);
@@ -757,6 +762,144 @@ class ModuleAdmin extends LmlBlog{
 				}
 				break;
 		}
+	}
+	
+	public function images(){
+		$matches = route_match('([\w]+)');
+		$action = arr_get($matches, 1);
+
+		$m = q('file_image');
+		switch ($action){
+			case 'list':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $m->getList(10*($pid-1), 12, false);
+				$count = $m->getCount();
+				$page = new Paging($count, $pid, 12);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/list.php');
+				break;
+			case 'listEditor':
+				$pid = 1;
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1]) && $matches[1] > 1) {
+					$pid = $matches[1];
+				}
+				$rs = $m->getList(10*($pid-1), 12, false);
+				$count = $m->getCount();
+				$page = new Paging($count, $pid, 12);
+				$this->assign('rs', $rs);
+				$this->assign('page', $page);
+				$this->assign('pid', $pid);
+				$this->display('', '/listEditor.php');
+				break;
+			case 'post':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1])) {
+					$rs = $m->find($matches[1]);
+					$this->assign('rs', $rs);
+				}
+				$this->display('', '/edit.php');
+				break;
+			case 'save':
+				$matches = route_match('[\w]+\/(\d+)');
+				if (isset($matches[1])) {
+					$fid = $matches[1];
+					$images = $_FILES['images'];
+					$file = array();
+					$file['name'] = $images['name'][0];
+					$file['type'] = $images['type'][0];
+					$file['tmp_name'] = $images['tmp_name'][0];
+					$file['error'] = $images['error'][0];
+					$file['size'] = $images['size'][0];
+					
+					$result_co = imagecropper($file['tmp_name']);
+					if($result_co){
+						file_put_contents($file['tmp_name'], $result_co);
+						$file['size'] = filesize($file['tmp_name']);
+					}
+					$db_image = $m->find($fid);
+					$hash = md5(file_get_contents($file['tmp_name']));
+					if($m->notExists(array('hash'=>$hash))){
+						$status = upload_image($file);
+					}else{
+						echo '<p>Filename '.$file['name'].' is already uploaded</p>';
+						return;
+					}
+					
+					if(file_exists(APP_PATH.'repository/image/'.$db_image['path'])){
+						//unlink(APP_PATH.'repository/image/'.$db_image['path']);
+						$image_deleted = array(
+							'image_id' => $db_image['id'],
+							'hash' => $db_image['hash'],
+							'path' => $db_image['path'],
+							'type' => $db_image['type'],
+							'size' => $db_image['size'],
+							'origin_name' => $db_image['origin_name'],
+							'width' => $db_image['width'],
+							'height' => $db_image['height'],
+							'image_createtime' => $db_image['createtime'],
+							'createtime' => $GLOBALS['start_time'],
+						);
+						q('file_image_deleted')->add($image_deleted);
+					}
+					unset($status['createtime']);
+					$m->update($status, "id=$fid");
+					echo '<p><img src="'.WEB_PATH.'file/image/'.$fid.'?'.$hash
+					.'" width="'.$status['width'].'" height="'.$status['height'].'"/></p>';
+					return;
+				}else{
+					//add
+					$images=$_FILES['images'];
+					$status = array();
+					$out_html = '';
+					if(is_array($images['name'])){
+						foreach ($images['name'] as $k=>$v){
+							//"name"]=> ["type"]=> ["tmp_name"]=>  ["error"]=> a} ["size"]=> array(1) 
+							$file = array(
+								'name' => $v,
+								'type' => $images['type'][$k],
+								'tmp_name' => $images['tmp_name'][$k],
+								'error' => $images['error'][$k],
+								'size' => $images['size'][$k],
+							);
+							$result_co = imagecropper($file['tmp_name']);
+							if($result_co){
+								file_put_contents($file['tmp_name'], $result_co);
+								$file['size'] = filesize($file['tmp_name']);
+							}
+							$hash = md5(file_get_contents($file['tmp_name']));
+							if($m->notExists(array('hash'=>$hash))){
+								$status[$v] = upload_image($file);
+							}else{
+								$out_html .= '<p>Filename '.$file['name'].' is already uploaded</p>';
+							}
+						}
+					}else{
+						$status[$images['name']] = upload_image($images);
+					}
+					foreach ($status as $k=>$v) {
+						if(is_array($v)){
+							$m->add($v);
+							$status[$k]['id'] = $m->getLastId();
+							
+							$image_wh = image_wh($v['width'], $v['height']);
+							$out_html .= '<p><img src="'.WEB_PATH.'file/image/'.$status[$k]['id'].'?'.$v['hash']
+								.'" width="'.$image_wh['w'].'" height="'.$image_wh['h'].'"/></p>';
+						}else{
+							$out_html .= '<p>Filename '.$v['name'].' is upload failed!</p>';
+						}
+					}
+					echo $out_html;
+				}
+				break;
+		}
+		return;
 	}
 
 	public function js(){

@@ -140,10 +140,22 @@ class Tool{
 	}
 
 	public static function getOriginLinks($path){
+		
+		$str_protocal = 'http://';
+		if(isset($_SERVER['HTTPS'])){
+			$https = arr_get($_SERVER, 'HTTPS');
+			if($https === 1 || $https === 'on'){
+				$str_protocal = 'https://';
+			}
+			if(arr_get($_SERVER, 'SERVER_PORT')){
+				$str_protocal = 'https://';
+			}
+		}
+		
 		return '
-		原文链接 : <a href="http://'.APP_DOMAIN.$path.'">
-		http://'.APP_DOMAIN.$path.'</a>
-		 &nbsp;来自 : <a href="http://'.APP_DOMAIN.'/">'.SITE_NAME.'</a>
+		原文链接 : <a href="'.$str_protocal.APP_DOMAIN.$path.'">'
+		.$str_protocal.APP_DOMAIN.$path.'</a>
+		 &nbsp;来自 : <a href="'.$str_protocal.APP_DOMAIN.'/">'.SITE_NAME.'</a>
 		';
 	}
 	

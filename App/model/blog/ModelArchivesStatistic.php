@@ -29,7 +29,7 @@ class ModelArchivesStatistic extends Model{
 	}
 	
 	public function getArticleReadRank(){
-		$sql = "SELECT aid, viewtimes FROM {$this->dbPrefix}blog_archives_statistic ORDER BY viewtimes DESC LIMIT 10";
+		$sql = "SELECT aid FROM {$this->dbPrefix}blog_archives_statistic ORDER BY viewtimes DESC LIMIT 1000";
 		return $this->db->query($sql);
 	}
 }
