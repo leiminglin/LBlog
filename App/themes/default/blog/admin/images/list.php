@@ -32,7 +32,7 @@
 <td><?php echo $v['size'];?></td>
 <td><?php echo date("Y-m-d H:i:s", $v['createtime']);?></td>
 <td>
-<?php if(p('images_read_post')){?>
+<?php if(p('images_modify')){?>
 <a href="javascript:void(0)" data-action="lblog_admin_images_post_page" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
 <?php }?>
 </td>

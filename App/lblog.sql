@@ -178,7 +178,7 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'images_read_list', '/^(?:\
 INSERT INTO `lblog_blog_permission` VALUES (default, 'images_read_post', '/^(?:\\/index\\.php)?\\/admin\\/images\\/post/', 'View images post page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'images_add', '/^(?:\\/index\\.php)?\\/admin\\/images\\/save$/', 'Add new images', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'images_modify', '/^(?:\\/index\\.php)?\\/admin\\/images\\/save\\/\\d+/', 'Modify posted images', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'images_editor_list', '/^(?:\\/index\\.php)?\\/admin\\/images\\/listEditor/', 'View images list in editor', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'images_editor_list', '/^(?:\\/index\\.php)?\\/admin\\/images\\/editorList/', 'View images list in editor', 'Y', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'sessions_read_list', '/^(?:\\/index\\.php)?\\/admin\\/sessions\\/list/', 'View sessions list page', 'Y', unix_timestamp());
 
@@ -329,6 +329,12 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'PostPage', '新建页面');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'EditPage', '编辑页面');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'PostPermission', '新建权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'EditPermission', '编辑权限');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Image', '图片');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Path', '路径');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Type', '类型');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Size', '大小');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'PostImage', '提交图片');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'EditImage', '编辑图片');
 
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives list page', '查看文章列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View archives post page', '查看文章发布页');
@@ -369,6 +375,12 @@ INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add new permissions', '添加�
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify posted permissions', '修改已有权限');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View sessions list page', '查看会话列表页');
 INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View accounts list page', '查看账号列表页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View images post page', '查看图片列表页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View images list page', '查看图片列表页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View images post page', '查看图片提交页');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Add new images', '添加新图片');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'Modify posted images', '修改已有图片');
+INSERT INTO `lblog_lang_zh_CN` VALUES (default, 'View images list in editor', '编辑器中查看图片列表');
 
 
 DROP TABLE IF EXISTS `lblog_user_qq`;
@@ -425,6 +437,24 @@ CREATE TABLE `lblog_file_image` (
   `origin_name` varchar(100) NOT NULL default '',
   `width` int(11) NOT NULL default '0',
   `height` int(11) NOT NULL default '0',
+  `createtime` bigint(20) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `hash` (`hash`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `lblog_file_image_deleted`;
+CREATE TABLE `lblog_file_image_deleted` (
+  `id` int(11) NOT NULL auto_increment,
+  `image_id` int(11) NOT NULL,
+  `hash` varchar(50) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `size` int(11) unsigned NOT NULL default '0',
+  `origin_name` varchar(100) NOT NULL default '',
+  `width` int(11) NOT NULL default '0',
+  `height` int(11) NOT NULL default '0',
+  `image_createtime` bigint(20) unsigned NOT NULL default '0',
   `createtime` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `hash` (`hash`)
