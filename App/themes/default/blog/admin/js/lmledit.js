@@ -30,10 +30,15 @@
 					cobj.width=$(obj).next().html();
 					cobj.height=$(obj).next().next().html();
 					getCaretPosition(div, '<p>'+cobj.outerHTML+'</p>');
+					return;
 				}
 				
-				if(!this.loaded){
-					get_images_list_page(0, function(rs){
+				if(!this.loaded||true){
+					var page=0;
+					if(obj.tagName=='A'){
+						page = obj.getAttribute('data-id')||0;
+					}
+					get_images_list_page(page, function(rs){
 						$(_this).children('div').html(rs);
 						_this.loaded=true;
 					});

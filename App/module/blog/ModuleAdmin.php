@@ -776,7 +776,7 @@ class ModuleAdmin extends LmlBlog{
 				if (isset($matches[1]) && $matches[1] > 1) {
 					$pid = $matches[1];
 				}
-				$rs = $m->getList(10*($pid-1), 12, false);
+				$rs = $m->getList(12*($pid-1), 12, false);
 				$count = $m->getCount();
 				$page = new Paging($count, $pid, 12);
 				$this->assign('rs', $rs);
@@ -790,7 +790,7 @@ class ModuleAdmin extends LmlBlog{
 				if (isset($matches[1]) && $matches[1] > 1) {
 					$pid = $matches[1];
 				}
-				$rs = $m->getList(10*($pid-1), 12, false);
+				$rs = $m->getList(12*($pid-1), 12, false);
 				$count = $m->getCount();
 				$page = new Paging($count, $pid, 12);
 				$this->assign('rs', $rs);
