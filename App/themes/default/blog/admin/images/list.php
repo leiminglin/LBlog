@@ -1,6 +1,6 @@
 <div class="line">
 
-<?php if(p('images_add') || true){?>
+<?php if(p('images_read_post')){?>
 <span>
 <a href="javascript:void(0)" data-action="lblog_admin_images_post_page"><?php elang('Post')?></a>
 </span>
@@ -32,7 +32,7 @@
 <td><?php echo $v['size'];?></td>
 <td><?php echo date("Y-m-d H:i:s", $v['createtime']);?></td>
 <td>
-<?php if(p('images_read_post')||true){?>
+<?php if(p('images_read_post')){?>
 <a href="javascript:void(0)" data-action="lblog_admin_images_post_page" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
 <?php }?>
 </td>

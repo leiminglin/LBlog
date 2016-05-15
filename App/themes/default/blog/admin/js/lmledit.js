@@ -81,7 +81,10 @@
 		}))
 		.append(paragraph)
 		.append(code)
-		.append(image).bind('mousedown click',function(){
+		<?php if(p('images_editor_list')){?>
+		.append(image)
+		<?php }?>
+		.bind('mousedown click',function(){
 			return prevent(this);
 		});
 		

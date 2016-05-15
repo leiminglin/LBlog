@@ -3,7 +3,7 @@
  method="post" enctype="multipart/form-data" target="iframeFileImage">
 <table>
 <tr>
-<?php if(p('images_upload')||true){?>
+<?php if(p('images_add')||p('images_modify')){?>
 <td><input type="file" name="images[]" <?php if(!isset($rs)){?>multiple="multiple"<?php }?>/></td>
 <td align="center"><input class="btn" type="submit" value="<?php elang('Submit')?>" data-id="images_upload"/></td>
 <?php }?>

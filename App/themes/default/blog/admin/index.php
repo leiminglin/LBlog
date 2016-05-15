@@ -199,7 +199,7 @@ window.onload=function(){
 			</li>
 			<?php }?>
 			
-			<?php if(p('images_read_list')||true){?>
+			<?php if(p('images_read_list')){?>
 			<li>
 			<a href="javascript:void(0)" data-action="lblog_admin_images_page"><?php elang('Image')?></a>
 			</li>
