@@ -81,9 +81,7 @@
 		}))
 		.append(paragraph)
 		.append(code)
-		<?php if(p('images_editor_list')){?>
 		.append(image)
-		<?php }?>
 		.bind('mousedown click',function(){
 			return prevent(this);
 		});
@@ -104,7 +102,7 @@
 	
 	/*once*/
 	
-	var lblog_admin_images_path = '<?php echo WEB_APP_PATH?>admin/images/listEditor';
+	var lblog_admin_images_path = '<?php echo WEB_APP_PATH?>admin/images/editorList';
 	function get_images_list_page(o, cb){
 		var path = lblog_admin_images_path;
 		if(o){

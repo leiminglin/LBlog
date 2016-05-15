@@ -784,7 +784,7 @@ class ModuleAdmin extends LmlBlog{
 				$this->assign('pid', $pid);
 				$this->display('', '/list.php');
 				break;
-			case 'listEditor':
+			case 'editorList':
 				$pid = 1;
 				$matches = route_match('[\w]+\/(\d+)');
 				if (isset($matches[1]) && $matches[1] > 1) {

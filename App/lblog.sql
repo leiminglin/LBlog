@@ -178,7 +178,7 @@ INSERT INTO `lblog_blog_permission` VALUES (default, 'images_read_list', '/^(?:\
 INSERT INTO `lblog_blog_permission` VALUES (default, 'images_read_post', '/^(?:\\/index\\.php)?\\/admin\\/images\\/post/', 'View images post page', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'images_add', '/^(?:\\/index\\.php)?\\/admin\\/images\\/save$/', 'Add new images', 'Y', unix_timestamp());
 INSERT INTO `lblog_blog_permission` VALUES (default, 'images_modify', '/^(?:\\/index\\.php)?\\/admin\\/images\\/save\\/\\d+/', 'Modify posted images', 'Y', unix_timestamp());
-INSERT INTO `lblog_blog_permission` VALUES (default, 'images_editor_list', '/^(?:\\/index\\.php)?\\/admin\\/images\\/listEditor/', 'View images list in editor', 'Y', unix_timestamp());
+INSERT INTO `lblog_blog_permission` VALUES (default, 'images_editor_list', '/^(?:\\/index\\.php)?\\/admin\\/images\\/editorList/', 'View images list in editor', 'Y', unix_timestamp());
 
 INSERT INTO `lblog_blog_permission` VALUES (default, 'sessions_read_list', '/^(?:\\/index\\.php)?\\/admin\\/sessions\\/list/', 'View sessions list page', 'Y', unix_timestamp());
 
