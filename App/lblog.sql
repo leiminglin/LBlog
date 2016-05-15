@@ -458,7 +458,7 @@ CREATE TABLE `lblog_file_image_deleted` (
   `createtime` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `hash` (`hash`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `lblog_page`;
