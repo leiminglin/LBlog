@@ -59,6 +59,11 @@ if(isset($save_status)){
 <td><input name="repasswd" type="password"/></td>
 </tr>
 <tr>
+<td>Captcha：</td>
+<td><img src="<?php echo WEB_APP_PATH?>user/register/captcha" 
+onclick="this.src='<?php echo WEB_APP_PATH?>user/register/captcha?'+Math.random()"/><input name="captcha" type="text"/></td>
+</tr>
+<tr>
 <td align="center" colspan="2"><input class="btn" type="submit" value="Submit"/></td>
 </tr>
 </table>
