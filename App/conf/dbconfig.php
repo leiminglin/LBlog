@@ -5,6 +5,6 @@
 //	'password' => 'root',
 //	'database' => 'lblog',
 //	'charset' => 'utf8',
-//	'persist' => false,
 //	'dbprefix' => 'lblog_',
+//	'persist' => false,
 );
