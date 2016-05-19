@@ -103,7 +103,7 @@ function last(){
 	$rs = q('page')->getAll();
 	foreach ($rs as $k=>$v){
 		if($v['uri_regexp'] && preg_match($v['uri_regexp'], LML_REQUEST_URI)){
-			return r($v['content']);
+			return r(template_interpreter($v['content']));
 		}
 	}
 	Tool::notFoundPage();
