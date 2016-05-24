@@ -53,6 +53,9 @@ foreach ($todayTop as $k=>$t){
 	if( isset($matches[1]) && $matches[1] ){
 		$id = $matches[1];
 		$article = $mArchives->getArticleTitleById($id);
+		if(empty($article)){
+			continue;
+		}
 ?>
 <li><a href="<?php echo Tool::getArticleUrl($id, $article['url']);?>"><?php ehtml($article['title']);?></a></li>
 <?php 
@@ -70,6 +73,9 @@ $i++;
 <ul>
 <?php foreach ($allTop as $t){
 	$t['article'] = $mArchives->getArticleTitleById($t['aid']);
+	if(empty($t['article'])){
+		continue;
+	}
 ?>
 <li><a href="<?php echo Tool::getArticleUrl($t['article']['id'], $t['article']['url']);?>"><?php ehtml($t['article']['title']);?></a></li>
 <?php }?>
