@@ -4,13 +4,13 @@
 
 $start_time = time();
 $start_microtime = microtime();
-$GLOBALS['start_time'] = time();
+$GLOBALS['start_time'] = $start_time;
 $GLOBALS['start_microtime'] = $start_microtime;
 define("APP_DOMAIN", arr_get($_SERVER, 'HTTP_HOST'));
 
-$lastRouter = array('last');
+$GLOBALS['lastRouter'] = $lastRouter = array('last');
 
-$domain = array(
+$GLOBALS['domain'] = $domain = array(
 	APP_DOMAIN => array(
 		'blog' => array(
 			'/^(?:\/index\.php)?\/p\/([1-9][\d]*)/i'=>array(
