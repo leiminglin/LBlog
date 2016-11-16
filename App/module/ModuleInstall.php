@@ -11,7 +11,8 @@ class ModuleInstall extends LmlBase{
 		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 		<title>'.lang('LBlog Install Guard').'</title>
 		</head>
-		<body>';
+		<body>
+		<iframe name="iframe_for_post" style="display:none;"></iframe>';
 	}
 
 	protected function getHtmlend(){
@@ -25,7 +26,7 @@ class ModuleInstall extends LmlBase{
 		if(!$_POST){
 			echo $this->getHtmlBegin().
 '
-<form action="'.WEB_APP_PATH.'install" method="post">
+<form action="'.WEB_APP_PATH.'install" method="post" target="iframe_for_post">
 <table align="center">
 <tr>
 	<th colspan="2"><h3>'.lang('LBlog Install Guard').'</h3></th>
@@ -88,6 +89,10 @@ class ModuleInstall extends LmlBase{
 	<td colspan="2"><input type="submit" value="'.lang('Submit').'"/></td>
 </tr>
 
+<tr align="center">
+	<td colspan="2"><span id="tips" style="color:red;"></span></td>
+</tr>
+
 </table>
 </form>
 '.$this->getHtmlend();
@@ -102,18 +107,17 @@ class ModuleInstall extends LmlBase{
 			!isset($_POST['hostname']) || !isset($_POST['hostport']) ||
 			!isset($_POST['username']) || !isset($_POST['password']) ||
 			!isset($_POST['database']) || !isset($_POST['charset']) ||
-			!isset($_POST['dbprefix']) ||
+			!isset($_POST['dbprefix']) || !isset($_POST['email']) ||
+			!isset($_POST['admin_passwd']) ||
 
 			!$_POST['hostname'] || !$_POST['hostport'] ||
 			!$_POST['username'] || !$_POST['password'] ||
 			!$_POST['database'] || !$_POST['charset'] ||
-			!$_POST['dbprefix']
+			!$_POST['dbprefix'] || !$_POST['email'] ||
+			!$_POST['admin_passwd']
 
 		){
-			echo $this->getHtmlBegin();
-			echo '<p>'.lang('Please input completely!').'</p>';
-			$this->outputBack();
-			echo $this->getHtmlend();
+			echo $this->tips(lang('Please input completely!'));
 			return;
 		}
 
@@ -132,19 +136,16 @@ class ModuleInstall extends LmlBase{
 
 		try{
 			$db = db($config);
+		}catch(LmlDbException $e){
+			echo $this->tips(lang($e->getMessage()));
+			return;
 		}catch(Exception $e){
-			echo $this->getHtmlBegin();
-			echo '<p>'.lang('Database connect fail!').'</p>';
-			$this->outputBack();
-			echo $this->getHtmlend();
+			echo $this->tips(lang('Database connect fail!'));
 			return;
 		}
 
 		if(!is_writeable(APP_PATH)){
-			echo $this->getHtmlBegin();
-			echo '<p>'.lang('App directory can\'t be writeable!').'</p>';
-			$this->outputBack();
-			echo $this->getHtmlend();
+			echo $this->tips(lang('App directory can\'t be writeable!'));
 			return;
 		}
 
@@ -181,10 +182,7 @@ class ModuleInstall extends LmlBase{
 			echo '<p>'.lang('Install success!').'</p><p><a href="'.WEB_PATH.'">'.lang('Go home page').'</a></p>';
 			echo $this->getHtmlend();
 		}catch (Exception $e){
-			echo $this->getHtmlBegin();
-			echo '<p>'.lang('Cause Error!').'</p>';
-			$this->outputBack();
-			echo $this->getHtmlend();
+			echo $this->tips(lang('Cause Error!'));
 			return;
 		}
 
@@ -205,6 +203,10 @@ class ModuleInstall extends LmlBase{
 
 	public function outputBack(){
 		echo '<p><a href="javascript:history.go(-1);">'.lang('Go back').'</a></p>';
+	}
+
+	public function tips($content) {
+		return '<script>parent.document.getElementById("tips").innerHTML="'.str_replace('"', '\\"', $content).'";</script>';
 	}
 
 	public function generateSalt(){

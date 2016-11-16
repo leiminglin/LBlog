@@ -22,6 +22,7 @@ return $lang_zh_CN = array(
 	'Install success!' => '安装成功！',
 	'Go home page' => '去首页',
 	'Cause error!' => '发生错误！',
+	'MySQL support not be enabled' => 'MySQL数据库扩展未启用！',
 
 
 
