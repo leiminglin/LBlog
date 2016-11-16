@@ -46,8 +46,8 @@ class ModelStatistic extends Model{
 	}
 	
 	public function getCount($offset = 0, $limit = 10){
-		$sql = "select COUNT(1) C from {$this->dbPrefix}statistic";
-		$rs = $this->db->getOne($sql);
+		//$sql = "select COUNT(1) C from {$this->dbPrefix}statistic";
+		$rs = $this->db->getOne($this->dbPrefix.'statistic', 'COUNT(1) C');
 		return isset($rs['C']) ? $rs['C'] : 0;
 	}
 	

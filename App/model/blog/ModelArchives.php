@@ -73,7 +73,7 @@ class ModelArchives extends Model{
 			." LEFT JOIN {$this->dbPrefix}user u ON a.userid=u.id"
 			." LEFT JOIN {$this->dbPrefix}blog_archives_statistic s ON a.id=s.aid"
 			." WHERE a.id='{$id}' $active_sql";
-		$article = $this->db->getOne($sql);
+		$article = arr_get($this->db->query($sql), 0);
 		if($article){
 			$url = $this->getArchivesUrlByIds(array($article['id']));
 			$article['url'] = isset($url[$article['id']]) ? $url[$article['id']] : '';
@@ -84,7 +84,7 @@ class ModelArchives extends Model{
 	public function getArticleTitleById($id){
 		$sql = "SELECT id, title FROM {$this->dbPrefix}blog_archives a"
 			." WHERE a.id='{$id}' AND is_active='Y'";
-		$rs = $this->db->getOne($sql);
+		$rs = arr_get($this->db->query($sql), 0);
 		if($rs){
 			$url = $this->getArchivesUrlByIds(array($rs['id']));
 			$rs['url'] = isset($url[$rs['id']]) ? $url[$rs['id']] : '';
@@ -109,7 +109,7 @@ class ModelArchives extends Model{
 	public function getCatCount($id){
 		$sql = "SELECT COUNT(1) C FROM {$this->dbPrefix}blog_archives"
 		." WHERE catid='{$id}' AND is_active='Y'";
-		$c = $this->db->getOne($sql);
+		$c = arr_get($this->db->query($sql), 0);
 		return $c['C'];
 	}
 	

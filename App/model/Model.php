@@ -23,8 +23,8 @@ abstract class Model{
 	}
 
 	public function getCount(){
-		$sql = "SELECT COUNT(1) C FROM {$this->table}";
-		$rs = $this->db->getOne($sql);
+		//$sql = "SELECT COUNT(1) C FROM {$this->table}";
+		$rs = $this->db->getOne($this->table, 'COUNT(1) C');
 		return isset($rs['C']) ? $rs['C'] : 0;
 	}
 	

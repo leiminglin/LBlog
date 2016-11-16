@@ -4,8 +4,8 @@ class ModelAccount extends Model{
 	public $table_name = 'blog_account';
 
 	public function checkIsAdmin($userid){
-		$sql = "SELECT * FROM {$this->dbPrefix}blog_account WHERE userid='".$userid."'";
-		$rs = $this->db->getOne($sql);
+		//$sql = "SELECT * FROM {$this->dbPrefix}blog_account WHERE userid='".$userid."'";
+		$rs = $this->db->getOne($this->dbPrefix.'blog_account', '*', 'userid=?', array($userid));
 		if(isset($rs['roleid']) && $rs['roleid']){
 			return true;
 		}
