@@ -149,13 +149,11 @@ class ModuleInstall extends LmlBase{
 			return;
 		}
 
-		echo $this->getHtmlBegin();
-		echo '<p>'.lang('Begin').'</p>';
+		$success_str = '<span style="color:green;"><p>'.lang('Begin').'</p>';
 
 		$statement = '';
 
 		try{
-			echo '<p>';
 			while($line = fgets($fp)){
 				$line = trim($line);
 
@@ -168,19 +166,19 @@ class ModuleInstall extends LmlBase{
 					$statement = str_replace('`lblog_', '`'.$dbprefix, $statement);
 					$statement = str_replace('unix_timestamp()', time(), $statement);
 					$db->query($statement);
-					echo '-';
 					$statement = '';
 				}
 			}
-			echo '</p><p>'.lang('Execute success!').'</p>';
+			$success_str .= '<p>'.lang('Execute success!').'</p>';
 			$admin_data = array(
 					'email' => $email,
 					'passwd' => generate_passwd($admin_passwd),
 					'createtime' => time()
 				);
 			$db->update($config['dbprefix'].'user', $admin_data, "id=1");
-			echo '<p>'.lang('Install success!').'</p><p><a href="'.WEB_PATH.'">'.lang('Go home page').'</a></p>';
-			echo $this->getHtmlend();
+			$success_str .= '<p>'.lang('Install success!').'</p><p><a href="'.WEB_PATH.'">'.lang('Go home page').'</a></p></span>';
+			echo $this->tips($success_str);
+
 		}catch (Exception $e){
 			echo $this->tips(lang('Cause Error!'));
 			return;
