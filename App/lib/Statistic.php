@@ -12,7 +12,7 @@ class Statistic{
 			s('page', arr2mapping(q('page')->getAll(), 'name', 'content'));
 			require APP_PATH.'conf/siteconfig.php';
 			
-			ini_set('session.cookie_domain', APP_DOMAIN);
+			ini_set('session.cookie_domain', LBLOG_SERVER_NAME);
 			if ( is_session_started() === FALSE ) {
 				$handler = new DbSession();
 				if ( version_compare(phpversion(), '5.4.0', '>=') ) {
@@ -31,7 +31,7 @@ class Statistic{
 					);
 				}
 				session_name('LBLOGSID');
-				session_set_cookie_params(0, '/', APP_DOMAIN, false, true);
+				session_set_cookie_params(0, '/', LBLOG_SERVER_NAME, false, true);
 				session_start();
 			}
 		}else{
