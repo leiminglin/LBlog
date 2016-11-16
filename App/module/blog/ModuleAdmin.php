@@ -84,7 +84,7 @@ class ModuleAdmin extends LmlBlog{
 				case 'save':
 					$matches = route_match('[\w]+\/(\d+)');
 					if (!isset($matches[1])) {
-						if(!isset($_POST['createtime'])){
+						if(!isset($_POST['createtime']) || !$_POST['createtime']){
 							$_POST['createtime'] = $GLOBALS['start_time'];
 						}
 						if($m->add($_POST)){

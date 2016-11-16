@@ -37,7 +37,7 @@ abstract class Model{
 	}
 	
 	public function find($id){
-		return $this->db->getOne("select * from {$this->table} where id=".(int)$id);
+		return $this->db->getOne($this->table, '*', 'id=?', array((int)$id));
 	}
 
 	public function getAll(){

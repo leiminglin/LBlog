@@ -185,8 +185,8 @@ class ModelArchives extends Model{
 	}
 	
 	public function checkArticleUrlExists($aid){
-		$sql = "SELECT COUNT(1) AS C FROM {$this->dbPrefix}blog_archives_url WHERE aid ='{$aid}'";
-		$rs = $this->db->getOne($sql);
+		//$sql = "SELECT COUNT(1) AS C FROM {$this->dbPrefix}blog_archives_url WHERE aid ='{$aid}'";
+		$rs = $this->db->getOne($this->dbPrefix.'blog_archives_url', 'COUNT(1) C', 'aid=?', array($aid));
 		return $rs['C'];
 	}
 	
