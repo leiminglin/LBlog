@@ -35,9 +35,8 @@ class DbSession
 
 	function read($id)
 	{
-		$rs = $this->link->getOne('select data from ' 
-			. $this->dbconfig['dbprefix'] 
-			. 'session where id=? and expires>?', array($id, $GLOBALS['start_time']));
+		$rs = $this->link->getOne($this->dbconfig['dbprefix'].'session', 'data', 
+			'id=? and expires>?', array($id, $GLOBALS['start_time']));
 		if($rs){
 			return (string)$rs['data'];
 		}

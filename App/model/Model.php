@@ -61,7 +61,6 @@ abstract class Model{
 	}
 	
 	public function getOne($fields, $where_tail='', $params=array()){
-		$rs = $this->db->select($this->table, $fields, $where_tail, $params);
-		return isset($rs[0]) ? $rs[0] : array();
+		return $this->db->getOne($this->table, $fields, $where_tail, $params);
 	}
 }
