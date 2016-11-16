@@ -7,13 +7,13 @@ class ModelStatistic extends Model{
 		$http_referer =  isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
 		$arr = array(
 			'http_host' => APP_DOMAIN,
-			'request_uri' => $_SERVER['REQUEST_URI'],
+			'request_uri' => arr_get($_SERVER, 'REQUEST_URI'),
 			'http_user_agent' => isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'',
 			'http_accept' => isset($_SERVER['HTTP_ACCEPT'])?$_SERVER['HTTP_ACCEPT']:'',
 			'http_accept_language' => $http_accept_language,
 			'http_accept_encoding' => $http_accept_encoding,
 			'http_referer' => $http_referer,
-			'remote_addr' => $_SERVER['REMOTE_ADDR'],
+			'remote_addr' => arr_get($_SERVER, 'REMOTE_ADDR'),
 			'createtime' => $GLOBALS['start_time'],
 		);
 		return $this->db->insert($this->dbPrefix.'statistic', $arr);

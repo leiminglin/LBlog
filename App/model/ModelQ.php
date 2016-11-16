@@ -31,7 +31,7 @@ class ModelQ extends Model{
 			$wheres[] = $k.'=?';
 		}
 		$rs = $this->getOne('COUNT(1) C', implode(' AND ', $wheres), array_values($arr));
-		if ($rs['C'] > 0){
+		if (isset($rs['C']) && $rs['C'] > 0){
 			return true;
 		}
 		return false;

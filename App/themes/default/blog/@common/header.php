@@ -115,12 +115,10 @@ a:hover{
 }
 .foot{
 	background:#fff;
-	height:100px;
 	margin:10px 0;
 	text-align:center;
 	color:#666;
 	font-size:14px;
-	
 }
 .foot .foottop{
 	font-size:20px;
@@ -136,6 +134,9 @@ a:hover{
 	font-size:12px;
 }
 .foot a{
+	color:#666;
+}
+.foot .footlink a{
 	color:#666;
 	width:100px;
 	display:inline-block;
@@ -315,6 +316,11 @@ a:hover{
 .content .left .essaybottom a:hover{
 	background:#eee;
 }
+.content .left .essay p{
+	text-shadow:0 0 1px #ccc;
+	text-align:justify;
+	letter-spacing:1px;
+}
 .content .left .essay p img{
 	margin:0 auto;
 	display:block;
@@ -391,9 +397,9 @@ window.onload=function(){lml.run()}
 <?php }?>
 </div>
 <div class="clear"></div>
-<div class="title">
+<h1 class="title">
 <a href="<?php echo WEB_PATH?>"><?php ehtml(SITE_NAME);?></a>
-</div>
+</h1>
 <div class="nav">
 <ul>
 <?php 

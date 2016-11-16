@@ -15,7 +15,7 @@ class LmlBlog extends LmlBase{
 	}
 	
 	public function isAdminLogin(){
-		if( !($userid = $this->hasLogin()) ){
+		if( !($userid = $this->hasAdminLogin()) ){
 			return false;
 		}
 		$mAccount = new ModelAccount();
@@ -25,7 +25,7 @@ class LmlBlog extends LmlBase{
 		return $userid;
 	}
 	
-	public function hasLogin(){
+	public function hasAdminLogin(){
 		if( !($userid = Tool::checkAdminCookie()) ) {
 			return false;
 		}

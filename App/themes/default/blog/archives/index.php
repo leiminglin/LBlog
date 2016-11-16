@@ -272,11 +272,11 @@ deferred.then(function(){
 
 		function show_login(){
 			var logindiv = $('.login_template');
-			if(this.flag){
+			if(show_login.flag){
 				logindiv.show();
 				return;
 			}
-			this.flag = 1;
+			show_login.flag = 1;
 			logindiv.html(logindiv.html().replace(/<!--|-->/g,''));
 			logindiv.show();
 			logindiv.children('.loginpage').append($('<div/>').css({"padding":"20px"}).html('<br/>请选择登录方式<br/>'))

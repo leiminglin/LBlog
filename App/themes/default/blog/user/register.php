@@ -64,7 +64,7 @@ if(isset($save_status)){
 onclick="this.src='<?php echo WEB_APP_PATH?>user/register/captcha?'+Math.random()"/><input name="captcha" type="text"/></td>
 </tr>
 <tr>
-<td align="center" colspan="2"><input class="btn" type="submit" value="Submit"/></td>
+<td align="center" colspan="2"><input class="btn" type="submit" value="Submit"/>&nbsp;<a href="<?php echo WEB_APP_PATH.'user/login'?>">已有账号？登录</a></td>
 </tr>
 </table>
 </form>

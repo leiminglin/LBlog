@@ -37,4 +37,21 @@ class ModuleFile extends LmlBase{
 		header('Content-Length: '.strlen($image_content));
 		echo $image_content;
 	}
+
+	/*
+	 * for /static/resource
+	 */
+	public function resource(){
+		$matches = route_match('([\w]+)\/([\w]+)');
+		$type = arr_get($matches, 1);
+		if($type == 'js'){
+			$name = arr_get($matches, 2);
+			$cache_seconds = 86400*365;
+			header('Pragma: none');
+			header('Content-Type: text/javascript');
+			header('Cache-Control: public, max-age='.$cache_seconds);
+			header('Expires: '.date('D, d M Y H:i:s e', $GLOBALS['start_time'] + $cache_seconds));
+			echo file_get_contents(APP_PATH.'repository/static/resource/'.$name.'.js');
+		}
+	}
 }

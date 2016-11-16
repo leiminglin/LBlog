@@ -54,7 +54,8 @@ class ModuleUser extends LmlBase{
 		setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
 		header('HTTP/1.1 302 Moved Temporarily');
 		header('Status:302 Moved Temporarily');
-		header('Location:'.$_SESSION['backurl']);
+		header('Location:'.arr_get($_SESSION, 'backurl', WEB_PATH));
+		unset($_SESSION['backurl']);
 	}
 
 	/**
@@ -123,7 +124,8 @@ class ModuleUser extends LmlBase{
 			setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
 			header('HTTP/1.1 302 Moved Temporarily');
 			header('Status:302 Moved Temporarily');
-			header('Location:'.$_SESSION['backurl']);
+			header('Location:'.arr_get($_SESSION, 'backurl', WEB_PATH));
+			unset($_SESSION['backurl']);
 		}
 	}
 
@@ -132,10 +134,11 @@ class ModuleUser extends LmlBase{
 	 * just for qq now
 	 */
 	public function qqlogin(){
-		if( !isset($_GET['backurl']) ){
+		$backurl = arr_get($_GET, 'backurl');
+		if( !$backurl ){
 			return;
 		}
-		$_SESSION['backurl'] = $_GET['backurl'];
+		$_SESSION['backurl'] = $backurl;
 		require_once(APP_PATH."third/qqconnect2.1/API/qqConnectAPI.php");
 		$qc = new QC();
 		$qc->qq_login(array('callback'=>APP_DOMAIN.WEB_PATH.'user/oauth'));
@@ -146,10 +149,11 @@ class ModuleUser extends LmlBase{
 	 * just for sina weibo
 	 */
 	public function weibologin(){
-		if( !isset($_GET['backurl']) ){
+		$backurl = arr_get($_GET, 'backurl');
+		if( !$backurl ){
 			return;
 		}
-		$_SESSION['backurl'] = $_GET['backurl'];
+		$_SESSION['backurl'] = $backurl;
 		include_once( APP_PATH.'third/sinaweibov2/config.php' );
 		include_once( APP_PATH.'third/sinaweibov2/saetv2.ex.class.php' );
 		$o = new SaeTOAuthV2( WB_AKEY , WB_SKEY );
@@ -188,45 +192,64 @@ class ModuleUser extends LmlBase{
 			lml()->app()->setOneSloc(false);
 			return;
 		}
-		
+		$backurl = arr_get($_GET, 'backurl');
+		if($backurl){
+			$_SESSION['backurl'] = $backurl;
+		}
 		if($_POST){
 			$email = $_POST['email'];
 			$passwd = $_POST['passwd'];
 			$repasswd = $_POST['repasswd'];
 			$captcha = $_POST['captcha'];
 			
-			$is_valid = false;
-			if(strlen($passwd)>5 && strlen($email)>5 && $passwd==$repasswd 
-					&& preg_match('/[\w\-\.]+@[\w\-\.]+/', $email)
-					&& trim(strtolower($captcha)) == $_SESSION['captcha_register']
-					){
-				$is_valid = true;
+			if(strlen($email)<6 && !preg_match('/[\w\-\.]+@[\w\-\.]+/', $email)){
+				$this->assign('save_status', '邮箱格式不正确');
+				$this->display();
+				return;
+			}
+			
+			if(trim(strtolower($captcha)) != $_SESSION['captcha_register']){
+				$this->assign('save_status', '验证码输入错误');
+				$this->display();
+				return;
 			}
 			unset($_SESSION['captcha_register']);
 			
-			if(!$is_valid){
-				$this->assign('save_status', '注册失败：请正确填写邮箱且密码长度至少6个字符！');
+			if($passwd!=$repasswd){
+				$this->assign('save_status', '两次密码输入不一致');
+				$this->display();
+				return;
+			}
+			
+			if(strlen($passwd)<8 || strlen($passwd)>50 || !preg_match('/[a-z]/i', $passwd) || !preg_match('/[0-9]/i', $passwd)){
+				$this->assign('save_status', '密码强度不够哦，8-50个字符，包含数字[0-9]和字母[a-z]');
 				$this->display();
 				return;
 			}
 			
 			$mUser = new ModelUser();
-			if( $is_valid && ($userid=$mUser->register($email, $passwd)) ){
+			if( ($userid=$mUser->register($email, $passwd)) == true ){
 				$expire_time = $GLOBALS['start_time']+86400*30;
 				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
-				header("Location:".WEB_PATH);
+				header('Location:'.arr_get($_SESSION, 'backurl', WEB_PATH));
+				unset($_SESSION['backurl']);
 			}else{
 				$this->assign('save_status', '注册失败：邮箱已经被注册！');
 				$this->display();
 			}
 		}elseif($this->hasLogin()){
-			header("Location:".WEB_PATH);
+			header("Location:".arr_get($_SESSION, 'backurl', WEB_PATH));
+			unset($_SESSION['backurl']);
 		}else{
 			$this->display();
 		}
 	}
 	
 	public function login(){
+		$backurl = arr_get($_GET, 'backurl');
+		if($backurl){
+			$_SESSION['backurl'] = $backurl;
+		}
 		if($_POST){
 			$email = $_POST['email'];
 			$passwd = $_POST['passwd'];
@@ -246,13 +269,14 @@ class ModuleUser extends LmlBase{
 					'createtime'=>$GLOBALS['start_time'],
 				);
 				$mUser->addLoginLog($arrsql);
-				header("Location:".WEB_PATH);
+				header('Location:'.arr_get($_SESSION, 'backurl', WEB_PATH));
 			}else{
 				$this->assign('save_status', '登录失败：用户名或密码错误！');
 				$this->display();
 			}
 		}elseif($this->hasLogin()){
-			header("Location:".WEB_PATH);
+			header("Location:".arr_get($_SESSION, 'backurl', WEB_PATH));
+			unset($_SESSION['backurl']);
 		}else{
 			$this->display();
 		}

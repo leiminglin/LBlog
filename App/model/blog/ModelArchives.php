@@ -167,7 +167,7 @@ class ModelArchives extends Model{
 			}
 			$status1 = $this->db->update($this->dbPrefix.'blog_archives_url', $modify_url_arr, "aid='{$id}'");
 		}
-		
+		$arr['content'] = preg_replace('/<br>/i', "\n", $arr['content']);
 		$update_arr = array(
 			'content' => $arr['content'],
 			'title' => $arr['title'],

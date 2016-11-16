@@ -438,3 +438,20 @@ function use_time(){
 	list($m2, $s2) = explode(' ', $t);
 	return number_format( ($s2.'.'.substr($m2, 2)) - ($s.'.'.substr($m, 2)), 6);
 }
+function csrf_token($check=false){
+	static $salt='7(VD3rg=[=2WS2-cHQ6K)4%FT<9(eRBNSoSKHP[EbtB,u`W*Q(,=y*?\'I_9Zkw.DWUgti%_6|n,"v?..Aa70:R<r:i6O20t.rzNu"/%RcWs#b7@px:xWU?c%4*I(^!afj_Qi5bG)fN*h1*m;.@Knl{>orJIZC82FhAk11.%EUnVp!t]k217"JkywNV+IqL4U!mf8a~ze_b97d701335d5dfeb52a8260f6f1bdc96';
+	$sess_token = arr_get($_SESSION, 'csrf_token');
+	if($check){
+		$header_token = arr_get($_SERVER, 'HTTP_TOKEN');
+		if($header_token && $header_token==$sess_token){
+			return true;
+		}else{
+			return false;
+		}
+	}else{
+		if(!$sess_token){
+			$_SESSION['csrf_token'] = md5($GLOBALS['start_time'].$salt);
+		}
+		return $_SESSION['csrf_token'];
+	}
+}
