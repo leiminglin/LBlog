@@ -36,6 +36,7 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 	private static $instances;
 	private $db;
 	public $sqls = array();
+	public $debug = false;
 
 	private function __construct() {
 		$dsn = 'mysql:host='.self::$config['hostname'].';port='.self::$config['hostport'].';dbname='.self::$config['database'];
@@ -48,6 +49,9 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 		if ($this->db->getAttribute(PDO::ATTR_DRIVER_NAME) != 'mysql') {
 			die("MySQL support not be enabled");
 		}
+
+		// fix sometimes no database selected
+		$this->db->exec('USE '.self::$config['database']);
 	}
 
 	public static function getInstance($config){
@@ -85,7 +89,12 @@ class MysqlPdoEnhance implements MysqlPdoInterface
 		}
 
 		$stmt->execute();
-		$this->sqls[] = array($sql, $params);
+		if($stmt->errorCode() != '00000'){
+			throw new LmlException(implode("\n", $stmt->errorInfo()));
+		}
+		if ($this->debug) {
+			$this->sqls[] = array($sql, $params);
+		}
 		if(preg_match('/^update|^insert|^replace|^delete/i', $sql)){
 			return $stmt->rowCount();
 		}else{

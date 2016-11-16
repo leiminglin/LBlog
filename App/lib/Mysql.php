@@ -16,6 +16,7 @@ class Mysql{
 	private $resource;
 	private static $instances;
 	public $sqls = array();
+	public $debug = false;
 
 	private function __construct($config){
 		if ( !extension_loaded('mysql') ) {
@@ -67,22 +68,39 @@ class Mysql{
 
 	public function query($str, $params=array()) {
 		if($params){
+			$pos = 0;
 			foreach($params as $k=>$v){
 				$v = $this->escapeString($v);
 				if(!is_numeric($v)){
 					$v = "'".$v."'";
 				}
 				if(is_int($k)){
+					$holder = '?';
+				}else{
+					$holder = ':'.$k;
+				}
+				$pos_holder = strpos($str, $holder, $pos);
+				$str = substr($str, 0, $pos_holder) . $v . substr($str, $pos_holder+strlen($holder));
+				$pos = $pos_holder + strlen($v);
+
+
+				/*
+				$v = str_replace('\\', '\\\\', $v);
+				$v = str_replace('$', '\$', $v);
+				if(is_int($k)){
 					$str = preg_replace('/\?/', $v, $str, 1);
 				}else{
 					$str = preg_replace('/:'.$k.'/', $v, $str, 1);
 				}
+				*/
 			}
 		}
 		if($this->resource){
 			$this->free();
 		}
-		$this->sqls[] = $str;
+		if($this->debug){
+			$this->sqls[] = $str;
+		}
 		$this->resource = mysql_query($str, $this->link);
 		if( false === $this->resource) {
 			$this->error();
@@ -147,7 +165,9 @@ class Mysql{
 		if ( $this->resource ) {
 			$this->free();
 		}
-		$this->sqls[] = $str;
+		if($this->debug){
+			$this->sqls[] = $str;
+		}
 		$result = mysql_query($str, $this->link) ;
 		if ( false === $result) {
 			$this->error();
