@@ -125,7 +125,7 @@ class ModuleAdmin extends LmlBlog{
 			$mUser = new ModelUser();
 			if( ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
 				$expire_time = $GLOBALS['start_time']+86400*30;
-				setcookie(LBLOGASS, Tool::getCookieValue($userid, $expire_time, LBLOGASALT), $expire_time, '/', APP_DOMAIN, false, true);
+				setcookie(LBLOGASS, Tool::getCookieValue($userid, $expire_time, LBLOGASALT), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
 				$arrsql = array(
 					'userid'=>$userid,
 					'from'=>null,
@@ -145,7 +145,7 @@ class ModuleAdmin extends LmlBlog{
 	}
 	
 	public function logout(){
-		setcookie(LBLOGASS, '', 0, '/', APP_DOMAIN);
+		setcookie(LBLOGASS, '', 0, '/', LBLOG_SERVER_NAME);
 		Tool::status(302);
 		header('Location:http://'.APP_DOMAIN);
 	}

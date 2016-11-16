@@ -7,6 +7,9 @@ $start_microtime = microtime();
 $GLOBALS['start_time'] = $start_time;
 $GLOBALS['start_microtime'] = $start_microtime;
 define("APP_DOMAIN", arr_get($_SERVER, 'HTTP_HOST'));
+define("LBLOG_HTTP_HOST", arr_get($_SERVER, 'HTTP_HOST'));
+define("LBLOG_SERVER_NAME", arr_get($_SERVER, 'SERVER_NAME'));
+define("LBLOG_SERVER_PORT", arr_get($_SERVER, 'SERVER_PORT'));
 
 $GLOBALS['lastRouter'] = $lastRouter = array('last');
 

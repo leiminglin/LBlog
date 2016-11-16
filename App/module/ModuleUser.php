@@ -51,7 +51,7 @@ class ModuleUser extends LmlBase{
 		);
 		$mUser->addLoginLog($arrsql);
 		$expire_time = $GLOBALS['start_time']+86400*30;
-		setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
+		setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
 		header('HTTP/1.1 302 Moved Temporarily');
 		header('Status:302 Moved Temporarily');
 		header('Location:'.$_SESSION['backurl']);
@@ -120,7 +120,7 @@ class ModuleUser extends LmlBase{
 			);
 			$mUser->addLoginLog($arrsql);
 			$expire_time = $GLOBALS['start_time']+86400*30;
-			setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
+			setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
 			header('HTTP/1.1 302 Moved Temporarily');
 			header('Status:302 Moved Temporarily');
 			header('Location:'.$_SESSION['backurl']);
@@ -161,7 +161,7 @@ class ModuleUser extends LmlBase{
 
 	public function logout(){
 		unset($_SESSION['userinfo']);
-		setcookie(LBLOGUSS, '', 0, '/', APP_DOMAIN);
+		setcookie(LBLOGUSS, '', 0, '/', LBLOG_SERVER_NAME);
 		header('HTTP/1.1 302 Moved Temporarily');
 		header('Status:302 Moved Temporarily');
 		$referrer = arr_get($_SERVER, 'HTTP_REFERER');
@@ -213,7 +213,7 @@ class ModuleUser extends LmlBase{
 			$mUser = new ModelUser();
 			if( $is_valid && ($userid=$mUser->register($email, $passwd)) ){
 				$expire_time = $GLOBALS['start_time']+86400*30;
-				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
+				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
 				header("Location:".WEB_PATH);
 			}else{
 				$this->assign('save_status', '注册失败：邮箱已经被注册！');
@@ -239,7 +239,7 @@ class ModuleUser extends LmlBase{
 			$mUser = new ModelUser();
 			if( $is_valid && ($userid = $mUser->checkEmailAndPasswd($email, $passwd)) == true ){
 				$expire_time = $GLOBALS['start_time']+86400*30;
-				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', APP_DOMAIN, false, true);
+				setcookie(LBLOGUSS, Tool::getCookieValue($userid, $expire_time), $expire_time, '/', LBLOG_SERVER_NAME, false, true);
 				$arrsql = array(
 					'userid'=>$userid,
 					'from'=>null,
