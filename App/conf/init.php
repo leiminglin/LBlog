@@ -46,7 +46,7 @@ if(($timezone = arr_get($basecofig, 'timezone')) !== ''){
  */
 function get_theme() {
 
-	$themes = array('mobile', 'default', 'new');
+	$themes = array('mobile', 'default', 'mall');
 	if(preg_match('/^(?:\/index\.php)?\/admin/', arr_get($_SERVER, 'REQUEST_URI'))){
 		$themes = array('mobile', 'default');
 	}

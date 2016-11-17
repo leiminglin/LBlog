@@ -52,6 +52,14 @@ class ModuleFile extends LmlBase{
 			header('Cache-Control: public, max-age='.$cache_seconds);
 			header('Expires: '.date('D, d M Y H:i:s e', $GLOBALS['start_time'] + $cache_seconds));
 			echo file_get_contents(APP_PATH.'repository/static/resource/'.$name.'.js');
+		}elseif($type == 'css'){
+			$name = arr_get($matches, 2);
+			$cache_seconds = 86400*365;
+			header('Pragma: none');
+			header('Content-Type: text/css');
+			header('Cache-Control: public, max-age='.$cache_seconds);
+			header('Expires: '.date('D, d M Y H:i:s e', $GLOBALS['start_time'] + $cache_seconds));
+			echo file_get_contents(APP_PATH.'repository/static/resource/'.$name.'.css');
 		}
 	}
 }
