@@ -11,17 +11,22 @@
 <script type="text/javascript" src="<?php echo WEB_APP_PATH?>file/resource/js/lml?t=<?php echo filemtime(APP_PATH.'repository/static/resource/lml.js');?>"></script>
 
 <script type="text/javascript">
-lml.loadJs(
-[
-'<?php echo WEB_APP_PATH?>file/resource/js/mall?t=<?php echo DEFAULT_LANG . filemtime(APP_PATH.'repository/static/resource/mall.js');?>'
-],
-function(){
+lml.deferred.front(function(){
 
 var link=document.createElement("link");
 link.rel="stylesheet";
 link.type="text/css";
 link.href='<?php echo WEB_APP_PATH?>file/resource/css/mall?t=<?php echo DEFAULT_LANG . filemtime(APP_PATH.'repository/static/resource/mall.css');?>';
 document.getElementsByTagName("head")[0].appendChild(link);
+
+});
+
+
+lml.loadJs(
+[
+'<?php echo WEB_APP_PATH?>file/resource/js/mall?t=<?php echo DEFAULT_LANG . filemtime(APP_PATH.'repository/static/resource/mall.js');?>'
+],
+function(){
 
 });
 </script>
