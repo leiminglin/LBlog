@@ -876,7 +876,7 @@ class ModuleAdmin extends LmlBlog{
 					if($m->notExists(array('hash'=>$hash))){
 						$status = upload_image($file);
 					}else{
-						echo '<p>Filename '.$file['name'].' is already uploaded</p>';
+						echo '<p><span>Filename '.$file['name'].' is already uploaded</span></p>';
 						return;
 					}
 					
@@ -928,11 +928,31 @@ class ModuleAdmin extends LmlBlog{
 							if($m->notExists(array('hash'=>$hash))){
 								$status[$v] = upload_image($file);
 							}else{
-								$out_html .= '<p>Filename '.$file['name'].' is already uploaded</p>';
+								//TODO find the image and return the path in hidden span
+								$image = $m->getOne('*', 'hash=?', array($hash));
+								$out_html .= '<p><img src="'.WEB_PATH.'file/image/'.$image['id'].'?'.$hash
+								.'" width="'.$image['width'].'" height="'.$image['height'].'" class="hidden"/><span>Filename '
+								.$file['name'].' is already uploaded</span></p>';
 							}
 						}
 					}else{
-						$status[$images['name']] = upload_image($images);
+						//TODO check is exists
+						if(!$is_origin){
+							$result_co = imagecropper($image['tmp_name']);
+							if($result_co){
+								file_put_contents($image['tmp_name'], $result_co);
+								$image['size'] = filesize($image['tmp_name']);
+							}
+						}
+						$hash = md5(file_get_contents($image['tmp_name']));
+						if($m->notExists(array('hash'=>$hash))){
+							$status[$images['name']] = upload_image($images);
+						}else{
+							$image = $m->getOne('*', 'hash=?', array($hash));
+							$out_html .= '<p><img src="'.WEB_PATH.'file/image/'.$image['id'].'?'.$hash
+							.'" width="'.$image['width'].'" height="'.$image['height'].'" class="hidden"/><span>Filename '
+							.$file['name'].' is already uploaded</span></p>';
+						}
 					}
 					foreach ($status as $k=>$v) {
 						if(is_array($v)){

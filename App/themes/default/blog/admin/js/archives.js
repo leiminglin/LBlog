@@ -658,12 +658,39 @@ lml.loadJs.competeLoad([
 			},
 			'images_upload':function(o){
 				$('td.preview', $(_this.form)).html(o);
+			},
+			
+			
+			'images_upload_editor_check':function(o){
+				var file=$('input[name=images\\[\\]]', $(_this.form)),fileval=file.val();
+				if(fileval == ''){
+					show_info('<?php elang('Please select file')?>');
+					return false;
+				}
+				_this.flag=true;
+				if(!_this.span){
+					_this.span=$("<span/>").html('<?php elang('Please wait...')?>');
+					_this.span.insertAfter($(_this));
+				}
+				_this.span.show();
+				return true;
+			},
+			'images_upload_editor':function(o){
+				if(!_this.flag){
+					return;
+				}
+				_this.span.hide();
+				var v=o.replace(/class="hidden"|<span.*?<\/span>|<p>|<\/p>/gi,'');
+				v=v.replace(/width="?\d+"?/gi,'width="100"');
+				v=v.replace(/height="?\d+"?/gi,'height="80"');
+				$('td.preview', $(_this.form)).append(v);
 			}
 		};
 		if(!submit_actions[data_id+'_check']()){
 			return false;
 		}
-		if(this.form.target){
+		if(this.form.target&&!this.binded){
+			this.binded=1;
 			$("#"+this.form.target).load(function(){
 				var content = $(this).contents().find("body").html();
 				submit_actions[data_id](content);
