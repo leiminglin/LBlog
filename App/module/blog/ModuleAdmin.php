@@ -151,7 +151,7 @@ class ModuleAdmin extends LmlBlog{
 	public function logout(){
 		setcookie(LBLOGASS, '', 0, '/', LBLOG_SERVER_NAME);
 		Tool::status(302);
-		header('Location:http://'.APP_DOMAIN);
+		header('Location: //'.APP_DOMAIN);
 	}
 	
 	public function postarticle(){
@@ -186,14 +186,14 @@ class ModuleAdmin extends LmlBlog{
 		$relation_ids = isset($_REQUEST['relation_ids'])?$_REQUEST['relation_ids']:'';
 		if(!$relation_ids){
 			echo 'no relation ids';
-			exit;
+			lblog_exit();
 		}
 		$matches = '';
 		preg_match('/([\d]+)\s+(\d+)/', $relation_ids, $matches);
 		
 		if( !isset($matches[1]) || !isset($matches[2]) ){
 			echo 'relation ids is not correct';
-			exit;
+			lblog_exit();
 		}
 		
 		$aid = $matches[1];
@@ -201,13 +201,13 @@ class ModuleAdmin extends LmlBlog{
 		
 		if( $aid == $aid2 ){
 			echo 'article id can not be equal';
-			exit;
+			lblog_exit();
 		}
 		
 		$mArchives = new ModelArchives();
 		if( !$mArchives->checkArchivesIdExists($aid) || !$mArchives->checkArchivesIdExists($aid2) ){
 			echo 'article id is not invalid';
-			exit;
+			lblog_exit();
 		}
 	}
 	

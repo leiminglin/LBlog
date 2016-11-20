@@ -14,6 +14,10 @@ if(empty($site)){
 <td colspan="2"><?php elang('SEO')?></td>
 </tr>
 <tr>
+<td><?php elang('Site domain')?></td>
+<td><input type="text" name="SITE_DOMAIN" class="longinput" value="<?php ehtml(s('config', 'SITE_DOMAIN'));?>"/></td>
+</tr>
+<tr>
 <td><?php elang('Site name')?></td>
 <td><input type="text" name="SITE_NAME" class="longinput" value="<?php ehtml(arr_get($site, 'site_name'));?>"/></td>
 </tr>

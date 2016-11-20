@@ -583,3 +583,10 @@ if(!function_exists('mime_content_type')) {
 		}
 	}
 }
+
+function lblog_exit(){
+	if( !headers_sent() ){
+		header('X-Powered-By: LMLPHP');
+	}
+	exit;
+}

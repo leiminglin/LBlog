@@ -172,7 +172,7 @@ class ModuleUser extends LmlBase{
 		if($referrer && preg_match('/'.APP_DOMAIN.'$/i', parse_url($referrer, PHP_URL_HOST))){
 			header('Location:'.$_SERVER['HTTP_REFERER']);
 		}else{
-			header('Location:http://'.APP_DOMAIN);
+			header('Location: //'.APP_DOMAIN);
 		}
 	}
 	

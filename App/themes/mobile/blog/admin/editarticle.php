@@ -1,7 +1,7 @@
 <?php 
 lml()->app()->setOneSloc(false);
 if(empty($article)){
-	exit;
+	lblog_exit();
 }
 ?>
 <!DOCTYPE html>

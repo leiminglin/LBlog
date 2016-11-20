@@ -9,6 +9,15 @@ class Statistic{
 			$mStatistic = new ModelStatistic();
 			$mStatistic->save();
 			s('config', arr2mapping(q('config')->getAll(), 'name', 'data'));
+			
+			// Filter spam requests
+			$setting_site_domain = s('config', 'SITE_DOMAIN');
+			if ($setting_site_domain && preg_replace('/:(\d+)$/i', '', LBLOG_HTTP_HOST) != preg_replace('/:(\d+)$/i', '', $setting_site_domain)) {
+				Tool::status(301);
+				header('Location: //'.$setting_site_domain.$_SERVER['REQUEST_URI']);
+				lblog_exit();
+			}
+			
 			s('page', arr2mapping(q('page')->getAll(), 'name', 'content'));
 			require APP_PATH.'conf/siteconfig.php';
 			
@@ -36,11 +45,10 @@ class Statistic{
 			}
 		}else{
 			if(LML_REQUEST_URI != '/install'){
-				header('HTTP/1.1 301 Moved Permanently');
-				header('Status: 301 Moved Permanently');
+				Tool::status(301);
 				header('Cache-Control: no-cache');
-				header('Location: http://'.APP_DOMAIN.'/install');
-				exit;
+				header('Location: //'.APP_DOMAIN.'/install');
+				lblog_exit();
 			}
 		}
 	}
