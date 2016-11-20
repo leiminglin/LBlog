@@ -26,6 +26,10 @@ class ModuleAdmin extends LmlBlog{
 	);
 	
 	public function __construct(){
+		if(!$this->hasPermission() && C_ACTION!==$this->getLoginUri()){
+			header("Location:".WEB_PATH);
+			lblog_exit();
+		}
 		$this->mArchives = new ModelArchives();
 		$rs = q('lang_'.DEFAULT_LANG)->getAll();
 		$lang = array();
@@ -35,12 +39,16 @@ class ModuleAdmin extends LmlBlog{
 		lang('', $lang);
 	}
 	
-	public function __call($name, $arg){
-		$mConfig = new ModelConfig();
+	private function getLoginUri(){
 		$login_uri = s('config', 'LOGIN_PAGE_URI');
 		if(!$login_uri){
 			$login_uri = 'login';
 		}
+		return $login_uri;
+	}
+	
+	public function __call($name, $arg){
+		$login_uri = $this->getLoginUri();
 		if($name == $login_uri){
 			return $this->login($login_uri);
 		}

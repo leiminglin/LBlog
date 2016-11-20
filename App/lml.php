@@ -1,7 +1,7 @@
 <?php
 /**
  * LMLPHP Framework
- * Copyright (c) 2014 http://lmlphp.com All rights reserved.
+ * Copyright (c) 2014-2016 http://lmlphp.com All rights reserved.
  * Licensed ( http://mit-license.org/ )
  * Author: leiminglin <leiminglin@126.com>
  * 
@@ -240,7 +240,7 @@ class Lmlphp {
 	public function fileDebug($content='', $filename='', $in_charset='', $out_charset=''){
 		if( $filename == '' ){
 			$filename = self::appName.'_debug'.DIRECTORY_SEPARATOR
-			.self::$filenamePrefix.date("Y-m-d").self::$filenameSuffix;
+			.self::$filenamePrefix.date('Y-m-d').self::$filenameSuffix;
 		}
 		LmlUtils::logPre($filename, $content, $in_charset, $out_charset);
 		file_put_contents( $filename, 
@@ -355,7 +355,7 @@ class Lmlphp {
 						$refine_str .= $tokens[$i][1];
 						for($x=$i+1; $x<$j; $x++){
 							if(is_array($tokens[$x]) && trim($tokens[$x][1]) != ''){
-								if( substr($tokens[$x][1], 0, 1) != '$' ){
+								if(substr($tokens[$x][1], 0, 1) != '$'){
 									$refine_str .= ' ';
 								}
 								break;
@@ -366,7 +366,7 @@ class Lmlphp {
 						$refine_str .= $tokens[$i][1];
 						for($x=$i+1; $x<$j; $x++){
 							if(is_array($tokens[$x]) && trim($tokens[$x][1]) != ''){
-								if( token_name($tokens[$x][0]) == "T_STRING" ){
+								if( token_name($tokens[$x][0]) == 'T_STRING' ){
 									$refine_str .= ' ';
 								}
 								break;
@@ -439,7 +439,7 @@ class Lmlphp {
 		$list = scandir ( $dir );
 		foreach ( $list as $file ) {
 			$file_location = $dir . DIRECTORY_SEPARATOR . $file;
-			if (is_dir ( $file_location ) && $file != "." && $file != "..") {
+			if (is_dir ( $file_location ) && $file != '.' && $file != '..') {
 				$this->showDirFile( $file_location, $flag )->getResval($retlist[$file_location]);
 			} else {
 				if( $flag ){
@@ -582,7 +582,7 @@ class LmlErrHandle{
 	
 	private static function log($content, $filename='', $in_charset='', $out_charset=''){
 		if( $filename == '' ){
-			$filename = LOG_PATH.'log_'.date("Y-m-d").'.txt';
+			$filename = LOG_PATH.'log_'.date('Y-m-d').'.txt';
 		}
 		LmlUtils::logPre($filename, $content, $in_charset, $out_charset);
 		file_put_contents( $filename, date('[ c ] ').$content.ENDL, FILE_APPEND );
@@ -680,7 +680,7 @@ class LmlApp{
 				LmlUtils::mkdirDeep(MODEL_PATH);
 			}
 			if( !file_exists(APP_PATH.'.htaccess') ){
-				file_put_contents(APP_PATH.'.htaccess', "Deny from all");
+				file_put_contents(APP_PATH.'.htaccess', 'Deny from all');
 			}
 			if( !file_exists(SCRIPT_PATH.'.htaccess') ){
 				file_put_contents(SCRIPT_PATH.'.htaccess', "<IfModule mod_rewrite.c>\r\nRewriteEngine on\r\nRewriteCond %{REQUEST_FILENAME} !-d\r\nRewriteCond %{REQUEST_FILENAME} !-f\r\nRewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]\r\n</IfModule>");
@@ -921,7 +921,7 @@ class LmlApp{
 		}
 		$o = ob_get_clean();
 		if(!IS_CLI){
-			$p = strpos(substr($o, 0, 200), "<html>");
+			$p = strpos(substr($o, 0, 200), '<html>');
 			if(!($p===false)){
 				$o = substr($o, 0, $p).'<!--Powered By LMLPHP-->'.substr($o, $p);
 				preg_match_all('/<pre[^>]*?>[\s\S]*?<\/pre>/i', $o, $matches, PREG_OFFSET_CAPTURE);
