@@ -18,7 +18,20 @@ method="post">
 </tr>
 <tr>
 <td><?php elang('CatID')?></td>
-<td><input name="catid" type="text" value="<?php echo arr_get($article, 'catid', 1);?>"/></td>
+<?php 
+$temp = q('blog_cat')->getAll();
+$temp_catid = arr_get($article, 'catid', 1);
+?>
+<td>
+<select name="catid">
+	<?php foreach ($temp as $k=>$v){?>
+	<option value="<?php echo $v['id']?>"<?php if($temp_catid==$v['id']){echo ' selected="selected"';}?>><?php ehtml($v['name'])?></option>
+	<?php }?>
+</select>
+<?php 
+/*<input name="catid" type="text" value="<?php echo arr_get($article, 'catid', 1);?>"/>*/
+?>
+</td>
 </tr>
 <tr>
 <td><?php elang('UserID')?></td>
@@ -62,6 +75,15 @@ if(arr_get($article,'is_active')=='N'){
 </form>
 
 <script>
+
+var visible_tab = $('.tabs_content').children(':visible');
+$('form input[type=button]',visible_tab).click(function(){
+	if(/[^a-z0-9_\-]/i.test($('form input[name=url]',visible_tab).val())){
+		show_info('URL format is [0-9a-z-_]');
+		return false;
+	}
+});
+
 lml.loadJs('<?php echo WEB_APP_PATH.'admin/js/lmledit?t='.DEFAULT_LANG.filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/lmledit.js');?>', function(){
 	lmledit();
 });

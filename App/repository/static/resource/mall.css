@@ -4,7 +4,7 @@ body{
 	color:#262626;
 	text-align:left;
 	font-size:14px;
-	font-family:Arial,Helvetica,LiHei Pro Medium;
+	font-family:Microsoft Yahei,Arial,Helvetica,LiHei Pro Medium;
 }
 img{
 	border:0px;
@@ -41,16 +41,22 @@ a:hover{
 
 
 .he{
-	background:#086ed5;
-	background:linear-gradient(to bottom, #086ed5, #055db5) repeat scroll 0 0;
-	border-bottom:1px solid #044e97;
+	background:#DD2727;
+	background:linear-gradient(to bottom, #DD2727, #C60A0A) repeat scroll 0 0;
+	border-bottom:1px solid #C40000;
 	box-shadow:0 1px 2px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.15) inset;
 	margin:0 0 5px;
-	line-height:30px;
+	line-height:40px;
 	padding:0 20px;
+}
+.he h1{
+	margin:0;
+	display:inline-block;
+	float:left;
 }
 .he a{
 	color:#F2F4F5;
+	font-size:16px;
 	display:inline-block;
 }
 .zc{
@@ -104,9 +110,10 @@ a:hover{
 .foot{
 	text-align:center;
 	border-top:1px solid #E8E9EB;
-	margin:10px 0;
-	padding:5px 0;
+	margin:15px 0;
+	padding:10px 0;
 	color:#ccc;
+	font-size:12px;
 }
 .foot a{
 	color:#ccc;

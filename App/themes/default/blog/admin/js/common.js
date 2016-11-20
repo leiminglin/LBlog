@@ -93,7 +93,7 @@ function modify_tab_title(origin_title, new_title){
 	$(tags_content).children('div[data-tab='+origin_title+']').attr({"data-tab":new_title});
 }
 
-function get(u,c){
+function get(u,s,e,c){
 	$('#topbar').stop(true,true)
 	.css({"width":"0%","opacity":"0.5"})
 	.animate({"width":"15%","opacity":"0.5"})
@@ -101,9 +101,15 @@ function get(u,c){
 	.animate({"width":"80%","opacity":"0.8"}, 10000);
 	$.ajax({
 		"method":"GET",
+		"beforeSend": function(xhr){
+			xhr.setRequestHeader("token", LBLOG_CSRF_TOKEN);
+		},
 		"url":u
-	}).done(c)
+	})
+	.error(e)
+	.done(s)
 	.complete(function(){
+		(c||function(){})();
 		$('#topbar').stop(true,true)
 		.animate({"width":"100%"}).animate({"opacity":"0"})
 		.queue(function(){
@@ -113,7 +119,7 @@ function get(u,c){
 	});
 }
 
-function post(u,d,c){
+function post(u,d,s,e,c){
 	$('#topbar').stop(true,true)
 	.css({"width":"0%","opacity":"0.5"})
 	.animate({"width":"15%","opacity":"0.5"})
@@ -121,10 +127,16 @@ function post(u,d,c){
 	.animate({"width":"80%","opacity":"0.8"}, 10000);
 	$.ajax({
 		"method":"POST",
+		"beforeSend": function(xhr){
+			xhr.setRequestHeader("token", LBLOG_CSRF_TOKEN);
+		},
 		"url":u,
 		"data":d
-	}).done(c)
+	})
+	.error(e)
+	.done(s)
 	.complete(function(){
+		(c||function(){})();
 		$('#topbar').stop(true,true)
 		.animate({"width":"100%"}).animate({"opacity":"0"})
 		.queue(function(){

@@ -54,6 +54,7 @@ class ModuleAdmin extends LmlBlog{
 			'sessions' => 'session',
 			'accounts' => 'blog_account',
 			'pages' => 'page',
+			'goods' => 'mall_goods',
 		);
 		
 		if(isset($qmap[C_ACTION])){
@@ -95,6 +96,9 @@ class ModuleAdmin extends LmlBlog{
 						}
 					}else{
 						$id = $matches[1];
+						if(arr_get($_POST, 'updatetime')){
+							$_POST['updatetime']=$GLOBALS['start_time'];
+						}
 						if($m->update($_POST, "id=$id")){
 							$this->assign('save_status', '保存成功！');
 						}else{
@@ -808,6 +812,7 @@ class ModuleAdmin extends LmlBlog{
 				break;
 			case 'save':
 				$matches = route_match('[\w]+\/(\d+)');
+				$is_origin = arr_get($_POST, 'is_origin');
 				if (isset($matches[1])) {
 					$fid = $matches[1];
 					$images = $_FILES['images'];
@@ -817,11 +822,12 @@ class ModuleAdmin extends LmlBlog{
 					$file['tmp_name'] = $images['tmp_name'][0];
 					$file['error'] = $images['error'][0];
 					$file['size'] = $images['size'][0];
-					
-					$result_co = imagecropper($file['tmp_name']);
-					if($result_co){
-						file_put_contents($file['tmp_name'], $result_co);
-						$file['size'] = filesize($file['tmp_name']);
+					if(!$is_origin){
+						$result_co = imagecropper($file['tmp_name']);
+						if($result_co){
+							file_put_contents($file['tmp_name'], $result_co);
+							$file['size'] = filesize($file['tmp_name']);
+						}
 					}
 					$db_image = $m->find($fid);
 					$hash = md5(file_get_contents($file['tmp_name']));
@@ -868,10 +874,13 @@ class ModuleAdmin extends LmlBlog{
 								'error' => $images['error'][$k],
 								'size' => $images['size'][$k],
 							);
-							$result_co = imagecropper($file['tmp_name']);
-							if($result_co){
-								file_put_contents($file['tmp_name'], $result_co);
-								$file['size'] = filesize($file['tmp_name']);
+							
+							if(!$is_origin){
+								$result_co = imagecropper($file['tmp_name']);
+								if($result_co){
+									file_put_contents($file['tmp_name'], $result_co);
+									$file['size'] = filesize($file['tmp_name']);
+								}
 							}
 							$hash = md5(file_get_contents($file['tmp_name']));
 							if($m->notExists(array('hash'=>$hash))){

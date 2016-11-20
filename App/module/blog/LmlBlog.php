@@ -73,6 +73,12 @@ class LmlBlog extends LmlBase{
 			if (!in_array($permission_id, $has_permission_ids)) {
 				return false;
 			}
+		}else{
+			if($userid != ADMIN_ACCOUNT_ID){
+				if(!preg_match('/^\/admin\/js/', LML_REQUEST_URI) && LML_REQUEST_URI != '/admin'){
+					return false;
+				}
+			}
 		}
 		
 		$has_permission_names = array();

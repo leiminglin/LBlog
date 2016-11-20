@@ -31,7 +31,7 @@ abstract class LmlBase{
 		if (file_exists($f)) {
 			$this->fetch($f);
 		}else{
-			$identifier = DEFAULT_THEME_NAME.'/'.$g.'/'.$theme_uri;
+			$identifier = DEFAULT_THEME_NAME.'/'.$g.'/'.str_replace('\\', '/', $theme_uri);
 			$db_page = s('page', $identifier);
 			
 			if($db_page){

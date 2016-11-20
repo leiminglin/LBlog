@@ -17,19 +17,7 @@ defj.promise();
 
 
 defj.then(function(){
-	$('a.go').mousedown(function(){
-		var v=$(this).siblings('textarea').first().val();
-		if(!v){
-			return
-		}
-		if(!/^https?:\/\//.test(v)){
-			v='http://'+v;
-		}
-		$(this).attr({"href":v});
-
-
-		/* todo csrf token, cookie 365 day, account */
-	});
+	
 	defj.promise();
 });
 

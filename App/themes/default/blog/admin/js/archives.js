@@ -24,6 +24,9 @@ var lblog_admin_pages_path = '<?php echo WEB_APP_PATH?>admin/pages/list';
 var pages_post_path = '<?php echo WEB_APP_PATH?>admin/pages/post';
 var lblog_admin_images_path = '<?php echo WEB_APP_PATH?>admin/images/list';
 var images_post_path = '<?php echo WEB_APP_PATH?>admin/images/post';
+var goods_post_path = '<?php echo WEB_APP_PATH?>admin/goods/post';
+var goods_list_path = '<?php echo WEB_APP_PATH?>admin/goods/list';
+var goods_save_path = '<?php echo WEB_APP_PATH?>admin/goods/save';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -269,6 +272,26 @@ function get_images_post_page(o){
 		create_tab(title, rs);
 	});
 }
+function get_goods_post_page(o){
+	var path = goods_post_path,title='<?php elang('PostGood')?>';
+	if(o){
+		path += '/'+o;
+		title = '<?php elang('EditGood')?>-'+o;
+	}
+	get(path, function(rs){
+		create_tab(title, rs);
+	});
+};
+function get_goods_list_page(o){
+	var path = goods_list_path;
+	if(o){
+		path += '/'+o;
+	}
+	get(path, function(rs){
+		create_tab('<?php elang('Goods')?>', rs);
+	});
+};
+
 
 
 
@@ -283,7 +306,7 @@ lml.loadJs.competeLoad([
 	'//code.jquery.com/jquery-1.11.0.min.js'
 	], function(){
 
-	get_list_archives_page(false);
+	get_goods_list_page(false);
 	
 	$('.left ul li a').click(function(){
 		$(this).addClass('cl');
@@ -384,7 +407,7 @@ lml.loadJs.competeLoad([
 			save_cat(o.previousSibling.value);
 		},
 		'lblog_admin_cats_edit':function(o){
-			var td = $(o).parent().prev(), name=td.html();
+			var td = $(o).parent().prev(), name=td.text();
 			if(o.flag){
 				save_cat(td.children('input').val(), o.getAttribute('data-id'));
 			}else{
@@ -499,6 +522,43 @@ lml.loadJs.competeLoad([
 			}else{
 				get_images_post_page(false);
 			}
+		},
+		'lblog_admin_goods_list_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_goods_list_page(o.getAttribute('data-id'));
+			}else{
+				get_goods_list_page(false);
+			}
+		},
+		'lblog_admin_goods_post_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_goods_post_page(o.getAttribute('data-id'));
+			}else{
+				get_goods_post_page(false);
+			}
+		},
+		'edit_specified_goods':function(o){
+			get_goods_post_page(o.previousSibling.value);
+		},
+		'lblog_admin_images_editor_page':function(o){
+			var page = o.getAttribute('data-id')||0;
+			var path = '<?php echo WEB_APP_PATH?>admin/images/editorList';
+			if(page){
+				path += '/'+page;
+			}
+			get(path, function(rs){
+				if($(o).children('div').length){
+					$(o).children('div').html(rs);
+				}else{
+					$(o).closest('div').html(rs);
+				}
+			});
+			var e = o || window.event;
+			if(e.preventDefault && e.stopPropagation){
+				e.preventDefault();
+				e.stopPropagation();
+			}
+			return false;
 		}
 	};
 

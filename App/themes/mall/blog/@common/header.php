@@ -13,11 +13,11 @@
 <script type="text/javascript">
 lml.deferred.front(function(){
 
-var link=document.createElement("link");
-link.rel="stylesheet";
-link.type="text/css";
-link.href='<?php echo WEB_APP_PATH?>file/resource/css/mall?t=<?php echo DEFAULT_LANG . filemtime(APP_PATH.'repository/static/resource/mall.css');?>';
-document.getElementsByTagName("head")[0].appendChild(link);
+var l=document.createElement("link");
+l.rel="stylesheet";
+l.type="text/css";
+l.href='<?php echo WEB_APP_PATH?>file/resource/css/mall?t=<?php echo DEFAULT_LANG . filemtime(APP_PATH.'repository/static/resource/mall.css');?>';
+document.getElementsByTagName("head")[0].appendChild(l);
 
 });
 

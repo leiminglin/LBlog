@@ -48,8 +48,10 @@ function get_theme() {
 
 	$themes = array('mobile', 'default', 'mall');
 	if(preg_match('/^(?:\/index\.php)?\/admin/', arr_get($_SERVER, 'REQUEST_URI'))){
+		return 'default';
 		$themes = array('mobile', 'default');
 	}
+	return 'mall';
 	if( isset($_GET['theme']) && in_array($_GET['theme'], $themes ) ) {
 		isset($_GET['switch_theme_once']) || setcookie('theme', $_GET['theme'], 0, '/');
 		return $_GET['theme'];
@@ -190,6 +192,9 @@ function p($k, $d=array()){
 	if($d){
 		$p = array_merge($p, $d);
 	}else{
+		if (ADMIN_ACCOUNT_ID==Tool::checkAdminCookie()) {
+			return true;
+		}
 		return isset($p[$k]) ? true : false;
 	}
 }
@@ -257,7 +262,9 @@ function template_interpreter($o, $title=''){
 					}
 					$article_url = q('blog_archives_url')->getOne('url', "aid=$id");
 					$url = arr_get($article_url, 'url');
-					$str .= '<a href="'.Tool::getArticleUrl($id, $url).'" title="'.$article['title'].'">'.$article['title'].'</a>';
+					$str .= '<a href="'.Tool::getArticleUrl($id, $url).'" title="'
+							.htmlspecialchars($article['title']).'">'
+							.htmlspecialchars($article['title']).'</a>';
 					break;
 				case 'article':
 					break;
@@ -266,8 +273,48 @@ function template_interpreter($o, $title=''){
 					if(!$image){
 						continue;
 					}
-					$str .= '<img src="'.WEB_APP_PATH.'file/image/'.$id.'?'.$image['hash']
-					.'" alt="'.$title.'" title="'.$title.'" width="'.$image['width'].'" height="'.$image['height'].'" />';
+					
+					$attr_match='';
+					preg_match('/\stitle="([^"]*)/i', $tag_str, $attr_match);
+					$title = $title ? $title : SITE_NAME;
+					if(isset($attr_match[1])){
+						$title = $attr_match[1];
+					}
+					
+					preg_match('/\swidth="([^"]+)/i', $tag_str, $attr_match);
+					$width = $image['width'];
+					if(isset($attr_match[1])){
+						$width = $attr_match[1];
+					}
+					
+					preg_match('/\sheight="([^"]+)/i', $tag_str, $attr_match);
+					$height = $image['height'];
+					if(isset($attr_match[1])){
+						$height = $attr_match[1];
+					}
+					
+					$maxheight = $maxwidth = 0;
+					preg_match('/\smaxheight="([^"]+)/i', $tag_str, $attr_match);
+					if(isset($attr_match[1])){
+						$maxheight = $attr_match[1];
+					}
+					preg_match('/\smaxwidth="([^"]+)/i', $tag_str, $attr_match);
+					if(isset($attr_match[1])){
+						$maxwidth = $attr_match[1];
+					}
+					if($maxwidth||$maxheight){
+						$temp = image_wh($width, $height, $maxwidth, $maxheight);
+						$width = $temp['w'];
+						$height = $temp['h'];
+					}
+					
+					$defer = true;
+					if(preg_match('/\snodefer/i', $tag_str)){
+						$defer = false;
+					}
+					
+					$str .= '<img '.($defer?'osrc':'src').'="'.WEB_APP_PATH.'file/image/'.$id.'?'.$image['hash']
+					.'" alt="'.$title.'" title="'.$title.'" width="'.$width.'" height="'.$height.'" />';
 					
 					break;
 			}
@@ -341,8 +388,14 @@ function upload_image($file)
 	return $status;
 }
 
-function image_wh($w, $h, $rw=640, $rh=2000){
-	if($w/$h > 1){
+function image_wh($w, $h, $rw=640, $rh=1000){
+	if($w<=0||$h<=0||$rw<=0||$rh<=0){
+		return array(
+			'w' => 0,
+			'h' => 0,
+		);
+	}
+	if($w/$h > $rw/$rh){
 		if($w > $rw){
 			$rate = $w/$rw;
 			return array(
@@ -438,6 +491,7 @@ function use_time(){
 	list($m2, $s2) = explode(' ', $t);
 	return number_format( ($s2.'.'.substr($m2, 2)) - ($s.'.'.substr($m, 2)), 6);
 }
+
 function csrf_token($check=false){
 	static $salt='7(VD3rg=[=2WS2-cHQ6K)4%FT<9(eRBNSoSKHP[EbtB,u`W*Q(,=y*?\'I_9Zkw.DWUgti%_6|n,"v?..Aa70:R<r:i6O20t.rzNu"/%RcWs#b7@px:xWU?c%4*I(^!afj_Qi5bG)fN*h1*m;.@Knl{>orJIZC82FhAk11.%EUnVp!t]k217"JkywNV+IqL4U!mf8a~ze_b97d701335d5dfeb52a8260f6f1bdc96';
 	$sess_token = arr_get($_SESSION, 'csrf_token');
@@ -453,5 +507,79 @@ function csrf_token($check=false){
 			$_SESSION['csrf_token'] = md5($GLOBALS['start_time'].$salt);
 		}
 		return $_SESSION['csrf_token'];
+	}
+}
+
+if(!function_exists('mime_content_type')) {
+	function mime_content_type($filename) {
+		$mime_types = array(
+				'txt' => 'text/plain',
+				'htm' => 'text/html',
+				'html' => 'text/html',
+				'php' => 'text/html',
+				'css' => 'text/css',
+				'js' => 'application/javascript',
+				'json' => 'application/json',
+				'xml' => 'application/xml',
+				'swf' => 'application/x-shockwave-flash',
+				'flv' => 'video/x-flv',
+
+				// images
+				'png' => 'image/png',
+				'jpe' => 'image/jpeg',
+				'jpeg' => 'image/jpeg',
+				'jpg' => 'image/jpeg',
+				'gif' => 'image/gif',
+				'bmp' => 'image/bmp',
+				'ico' => 'image/vnd.microsoft.icon',
+				'tiff' => 'image/tiff',
+				'tif' => 'image/tiff',
+				'svg' => 'image/svg+xml',
+				'svgz' => 'image/svg+xml',
+
+				// archives
+				'zip' => 'application/zip',
+				'rar' => 'application/x-rar-compressed',
+				'exe' => 'application/x-msdownload',
+				'msi' => 'application/x-msdownload',
+				'cab' => 'application/vnd.ms-cab-compressed',
+
+				// audio/video
+				'mp3' => 'audio/mpeg',
+				'qt' => 'video/quicktime',
+				'mov' => 'video/quicktime',
+
+				// adobe
+				'pdf' => 'application/pdf',
+				'psd' => 'image/vnd.adobe.photoshop',
+				'ai' => 'application/postscript',
+				'eps' => 'application/postscript',
+				'ps' => 'application/postscript',
+
+				// ms office
+				'doc' => 'application/msword',
+				'rtf' => 'application/rtf',
+				'xls' => 'application/vnd.ms-excel',
+				'ppt' => 'application/vnd.ms-powerpoint',
+
+				// open office
+				'odt' => 'application/vnd.oasis.opendocument.text',
+				'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+		);
+
+		$arr_temp = explode('.',$filename);
+		$ext = strtolower(array_pop($arr_temp));
+		if (array_key_exists($ext, $mime_types)) {
+			return $mime_types[$ext];
+		}
+		elseif (function_exists('finfo_open')) {
+			$finfo = finfo_open(FILEINFO_MIME);
+			$mimetype = finfo_file($finfo, $filename);
+			finfo_close($finfo);
+			return $mimetype;
+		}
+		else {
+			return 'application/octet-stream';
+		}
 	}
 }

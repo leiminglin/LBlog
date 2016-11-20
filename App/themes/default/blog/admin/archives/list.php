@@ -20,15 +20,20 @@
 <table>
 <tr>
 <th><?php elang('ID')?></th>
+<th><?php elang('Cat')?></th>
 <th><?php elang('Title')?></th>
 <th><?php elang('Author')?></th>
 <th><?php elang('IsActive')?></th>
 <th><?php elang('CreatedTime')?></th>
 <th><?php elang('Action')?></th>
 </tr>
-<?php foreach ($rs as $k=>$v){?>
+<?php
+$temp = q('blog_cat')->getAll();
+$temp = arr2mapping($temp, 'id', 'name');
+foreach ($rs as $k=>$v){?>
 <tr>
 <td><?php echo $v['id'];?></td>
+<td><?php ehtml(arr_get($temp, $v['catid']));?></td>
 <td><?php ehtml($v['title']);?></td>
 <td><?php ehtml($v['nickname']);?></td>
 <td><?php echo $v['is_active'];?></td>
