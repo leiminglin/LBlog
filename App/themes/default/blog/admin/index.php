@@ -175,6 +175,12 @@ window.onload=function(){
 			<a href="javascript:void(0)" data-action="lblog_admin_goods_list_page" class="cl"><?php elang('Goods')?></a>
 			</li>
 			<?php }?>
+		
+			<?php if(p('goods_cat_read_list')){?>
+			<li>
+			<a href="javascript:void(0)" data-action="lblog_admin_mall_cats_list_page"><?php elang('Goods Cat')?></a>
+			</li>
+			<?php }?>
 			
 			<?php if(p('archives_read_list')){?>
 			<li>

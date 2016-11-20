@@ -37,7 +37,7 @@ class ModuleAdmin extends LmlBlog{
 	
 	public function __call($name, $arg){
 		$mConfig = new ModelConfig();
-		$login_uri = $mConfig->getConfig('LOGIN_PAGE_URI');
+		$login_uri = s('config', 'LOGIN_PAGE_URI');
 		if(!$login_uri){
 			$login_uri = 'login';
 		}
@@ -55,6 +55,7 @@ class ModuleAdmin extends LmlBlog{
 			'accounts' => 'blog_account',
 			'pages' => 'page',
 			'goods' => 'mall_goods',
+			'goods_cat' => 'mall_cat',
 		);
 		
 		if(isset($qmap[C_ACTION])){
@@ -84,6 +85,8 @@ class ModuleAdmin extends LmlBlog{
 					break;
 				case 'save':
 					$matches = route_match('[\w]+\/(\d+)');
+					$z = $this->zHandle();
+					$z_id = '';
 					if (!isset($matches[1])) {
 						if(!isset($_POST['createtime']) || !$_POST['createtime']){
 							$_POST['createtime'] = $GLOBALS['start_time'];
@@ -92,10 +95,12 @@ class ModuleAdmin extends LmlBlog{
 							$this->assign('save_status', '保存成功！');
 							$rs = $m->find($m->getLastId());
 							$this->assign('rs', $rs);
+							$z_id = $rs['id'];
 							$this->display('', '/edit.php');
 						}
 					}else{
 						$id = $matches[1];
+						$z_id = $id;
 						if(arr_get($_POST, 'updatetime')){
 							$_POST['updatetime']=$GLOBALS['start_time'];
 						}
@@ -105,12 +110,49 @@ class ModuleAdmin extends LmlBlog{
 							$this->assign('save_status', '内容未改变！');
 						}
 					}
+					$this->zProcess($z_id, $z);
 					break;
 			}
 			return;
 		}
 
 		return parent::__call($name, $arg);
+	}
+	
+	private function zHandle(){
+		static $z;
+		$handle = arr_get($_POST, 'z_handle');
+		$data = arr_get($_POST, 'z_data');
+		unset($_POST['z_handle']);
+		unset($_POST['z_data']);
+		$z['h'] = $handle;
+		$z['d'] = $data;
+		return $z;
+	}
+	
+	private function zProcess($id, $z){
+		if(!$id){
+			return;
+		}
+		if($z['h'] == 'mallCatSave'){
+			$m_goods_cat = q('mall_goods_cat');
+			$where = 'good_id=?';
+			if($z['d']){
+				$where .= ' and good_cat_id not in ('.implode(',', $z['d']).')';
+			}
+			$m_goods_cat->del($where, array($id));
+			
+			foreach ($z['d'] as $k => $v) {
+				$arr = array(
+					'good_id' => $id,
+					'good_cat_id' => $v,
+				);
+				if($m_goods_cat->notExists($arr)){
+					$arr['createtime'] = $GLOBALS['start_time'];
+					$m_goods_cat->add($arr);
+				}
+			}
+		}
 	}
 	
 	public function index(){

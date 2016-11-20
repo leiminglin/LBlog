@@ -32,6 +32,30 @@ if(isset($save_status)){
 </tr>
 
 <tr>
+<td><?php elang('Cat')?></td>
+<td>
+<?php 
+$rs_id = arr_get($rs, 'id');
+if($rs_id){
+	$good_cats = arr_get_index(q('mall_goods_cat')->select('good_cat_id', 'good_id=?', array($rs_id)), 'good_cat_id');
+}else{
+	$good_cats = array();
+}
+
+
+$mall_cats=q('mall_cat')->select('id,title', 'status=1');
+if($mall_cats){
+	foreach ($mall_cats as $k => $v) {
+		echo '<label><input name="z_data[]" type="checkbox" value="'.$v['id'].'" '
+			. (in_array($v['id'], $good_cats)?'checked':'') .'>'.$v['title'].'</label>';
+	}
+	echo '<input name="z_handle" type="hidden" value="mallCatSave"/>';
+}
+?>
+</td>
+</tr>
+
+<tr>
 <td><?php elang('Album')?></td>
 <td>
 <div class="image_edit_album" style="min-height:200px;">

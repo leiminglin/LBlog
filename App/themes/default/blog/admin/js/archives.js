@@ -27,6 +27,9 @@ var images_post_path = '<?php echo WEB_APP_PATH?>admin/images/post';
 var goods_post_path = '<?php echo WEB_APP_PATH?>admin/goods/post';
 var goods_list_path = '<?php echo WEB_APP_PATH?>admin/goods/list';
 var goods_save_path = '<?php echo WEB_APP_PATH?>admin/goods/save';
+var goods_cat_list_path = '<?php echo WEB_APP_PATH?>admin/goods_cat/list';
+var goods_cat_post_path = '<?php echo WEB_APP_PATH?>admin/goods_cat/post';
+var goods_cat_save_path = '<?php echo WEB_APP_PATH?>admin/goods_cat/save';
 
 function get_list_archives_page(pid){
 	var path = archives_list_path;
@@ -291,6 +294,26 @@ function get_goods_list_page(o){
 		create_tab('<?php elang('Goods')?>', rs);
 	});
 };
+function get_goods_cat_list_page(o){
+	var path = goods_cat_list_path;
+	if(o){
+		path += '/'+o;
+	}
+	get(path, function(rs){
+		create_tab('<?php elang('GoodsCat')?>', rs);
+	});
+};
+function get_goods_cat_post_page(o){
+	var path = goods_cat_post_path,title='<?php elang('PostGoodsCat')?>';
+	if(o){
+		path += '/'+o;
+		title = '<?php elang('EditGoodsCat')?>-'+o;
+	}
+	get(path, function(rs){
+		create_tab(title, rs);
+	});
+};
+
 
 
 
@@ -559,6 +582,23 @@ lml.loadJs.competeLoad([
 				e.stopPropagation();
 			}
 			return false;
+		},
+		'lblog_admin_mall_cats_list_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_goods_cat_list_page(o.getAttribute('data-id'));
+			}else{
+				get_goods_cat_list_page(false);
+			}
+		},
+		'lblog_admin_mall_cats_post_page':function(o){
+			if(o.getAttribute('data-id')){
+				get_goods_cat_post_page(o.getAttribute('data-id'));
+			}else{
+				get_goods_cat_post_page(false);
+			}
+		},
+		'edit_specified_mall_cats':function(o){
+			get_goods_cat_post_page(o.previousSibling.value);
 		}
 	};
 
