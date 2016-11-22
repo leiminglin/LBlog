@@ -178,8 +178,7 @@
 
 
 	function getElementViewTop(element){
-		var
-		actualTop = element.offsetTop
+		var actualTop = element.offsetTop
 		,offsetParentElement = element.offsetParent
 		,parentNode
 		,pageScrollTop
@@ -225,8 +224,7 @@
 	 * Lazy load img
 	 */
 	deferred.then(function(){
-		var
-		i, length, src, m = doc.getElementsByTagName('IMG'),
+		var i, length, src, m = doc.getElementsByTagName('IMG'),
 		viewport=getViewport(), count=0, viewtop, imgHeight
 		;
 		lml.registerOnResize(function(){
@@ -275,8 +273,7 @@
 
 	if( typeof doc.getElementsByClassName != 'function' ){
 		doc.getElementsByClassName = function (classname) {
-			var
-			e = doc.getElementsByTagName('*'),
+			var e = doc.getElementsByTagName('*'),
 			c = new RegExp('\\b'+classname+'\\b'),
 			r = [], i, l, classname
 			;
@@ -316,8 +313,7 @@
 	 * Lazy load HTML
 	 */
 	deferred.then(function(){
-		var
-		e = doc.getElementsByClassName('lazyHtml'),
+		var e = doc.getElementsByClassName('lazyHtml'),
 		i, wrapdiv
 		;
 		for (i=0; i<e.length; i++ ) {

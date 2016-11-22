@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-transform"/>
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>琳淋衣橱</title>
+<title>琳琳衣橱</title>
 <script type="text/javascript" src="<?php echo WEB_APP_PATH?>file/resource/js/lml?t=<?php echo filemtime(APP_PATH.'repository/static/resource/lml.js');?>"></script>
 
 <script type="text/javascript">
@@ -19,6 +19,7 @@ l.type="text/css";
 l.href='<?php echo WEB_APP_PATH?>file/resource/css/mall?t=<?php echo DEFAULT_LANG . filemtime(APP_PATH.'repository/static/resource/mall.css');?>';
 document.getElementsByTagName("head")[0].appendChild(l);
 
+lml.deferred.promise();
 });
 
 
