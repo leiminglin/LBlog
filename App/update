@@ -1,26 +1,40 @@
 #!/bin/bash
 # Author may
 
+if [ ! -n "$1" ];then
+	echo 'Error: param old code folder path needed';
+	exit;
+fi
+
+ORIGIN_DIR=`realpath $1`;
+
 if [ -L $0 ];then
 	fp=`readlink $0`;
 	basedir=`dirname $fp`
 elif [ -f $0 ];then
 	basedir=`dirname $0`
 fi
+
 cd $basedir
 
-if [ ! -n "$1" ];then
-	echo 'param folder path needed';
-else
-	echo "folder is ${1}";
-	# mv install file
-	mv ./module/ModuleInstall.php ./module/.ModuleInstall.php;
-	cp -a $1/App/conf/dbconfig.php ./conf/dbconfig.php;
-	if [ -d $1/App/log ];then
-		cp -a -r $1/App/log ./log;
-	fi
-	if [ -d $1/App/repository/image ];then
-		cp -a -r $1/App/repository/image ./repository/image;
-	fi
+echo "old code folder is ${1}";
 
-fi 
+# mv install file
+if [ -f ./module/ModuleInstall.php ];then
+	mv ./module/ModuleInstall.php ./module/.ModuleInstall.php;
+	echo 'rename install file ok';
+fi
+
+cp -a ${CURRENT_DIR}/App/conf/dbconfig.php ./conf/dbconfig.php;
+echo 'copy dbconfig file ok';
+
+if [ -d ${CURRENT_DIR}/App/log ];then
+	cp -a -r ${CURRENT_DIR}/App/log .;
+	echo 'move log folder ok';
+fi
+
+if [ -d ${CURRENT_DIR}/App/repository/image ];then
+	cp -a -r ${CURRENT_DIR}/App/repository/image ./repository;
+	echo 'move repository/image folder ok';
+fi
+
