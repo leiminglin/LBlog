@@ -134,6 +134,10 @@ class Lmlphp {
 		define('LOG_PATH', APP_PATH.LOG_DIR_NAME.$p);
 		define('THEMES_PATH', APP_PATH.THEMES_DIR_NAME.$p);
 		define('DEFAULT_THEME_PATH', THEMES_PATH.DEFAULT_THEME_NAME.$p);
+
+		defined('THEME_NAME') || define('THEME_NAME', DEFAULT_THEME_NAME);
+		defined('THEME_PATH') || define('THEME_PATH', DEFAULT_THEME_PATH);
+
 		define('WEB_PATH', preg_replace('/[^\/]+\.php$/', '', $_SERVER['SCRIPT_NAME']));
 		if( defined('IS_REWRITE_ON') && !IS_REWRITE_ON ){
 			preg_match('/([^\/]+\.php)$/', $_SERVER['SCRIPT_NAME'], $matches );
@@ -666,7 +670,7 @@ class LmlApp{
 				file_put_contents(MODULE_PATH.ucfirst(MODULE_DIR_NAME).'Index.php', "<?php\r\nclass ".ucfirst(MODULE_DIR_NAME)."Index extends LmlBase{\r\n\tpublic function index(){\r\n\t\tif( !headers_sent() ) {\r\n\t\t\theader(\"Content-type:text/html;charset=utf-8\");\r\n\t\t}\r\n\t\tif(IS_CLI){\r\n\t\t\techo'Welcome to use LMLPHP!';\r\n\t\t}else{\r\n\t\t\techo '<div style=\"margin-top:100px;line-height:30px;font-size:16px;font-weight:bold;font-family:微软雅黑;text-align:center;color:red;\">^_^,&nbsp;Welcome to use LMLPHP!<div style=\"color:#333;\">A fully object-oriented PHP framework, keep it light, magnificent, lovely.</div></div>';\r\n\t\t}\r\n\t}\r\n}");
 			}
 			if( !file_exists(MODULE_PATH.'LmlBase.php') ){
-				file_put_contents(MODULE_PATH.'LmlBase.php', "<?php\r\nabstract class LmlBase{\r\n\tpublic \$v = array();\r\n\tpublic function __call(\$name, \$arg){\r\n\t\t// TODO handle some unknow method\r\n\t}\r\n\tpublic function assign(\$k, \$v){\r\n\t\t\$this->v[\$k] = \$v;\r\n\t}\r\n\tpublic function display(\$t='', \$f='.php'){\r\n\t\t\$s = DIRECTORY_SEPARATOR;\r\n\t\t\$d = DEFAULT_THEME_PATH;\r\n\t\tif( defined('C_GROUP') ){\r\n\t\t\t\$d .= C_GROUP.\$s;\r\n\t\t}\r\n\t\tif(\$t){\r\n\t\t\t\$arr = explode('/', \$t, 2);\r\n\t\t\tif(count(\$arr) == 1){\r\n\t\t\t\tarray_unshift(\$arr, C_MODULE);\r\n\t\t\t}\r\n\t\t\t\$this->fetch(\$d.\$arr[0].\$s.\$arr[1].\$f);\r\n\t\t}else{\r\n\t\t\t\$this->fetch(\$d.C_MODULE.\$s.C_ACTION.\$f);\r\n\t\t}\r\n\t}\r\n\tprivate function fetch(\$f){\r\n\t\textract(\$this->v, EXTR_OVERWRITE);\r\n\t\tinclude \$f;\r\n\t}\r\n\tpublic function __construct(){\r\n\t\t\r\n\t}\r\n}");
+				file_put_contents(MODULE_PATH.'LmlBase.php', "<?php\r\nabstract class LmlBase{\r\n\tpublic \$v = array();\r\n\tpublic function __call(\$name, \$arg){\r\n\t\t// TODO handle some unknow method\r\n\t}\r\n\tpublic function assign(\$k, \$v){\r\n\t\t\$this->v[\$k] = \$v;\r\n\t}\r\n\tpublic function display(\$t='', \$f='.php'){\r\n\t\t\$s = DIRECTORY_SEPARATOR;\r\n\t\t\$d = THEME_PATH;\r\n\t\tif( defined('C_GROUP') ){\r\n\t\t\t\$d .= C_GROUP.\$s;\r\n\t\t}\r\n\t\tif(\$t){\r\n\t\t\t\$arr = explode('/', \$t, 2);\r\n\t\t\tif(count(\$arr) == 1){\r\n\t\t\t\tarray_unshift(\$arr, C_MODULE);\r\n\t\t\t}\r\n\t\t\t\$this->fetch(\$d.\$arr[0].\$s.\$arr[1].\$f);\r\n\t\t}else{\r\n\t\t\t\$this->fetch(\$d.C_MODULE.\$s.C_ACTION.\$f);\r\n\t\t}\r\n\t}\r\n\tprivate function fetch(\$f){\r\n\t\textract(\$this->v, EXTR_OVERWRITE);\r\n\t\tinclude \$f;\r\n\t}\r\n\tpublic function __construct(){\r\n\t\t\r\n\t}\r\n}");
 			}
 			if( !is_dir(DEFAULT_THEME_PATH.'index') ){
 				LmlUtils::mkdirDeep(DEFAULT_THEME_PATH.'index');
@@ -832,7 +836,7 @@ class LmlApp{
 		$a = $path[1];
 		defined('C_MODULE') || define('C_MODULE', strtolower($path[0]));
 		defined('C_ACTION') || define('C_ACTION', strtolower($a));
-		$v = DEFAULT_THEME_PATH.(defined('C_GROUP')?C_GROUP.DIRECTORY_SEPARATOR:'').C_MODULE.DIRECTORY_SEPARATOR.C_ACTION.'.php';
+		$v = THEME_PATH.(defined('C_GROUP')?C_GROUP.DIRECTORY_SEPARATOR:'').C_MODULE.DIRECTORY_SEPARATOR.C_ACTION.'.php';
 		if( class_exists($m) ){
 			$class = new ReflectionClass($m);
 		}else{

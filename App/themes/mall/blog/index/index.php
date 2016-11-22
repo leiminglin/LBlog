@@ -1,4 +1,4 @@
-<?php require DEFAULT_THEME_PATH.C_GROUP.'/@common/header.php';?>
+<?php require THEME_PATH.C_GROUP.'/@common/header.php';?>
 
 <div class="he">
 <h1><a class="fl" href="/">琳琳衣橱</a></h1>
@@ -15,4 +15,4 @@
 
 </div>
 
-<?php require DEFAULT_THEME_PATH.C_GROUP.'/@common/foot.php';?>
+<?php require THEME_PATH.C_GROUP.'/@common/foot.php';?>

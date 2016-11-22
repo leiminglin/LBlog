@@ -10,6 +10,10 @@ class ModuleIndex extends LmlBlog{
 		$this->assign('cats', $this->mCats->getCats());
 	}
 	public function index(){
+		if (THEME_NAME == 'mall') {
+			return $this->index_mall();
+		}
+
 		$pid = 1;
 		$pcount = 5;
 		
@@ -32,6 +36,10 @@ class ModuleIndex extends LmlBlog{
 		$this->assign('page', $page);
 		$this->assign('page_path', 'p/');
 		$this->assign('pid', $pid);
+		$this->display();
+	}
+
+	private function index_mall(){
 		$this->display();
 	}
 }

@@ -3,7 +3,7 @@ class Tool{
 
 	public static function notFoundPage(){
 		LmlUtils::_404();
-		$f = DEFAULT_THEME_PATH.(defined('C_GROUP') ? C_GROUP.'/' : '').'@common/404.php';
+		$f = THEME_PATH.(defined('C_GROUP') ? C_GROUP.'/' : '').'@common/404.php';
 		if(file_exists($f)){
 			include $f;
 		}

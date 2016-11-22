@@ -10,7 +10,7 @@ abstract class LmlBase{
 	}
 	public function display($t='', $suffix='.php'){
 		$s = DIRECTORY_SEPARATOR;
-		$d = DEFAULT_THEME_PATH;
+		$d = THEME_PATH;
 		$g = '';
 		if( defined('C_GROUP') ){
 			$g = C_GROUP;
@@ -31,7 +31,7 @@ abstract class LmlBase{
 		if (file_exists($f)) {
 			$this->fetch($f);
 		}else{
-			$identifier = DEFAULT_THEME_NAME.'/'.$g.'/'.str_replace('\\', '/', $theme_uri);
+			$identifier = THEME_NAME.'/'.$g.'/'.str_replace('\\', '/', $theme_uri);
 			$db_page = s('page', $identifier);
 			
 			if($db_page){
