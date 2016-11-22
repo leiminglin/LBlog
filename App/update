@@ -25,16 +25,17 @@ if [ -f ./module/ModuleInstall.php ];then
 	echo 'rename install file ok';
 fi
 
-cp -a ${CURRENT_DIR}/App/conf/dbconfig.php ./conf/dbconfig.php;
+cp -a ${ORIGIN_DIR}/App/conf/dbconfig.php ./conf/dbconfig.php;
 echo 'copy dbconfig file ok';
 
-if [ -d ${CURRENT_DIR}/App/log ];then
-	cp -a -r ${CURRENT_DIR}/App/log .;
+if [ -d ${ORIGIN_DIR}/App/log ];then
+	cp -a -r ${ORIGIN_DIR}/App/log .;
 	echo 'move log folder ok';
 fi
 
-if [ -d ${CURRENT_DIR}/App/repository/image ];then
-	cp -a -r ${CURRENT_DIR}/App/repository/image ./repository;
+if [ -d ${ORIGIN_DIR}/App/repository/image ];then
+	cp -a -r ${ORIGIN_DIR}/App/repository/image ./repository;
 	echo 'move repository/image folder ok';
 fi
 
+echo 'done.';
