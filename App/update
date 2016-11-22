@@ -1,0 +1,26 @@
+#!/bin/bash
+# Author may
+
+if [ -L $0 ];then
+	fp=`readlink $0`;
+	basedir=`dirname $fp`
+elif [ -f $0 ];then
+	basedir=`dirname $0`
+fi
+cd $basedir
+
+if [ ! -n "$1" ];then
+	echo 'param folder path needed';
+else
+	echo "folder is ${1}";
+	# mv install file
+	mv ./module/ModuleInstall.php ./module/.ModuleInstall.php;
+	cp -a $1/App/conf/dbconfig.php ./conf/dbconfig.php;
+	if [ -d $1/App/log ];then
+		cp -a -r $1/App/log ./log;
+	fi
+	if [ -d $1/App/repository/image ];then
+		cp -a -r $1/App/repository/image ./repository/image;
+	fi
+
+fi 
