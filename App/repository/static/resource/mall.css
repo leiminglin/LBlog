@@ -5,6 +5,7 @@ body{
 	text-align:left;
 	font-size:14px;
 	font-family:Microsoft Yahei,Arial,Helvetica,LiHei Pro Medium;
+	background:#FCFCFC;
 }
 img{
 	border:0px;
@@ -63,6 +64,7 @@ a:hover{
 
 .top{
 	margin:auto auto 5px;
+	background:white;
 }
 .top h2{
 	margin:0;
@@ -133,6 +135,7 @@ a:hover{
 	padding:10px 0;
 	color:#ccc;
 	font-size:12px;
+	background:white;
 }
 .foot a{
 	color:#ccc;

@@ -64,6 +64,7 @@
 	overflow:hidden;
 	position:relative;
 	margin:auto;
+	background:white;
 }
 .content li div img{
 	display:block;
