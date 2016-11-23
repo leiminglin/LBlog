@@ -13,12 +13,14 @@
 	<div class="top">
 		<ul>
 			<li><h2><a href="/"><span class="tbg1">品牌</span></a></h2></li>
-			<li><h2><a href="/"><span class="tbg2">内衣</span></a></h2></li>
+			<li><h2><a href="/"><span class="tbg3">内衣</span></a></h2></li>
+			<li><h2><a href="/"><span class="tbg5">玩具</span></a></h2></li>
 		</ul>
 		<div class="clear"></div>
 		<ul>
-			<li><h2><a href="/"><span class="tbg3">文胸</span></a></h2></li>
+			<li><h2><a href="/"><span class="tbg2">文胸</span></a></h2></li>
 			<li><h2><a href="/"><span class="tbg4">裤袜</span></a></h2></li>
+			<li><h2><a href="/"><span class="tbg6">帽衫</span></a></h2></li>
 		</ul>
 		<div class="clear"></div>
 	</div>
@@ -66,6 +68,9 @@
 	margin:auto;
 	background:white;
 }
+.content div.img{
+	margin-top:5px;
+}
 .content li div img{
 	display:block;
 	margin:auto;
@@ -79,7 +84,7 @@
 	position:absolute;
 	bottom:20px;
 	color:#333;
-	padding:0 4px;
+	padding:0 5px;
 }
 .content .item .price{
 	position:absolute;
