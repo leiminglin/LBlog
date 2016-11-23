@@ -77,10 +77,10 @@ a:hover{
 }
 .top li a{
 	display:block;
-	padding:6px;
+	padding:8px;
 }
 .top li a span{
-	padding:4px 8px;
+	padding:5px 10px;
 	color:white;
 	border-radius:5px;
 }

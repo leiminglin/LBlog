@@ -26,19 +26,44 @@
 
 <style>
 
+
+
 .content{
-	border-top:1px solid #eee;
 	padding-top:5px;
+	margin:auto;
 }
 .content li{
-	width:50%;
+	width:100%;
 	float:left;
+	margin-bottom:12px;
+}
+@media screen and (min-width:320px){
+	.content li{
+		width:50%;
+	}
+}
+
+@media screen and (min-width:480px){
+	.content li{
+		width:33.3%;
+	}
+}
+@media screen and (min-width:640px){
+	.content li{
+		width:25%;
+	}
+}
+@media screen and (min-width:960px){
+	.content{
+		width:960px;
+	}
 }
 .content li div.item{
 	height:220px;
 	width:160px;
 	overflow:hidden;
 	position:relative;
+	margin:auto;
 }
 .content li div img{
 	display:block;
@@ -73,7 +98,7 @@
 	<div class="content">
 		<ul>
 			<li>
-				<div class="fr item">
+				<div class="item">
 					<div class="img">
 						<?php echo template_interpreter('<LBLOGimage id="1" maxwidth="150" maxheight="150">');?>
 					</div>
@@ -101,7 +126,7 @@
 				</div>
 			</li>
 			<li>
-				<div class="fr item">
+				<div class="item">
 					<div class="img">
 						<?php echo template_interpreter('<LBLOGimage id="3" maxwidth="150" maxheight="150">');?>
 					</div>
@@ -129,7 +154,7 @@
 				</div>
 			</li>
 			<li>
-				<div class="fr item">
+				<div class="item">
 					<div class="img">
 						<?php echo template_interpreter('<LBLOGimage id="5" maxwidth="150" maxheight="150">');?>
 					</div>

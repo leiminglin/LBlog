@@ -268,6 +268,7 @@
 			win.attachEvent("onscroll", loadImg);
 		}
 		loadImg();
+		setInterval(function(){loadImg()}, 1000);
 		deferred.promise();
 	});
 
