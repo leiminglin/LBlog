@@ -268,7 +268,15 @@
 			win.attachEvent("onscroll", loadImg);
 		}
 		loadImg();
-		setInterval(function(){loadImg()}, 1000);
+		setInterval(function(){loadImg();
+			if($){
+				var fd=$('#footdate').get(0);
+				if(!fd.span){
+					fd.span=$('<span/>').appendTo(fd);
+				}
+				fd.span.html(' '+screen.width+'x'+screen.height);
+			}
+		}, 1000);
 		deferred.promise();
 	});
 
