@@ -78,6 +78,20 @@ if($mall_cats){
 </tr>
 
 <tr>
+<td><?php elang('Original Price')?></td>
+<td>
+<input name="origin_price" type="text" value="<?php ehtml(arr_get($rs, 'origin_price'));?>"/>
+</td>
+</tr>
+
+<tr>
+<td><?php elang('Price')?></td>
+<td>
+<input name="price" type="text" value="<?php ehtml(arr_get($rs, 'price'));?>"/>
+</td>
+</tr>
+
+<tr>
 <td><?php elang('Content')?></td>
 <td><textarea cols="88" rows="20" name="content"><?php ehtml(arr_get($rs, 'content', '<div class="intro"><p>content here</p></div>'));?></textarea></td>
 </tr>

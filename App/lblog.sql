@@ -470,3 +470,43 @@ CREATE TABLE `lblog_page` (
   `createtime` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `lblog_mall_cat`;
+CREATE TABLE `lblog_mall_cat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(250) NOT NULL DEFAULT '',
+  `status` tinyint(3) NOT NULL DEFAULT '0',
+  `createtime` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `updatetime` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='mall cat';
+
+
+DROP TABLE IF EXISTS `lblog_mall_goods`;
+CREATE TABLE `lblog_mall_goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(250) NOT NULL DEFAULT '',
+  `origin_price` int(11) NOT NULL DEFAULT '0',
+  `price` int(11) NOT NULL DEFAULT '0',
+  `abstract` text NOT NULL,
+  `content` text NOT NULL,
+  `status` tinyint(3) NOT NULL DEFAULT '0',
+  `images` text NOT NULL,
+  `createtime` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `updatetime` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `userid` (`userid`),
+  KEY `status` (`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='mall goods';
+
+
+DROP TABLE IF EXISTS `lblog_mall_goods_cat`;
+ CREATE TABLE `lblog_mall_goods_cat` (
+  `good_id` int(11) NOT NULL DEFAULT '0',
+  `good_cat_id` int(11) NOT NULL DEFAULT '0',
+  `createtime` bigint(20) unsigned NOT NULL DEFAULT '0',
+  KEY `good_id` (`good_id`),
+  KEY `good_cat_id` (`good_cat_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='mall goods cat';
