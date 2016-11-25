@@ -104,7 +104,7 @@ class Lmlphp {
 		define('SCRIPT_DIR', realpath(dirname($_SERVER['SCRIPT_FILENAME'])));
 		define('SCRIPT_PATH', SCRIPT_DIR.$p);
 		if( !defined('APP_DIR') ){
-			define('APP_DIR', SCRIPT_PATH.'App');
+			define('APP_DIR', SCRIPT_PATH.'app');
 			$app_abs_dir = APP_DIR;
 		}else{
 			if(!is_dir(APP_DIR)){
