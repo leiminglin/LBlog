@@ -31,7 +31,7 @@ defined('DEFAULT_LANG')||define('DEFAULT_LANG', get_lang());
 defined('ADMIN_ACCOUNT_ID')||define('ADMIN_ACCOUNT_ID', 1);
 defined('ADMIN_ROLE_ID')||define('ADMIN_ROLE_ID', 1);
 
-$basecofig = require './App/conf/baseconfig.php';
+$basecofig = require './app/conf/baseconfig.php';
 
 if(($timezone = arr_get($basecofig, 'timezone')) !== ''){
 	define('TIMEZONE', $timezone);
