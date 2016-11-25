@@ -29,6 +29,10 @@ if(empty($site)){
 <td><?php elang('Site meta-infomation')?></td>
 <td><textarea cols="60" rows="3" name="SITE_DESCRIPTION"><?php ehtml(arr_get($site, 'site_description'));?></textarea></td>
 </tr>
+<tr>
+<td><?php elang('Site Notice')?></td>
+<td><textarea cols="60" rows="3" name="SITE_NOTICE"><?php ehtml(s('config', 'SITE_NOTICE'));?></textarea></td>
+</tr>
 
 <?php if(p('settings_modify_seo')){?>
 <tr>
