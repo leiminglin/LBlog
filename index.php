@@ -1,8 +1,6 @@
 <?php
 
-// require './App/conf/init.php';
-// require './App/lml.min.php';
-require './App/lml.php';
+require './app/lml.php';
 
 lml()->app()
 ->attachEvent(array('onRun'=>array('Statistic', 'start')))
