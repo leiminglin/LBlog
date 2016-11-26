@@ -224,6 +224,11 @@ function r($p, $d=array()){
 	return eval('?>'.$p);
 }
 
+function r_file($f, $d=array()){
+	extract($d, EXTR_OVERWRITE);
+	return include $f;
+}
+
 function s($name, $data=null){
 	static $store = array();
 	if(is_array($data)){

@@ -62,6 +62,13 @@ a:hover{
 }
 
 
+.notice{
+	text-align:center;
+	background:white;
+	margin:5px 0;
+}
+
+
 .top{
 	margin:auto auto 5px;
 	background:white;
@@ -88,30 +95,114 @@ a:hover{
 }
 
 
+
+
+
+
+.content{
+	padding-top:5px;
+	margin:auto;
+}
+.content li{
+	width:100%;
+	float:left;
+	margin-bottom:12px;
+}
+@media screen and (min-width:320px){
+	.content li{
+		width:50%;
+	}
+}
+
+@media screen and (min-width:480px){
+	.content li{
+		width:33.3%;
+	}
+}
+@media screen and (min-width:640px){
+	.content li{
+		width:25%;
+	}
+}
+@media screen and (min-width:960px){
+	.content{
+		width:960px;
+	}
+}
+.content li div.item{
+	height:220px;
+	width:160px;
+	overflow:hidden;
+	position:relative;
+	margin:auto;
+	background:white;
+}
+.content div.img{
+	margin-top:5px;
+}
+.content li div img{
+	display:block;
+	margin:auto;
+}
+.content .item h3{
+	font-weight:normal;
+	font-size:14px;
+	margin:0;
+}
+.content .item .title{
+	position:absolute;
+	bottom:20px;
+	color:#333;
+	padding:0 5px;
+}
+.price del{
+	color:#999;
+	font-weight:normal;
+}
+.content .item .price{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	text-align:center;
+	color:#DD2727;
+	font-weight:bold;
+}
+.content .item .price span{
+	font-size:12px;
+}
+
+
+
+
 .fl{
 	float:left;
 }
 .fr{
 	float:right;
 }
+
 .tbg1{
 	background:#F9AE0F;
 }
-.tbg2{
+.tbg4{
 	background:#FA6D22;
 }
-.tbg3{
+.tbg2{
 	background:#FC2E9D;
 }
-.tbg4{
+.tbg5{
 	background:#18C5C0;
 }
-.tbg5{
+.tbg3{
 	background:#8855FB;
 }
 .tbg6{
 	background:#F9331D;
 }
+
+
+
 .tbg7{
 	background:#F62E63;
 }
@@ -128,10 +219,74 @@ a:hover{
 
 
 
+.page{
+	text-align:center;
+	line-height:30px;
+	margin:40px 0px;
+	font-family:Microsoft Yahei;
+}
+.page a{
+	padding:0 5px;
+	display:inline-block;
+	text-decoration:none;
+	border:1px solid #eee;
+	color:#666;
+	margin-left:-1px;
+}
+.page a:hover{
+	color:#fd703d;
+}
+.page a.current{
+	color:#fd703d;
+	text-decoration:none;
+}
+.page a.gray{
+	color:#ccc;
+	text-decoration:none;
+}
+.page .leftradius{
+	border-top-left-radius:5px;
+	border-bottom-left-radius:5px;
+}
+.page .rightradius{
+	border-top-right-radius:5px;
+	border-bottom-right-radius:5px;
+}
+
+
+.ditem{
+	background:#FFF;
+}
+.ditem img{
+	margin:auto;
+	display:block;
+	max-width:80%;
+	height:auto;
+}
+.ditem .album img{
+	margin:0 auto 5px;
+}
+.ditem .price{
+	color:#DD2727;
+	font-weight:bold;
+	text-align:center;
+}
+.ditem .title{
+	text-align:center;
+}
+.ditem .intro{
+	padding:0 20px;
+	text-indent:2em;
+}
+
+
+
+
+
 .foot{
 	text-align:center;
 	border-top:1px solid #E8E9EB;
-	margin:15px 0;
+	margin:30px 0 0;
 	padding:10px 0;
 	color:#ccc;
 	font-size:12px;

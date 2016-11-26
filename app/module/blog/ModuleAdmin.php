@@ -150,6 +150,9 @@ class ModuleAdmin extends LmlBlog{
 			}
 			$m_goods_cat->del($where, array($id));
 			
+			if(!is_array($z['d'])){
+				return;
+			}
 			foreach ($z['d'] as $k => $v) {
 				$arr = array(
 					'good_id' => $id,

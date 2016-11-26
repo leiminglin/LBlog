@@ -40,6 +40,6 @@ class ModuleIndex extends LmlBlog{
 	}
 
 	private function index_mall(){
-		$this->display();
+		$this->display('list/index');
 	}
 }

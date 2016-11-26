@@ -1,7 +1,7 @@
 <?php require THEME_PATH.C_GROUP.'/@common/header.php';?>
 
 <div class="he">
-<h1><a class="fl" href="/">琳琳衣橱</a></h1>
+<h1><a class="fl" href="/"><?php ehtml(s('config','SITE_NAME'));?></a></h1>
 <?php 
 //<a class="fr zc" href="/user/register">注册</a>
 //<a class="fr" href="/user/login">登录</a>
@@ -10,7 +10,27 @@
 </div>
 
 <div class="wrap">
+	<div class="notice">
+	<?php ehtml(s('config', 'SITE_NOTICE'));?>
+	</div>
 	<div class="top">
+		<?php 
+			$cats = q('mall_cat')->select('*','status=1');
+			foreach ($cats as $k=>$v){
+				if($k==0){
+					echo '<ul>';
+				}
+				echo '<li><h2><a href="/cat/'.$v['id'].'"><span class="tbg'.($k+1).'">'.$v['title'].'</span></a></h2></li>';
+				if($k>0 && ($k+1)%3==0){
+					echo '</ul><div class="clear"></div>';
+				}elseif($k+1 == count($cats)){
+					echo '<div class="clear"></div>';
+				}
+			}
+		?>
+		
+		<?php 
+		/**
 		<ul>
 			<li><h2><a href="/"><span class="tbg1">品牌</span></a></h2></li>
 			<li><h2><a href="/"><span class="tbg3">内衣</span></a></h2></li>
@@ -23,158 +43,43 @@
 			<li><h2><a href="/"><span class="tbg6">帽衫</span></a></h2></li>
 		</ul>
 		<div class="clear"></div>
+		 */
+		?>
 	</div>
 
 
-<style>
-
-
-
-.content{
-	padding-top:5px;
-	margin:auto;
-}
-.content li{
-	width:100%;
-	float:left;
-	margin-bottom:12px;
-}
-@media screen and (min-width:320px){
-	.content li{
-		width:50%;
-	}
-}
-
-@media screen and (min-width:480px){
-	.content li{
-		width:33.3%;
-	}
-}
-@media screen and (min-width:640px){
-	.content li{
-		width:25%;
-	}
-}
-@media screen and (min-width:960px){
-	.content{
-		width:960px;
-	}
-}
-.content li div.item{
-	height:220px;
-	width:160px;
-	overflow:hidden;
-	position:relative;
-	margin:auto;
-	background:white;
-}
-.content div.img{
-	margin-top:5px;
-}
-.content li div img{
-	display:block;
-	margin:auto;
-}
-.content .item h3{
-	font-weight:normal;
-	font-size:14px;
-	margin:0;
-}
-.content .item .title{
-	position:absolute;
-	bottom:20px;
-	color:#333;
-	padding:0 5px;
-}
-.content .item .price{
-	position:absolute;
-	bottom:0;
-	left:0;
-	right:0;
-	text-align:center;
-	color:#DD2727;
-	font-weight:bold;
-}
-.content .item .price span{
-	font-size:12px;
-}
-</style>
-	
-	
 	<div class="content">
 		<ul>
+		<?php 
+		
+			if(!isset($items)){
+				$items = q('mall_goods')->select('*', 'status=1');
+			}
+			
+			foreach ($items as $k=>$v){
+				
+		?>
 			<li>
+				<a href="/item/<?php echo $v['id'];?>">
 				<div class="item">
 					<div class="img">
-						<?php echo template_interpreter('<LBLOGimage id="1" maxwidth="150" maxheight="150">');?>
+						<?php echo template_interpreter('<LBLOGimage id="'.substr($v['images'],0,1).'" maxwidth="150" maxheight="150">', $v['title']);?>
 					</div>
 					<div class="title">
-						<h3>波司登超长修身加厚羽绒服</h3>
+						<h3><?php ehtml($v['title']);?></h3>
 					</div>
 					<div class="price">
-						￥538
-						<span>.00</span>
+						<?php if(!in_array($v['origin_price'], array('0','0.00'))){echo '<del><i>￥'.substr($v['origin_price'],0,-3).'<span>'.substr($v['origin_price'],-3).'</span></i></del> ';}?>
+						￥<?php echo substr($v['price'],0,-3);?>
+						<span><?php echo substr($v['price'],-3);?></span>
 					</div>
 				</div>
+				</a>
 			</li>
-			<li>
-				<div class="item">
-					<div class="img">
-						<?php echo template_interpreter('<LBLOGimage id="2" maxwidth="150" maxheight="150">');?>
-					</div>
-					<div class="title">
-						波司登超长修身加厚羽绒服
-					</div>
-					<div class="price">
-						￥538
-						<span>.00</span>
-					</div>
-				</div>
-			</li>
-			<li>
-				<div class="item">
-					<div class="img">
-						<?php echo template_interpreter('<LBLOGimage id="3" maxwidth="150" maxheight="150">');?>
-					</div>
-					<div class="title">
-						波司登超长修身加厚羽绒服
-					</div>
-					<div class="price">
-						￥538
-						<span>.00</span>
-					</div>
-				</div>
-			</li>
-			<li>
-				<div class="item">
-					<div class="img">
-					<?php echo template_interpreter('<LBLOGimage id="4" maxwidth="150" maxheight="150">');?>
-					</div>
-					<div class="title">
-						波司登超长修身加厚羽绒服
-					</div>
-					<div class="price">
-						￥538
-						<span>.00</span>
-					</div>
-				</div>
-			</li>
-			<li>
-				<div class="item">
-					<div class="img">
-						<?php echo template_interpreter('<LBLOGimage id="5" maxwidth="150" maxheight="150">');?>
-					</div>
-					<div class="title">
-						波司登超长修身加厚羽绒服
-					</div>
-					<div class="price">
-						￥538
-						<span>.00</span>
-					</div>
-				</div>
-			</li>
+		<?php }?>
 		</ul>
 		<div class="clear"></div>
+		<?php require THEME_PATH.C_GROUP.'/@common/page.php';?>
 	</div>
 
 

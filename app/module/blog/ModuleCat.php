@@ -9,6 +9,9 @@ class ModuleCat extends LmlBlog{
 	}
 	
 	public function index(){
+		if (THEME_NAME == 'mall') {
+			return $this->index_mall();
+		}
 		
 		$matches = '';
 		$id = '';
@@ -47,6 +50,10 @@ class ModuleCat extends LmlBlog{
 		$this->assign('page', $page);
 		$this->assign('page_path', 'cat/'.$id.'/p');
 		$this->assign('pid', $pid);
+		$this->display();
+	}
+	
+	private function index_mall(){
 		$this->display();
 	}
 }
