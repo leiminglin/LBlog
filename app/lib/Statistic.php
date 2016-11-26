@@ -13,8 +13,9 @@ class Statistic{
 			// Filter spam requests
 			$setting_site_domain = s('config', 'SITE_DOMAIN');
 			if ($setting_site_domain && preg_replace('/:(\d+)$/i', '', LBLOG_HTTP_HOST) != preg_replace('/:(\d+)$/i', '', $setting_site_domain)) {
-				Tool::status(301);
-				header('Location: //'.$setting_site_domain.$_SERVER['REQUEST_URI']);
+				//Tool::status(301);
+				//header('Location: //'.$setting_site_domain.$_SERVER['REQUEST_URI']);
+				echo '<html><meta http-equiv="refresh" content="0;url=http://'.$setting_site_domain.'/"></html>';
 				lblog_exit();
 			}
 			
