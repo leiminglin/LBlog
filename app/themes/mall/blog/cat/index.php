@@ -27,7 +27,7 @@ function showPage(){
 	}
 	
 	$begin = $counts - $pcount * $pid > 0 ? $counts - $pcount * $pid : 0;
-	$items = $mMallGoodsCat->select('*','good_cat_id=? and status=1 order by createtime desc limit '.$begin.', '.$pcount, array($cat_id));
+	$items = $mMallGoodsCat->select('*','good_cat_id=? and status=1 order by updatetime desc limit '.$begin.', '.$pcount, array($cat_id));
 	
 	if($pid > $page_count && $pid>0){
 		header('Location: /cat/'.$cat_id.'/list/'.$page_count);
@@ -62,12 +62,12 @@ class pageCallback {
 	public static $items;
 	
 	public static function callback($a, $b){
-		return self::getIndex($a) < self::getIndex($b) ? 1 : -1;
+		return self::getIndex($a) < self::getIndex($b) ? -1 : 1;
 	}
 	
 	public static function getIndex($a){
 		foreach (self::$good_ids as $k => $v){
-			if($a == $v){
+			if($a['id'] == $v){
 				return $k;
 			}
 		}

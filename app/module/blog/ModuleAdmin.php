@@ -164,7 +164,7 @@ class ModuleAdmin extends LmlBlog{
 					$m_goods_cat->add($arr);
 				}
 			}
-			$m_goods_cat->update(array('status'=>$z['o']), "good_id=$id");
+			$m_goods_cat->update(array('status'=>$z['o'],'updatetime'=>$GLOBALS['start_time']), "good_id=$id");
 		}
 	}
 	
