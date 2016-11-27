@@ -138,7 +138,7 @@ a:hover{
 	background:white;
 }
 .content div.img{
-	margin-top:5px;
+	padding-top:5px;
 }
 .content li div img{
 	display:block;
