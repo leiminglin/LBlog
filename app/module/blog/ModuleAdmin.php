@@ -135,6 +135,7 @@ class ModuleAdmin extends LmlBlog{
 		unset($_POST['z_data']);
 		$z['h'] = $handle;
 		$z['d'] = $data;
+		$z['o'] = arr_get($_POST, 'status');
 		return $z;
 	}
 	
@@ -163,6 +164,7 @@ class ModuleAdmin extends LmlBlog{
 					$m_goods_cat->add($arr);
 				}
 			}
+			$m_goods_cat->update(array('status'=>$z['o']), "good_id=$id");
 		}
 	}
 	

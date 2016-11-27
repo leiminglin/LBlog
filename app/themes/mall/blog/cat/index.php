@@ -27,7 +27,7 @@ function showPage(){
 	}
 	
 	$begin = $counts - $pcount * $pid > 0 ? $counts - $pcount * $pid : 0;
-	$items = $mMallGoodsCat->select('*','good_cat_id=? order by createtime desc limit '.$begin.', '.$pcount, array($cat_id));
+	$items = $mMallGoodsCat->select('*','good_cat_id=? and status=1 order by createtime desc limit '.$begin.', '.$pcount, array($cat_id));
 	
 	if($pid > $page_count && $pid>0){
 		header('Location: /cat/'.$cat_id.'/list/'.$page_count);

@@ -506,7 +506,9 @@ DROP TABLE IF EXISTS `lblog_mall_goods_cat`;
  CREATE TABLE `lblog_mall_goods_cat` (
   `good_id` int(11) NOT NULL DEFAULT '0',
   `good_cat_id` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(3) NOT NULL DEFAULT '0',
   `createtime` bigint(20) unsigned NOT NULL DEFAULT '0',
   KEY `good_id` (`good_id`),
-  KEY `good_cat_id` (`good_cat_id`)
+  KEY `good_cat_id` (`good_cat_id`),
+  KEY `status` (`status`),
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='mall goods cat';
