@@ -105,11 +105,34 @@ CREATE TABLE `lblog_statistic` (
   `http_host` varchar(50) NOT NULL,
   `request_uri` varchar(1024) NOT NULL,
   `remote_addr` varchar(24) NOT NULL,
+  `request_method` varchar(50) NOT NULL DEFAULT '',
+  `http_x_forward_for` varchar(24) NOT NULL DEFAULT '',
   `http_user_agent` varchar(300) NOT NULL,
   `http_accept` varchar(200) NOT NULL,
   `http_accept_language` varchar(100) NOT NULL,
   `http_accept_encoding` varchar(50) NOT NULL,
   `http_referer` varchar(1024) NOT NULL,
+  `request_time_float` varchar(20) NOT NULL DEFAULT '',
+  `createtime` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `createtime` (`createtime`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `lblog_statistic_admin`;
+CREATE TABLE `lblog_statistic_admin` (
+  `id` int(11) NOT NULL auto_increment,
+  `http_host` varchar(50) NOT NULL,
+  `request_uri` varchar(1024) NOT NULL,
+  `remote_addr` varchar(24) NOT NULL,
+  `request_method` varchar(50) NOT NULL DEFAULT '',
+  `http_x_forward_for` varchar(24) NOT NULL DEFAULT '',
+  `http_user_agent` varchar(300) NOT NULL,
+  `http_accept` varchar(200) NOT NULL,
+  `http_accept_language` varchar(100) NOT NULL,
+  `http_accept_encoding` varchar(50) NOT NULL,
+  `http_referer` varchar(1024) NOT NULL,
+  `request_time_float` varchar(20) NOT NULL DEFAULT '',
   `createtime` bigint(20) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `createtime` (`createtime`)
