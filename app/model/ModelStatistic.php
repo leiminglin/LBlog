@@ -22,7 +22,7 @@ class ModelStatistic extends Model{
 		);
 
 		$suffix = '';
-		if(preg_match('^(?:\/index\.php)?\/admin/i', $request_uri)){
+		if(preg_match('/^(?:\/index\.php)?\/admin/i', $request_uri)){
 			$suffix = '_admin';
 		}
 		return $this->db->insert($this->dbPrefix.'statistic'.$suffix, $arr);
