@@ -11,9 +11,9 @@
 <tr>
 <td><?php echo $v['id'];?></td>
 <td><?php echo $v['http_host'];?></td>
-<td><?php echo $v['request_uri'];?></td>
+<td><?php ehtml($v['request_uri']);?></td>
 <td><?php echo $v['remote_addr'];?></td>
-<td><?php echo $v['http_referer'];?></td>
+<td><?php ehtml($v['http_referer']);?></td>
 <td><?php echo date('Y-m-d H:i:s', $v['createtime']);?></td>
 </tr>
 <?php }?>
