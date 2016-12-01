@@ -832,7 +832,7 @@ class LmlApp{
 			return $this->show();
 		}
 		$path = $this->path;
-		$m = ucfirst(MODULE_DIR_NAME).ucfirst($path[0]);
+		$m = ucfirst(MODULE_DIR_NAME).ucfirst(strtolower($path[0]));
 		$a = $path[1];
 		defined('C_MODULE') || define('C_MODULE', strtolower($path[0]));
 		defined('C_ACTION') || define('C_ACTION', strtolower($a));
