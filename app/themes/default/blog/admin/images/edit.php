@@ -38,9 +38,9 @@ if(isset($rs)){
 <tr>
 <td colspan="2">
 <?php if(p('images_rotate')){?>
-<a href="javascript:void(0)" data-action="lblog_admin_images_rotate" data-id="<?php echo $rs['id']?>"><?php elang('Rotate')?>90бу</a> 
-<a href="javascript:void(0)" data-action="lblog_admin_images_rotate" data-id="<?php echo $rs['id']?>"><?php elang('Rotate')?>180бу</a> 
-<a href="javascript:void(0)" data-action="lblog_admin_images_rotate" data-id="<?php echo $rs['id']?>"><?php elang('Rotate')?>270бу</a>
+<a href="javascript:void(0)" data-action="lblog_admin_images_rotate" data-id="<?php echo $rs['id']?>"><?php elang('Rotate')?>90&deg;</a> 
+<a href="javascript:void(0)" data-action="lblog_admin_images_rotate" data-id="<?php echo $rs['id']?>"><?php elang('Rotate')?>180&deg;</a> 
+<a href="javascript:void(0)" data-action="lblog_admin_images_rotate" data-id="<?php echo $rs['id']?>"><?php elang('Rotate')?>270&deg;</a>
 <?php }?>
 </td>
 </tr>
