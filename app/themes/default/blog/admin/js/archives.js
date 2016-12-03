@@ -599,6 +599,19 @@ lml.loadJs.competeLoad([
 		},
 		'edit_specified_mall_cats':function(o){
 			get_goods_cat_post_page(o.previousSibling.value);
+		},
+		'lblog_admin_images_rotate':function(o){
+			var id=o.getAttribute('data-id'),degree=o.innerHTML.match(/\d+/)[0];
+			get('<?php echo WEB_APP_PATH?>admin/images/rotate/'+id+'/'+degree, function(rs){
+				show_info('<?php elang('Rotate Successfully!')?>');
+				var visible_tab=$('.tabs_content').children(':visible');
+				$('img',visible_tab).each(function(){
+					if($(this).attr('src').match(/^\/file\/image\/(\d+)/)[1]==id){
+						rs=$.parseJSON(rs);
+						$(this).attr({"src":rs.src,"width":rs.width,"height":rs.height});
+					}
+				});
+			});
 		}
 	};
 

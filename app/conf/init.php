@@ -425,6 +425,42 @@ function image_wh($w, $h, $rw=640, $rh=1000){
 
 function imagecropper($source_path, $width=640)
 {
+	$exif = exif_read_data($source_path);
+	if(isset($exif['Orientation'])){
+		$image = imagecreatefromstring(file_get_contents($source_path));
+		switch($exif['Orientation']){
+			case 8:
+				$image = imagerotate($image,90,0);
+				break;
+			case 3:
+				$image = imagerotate($image,180,0);
+				break;
+			case 6:
+				$image = imagerotate($image,-90,0);
+				break;
+		}
+		$source_info = getimagesize($source_path);
+		
+		ob_start();
+		switch ($source_info['mime'])
+		{
+			case 'image/gif':
+				imagegif($image);
+				break;
+			case 'image/jpeg':
+				imagejpeg($image);
+				break;
+			case 'image/png':
+				imagepng($image);
+				break;
+			default:
+				imagejpeg($image);
+				break;
+		}
+		file_put_contents($source_path, ob_get_clean());
+	}
+	
+	
 	$source_info   = getimagesize($source_path);
 	$source_width  = $source_info[0];
 	$source_height = $source_info[1];
@@ -461,6 +497,9 @@ function imagecropper($source_path, $width=640)
 		case 'image/png':
 			$source_image = imagecreatefrompng($source_path);
 			imagesavealpha($source_image, true);
+			break;
+		case 'image/bmp':
+			$source_image = imagecreatefromstring(file_get_contents($source_path));
 			break;
 		default:
 			return false;

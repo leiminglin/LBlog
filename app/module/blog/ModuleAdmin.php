@@ -982,6 +982,54 @@ class ModuleAdmin extends LmlBlog{
 					echo $out_html;
 				}
 				break;
+			case 'rotate':
+				$matches = route_match('[\w]+\/(\d+)\/(\d+)');
+				if(!$matches){
+					return;
+				}
+				$id=$matches[1];
+				$degree=$matches[2];
+				$image=$m->find($id);
+				$filename = APP_PATH.'repository/image/'.$image['path'];
+				$source_info = getimagesize($filename);
+				$im = imagecreatefromstring(file_get_contents($filename));
+				$im = imagerotate($im,$degree,0);
+				
+				ob_start();
+				switch ($source_info['mime'])
+				{
+					case 'image/gif':
+						imagegif($im);
+						break;
+					case 'image/jpeg':
+						imagejpeg($im);
+						break;
+					case 'image/png':
+						imagepng($im);
+						break;
+					default:
+						imagejpeg($im);
+						break;
+				}
+				$data = ob_get_clean();
+				file_put_contents($filename, $data);
+				$source_info = getimagesize($filename);
+				
+				$hash = md5($data);
+				$m->update(array(
+					'hash'=>md5($data),
+					'size'=>strlen($data),
+					'width'=>$source_info[0],
+					'height'=>$source_info[1],
+					'type'=>$source_info['mime']
+				), 'id='.$id);
+				$return_arr = array(
+					'src' => WEB_APP_PATH.'file/image/'.$id.'?'.$hash,
+					'width' => $source_info[0],
+					'height' => $source_info[1],
+				);
+				echo json_encode($return_arr);
+				break;
 		}
 		return;
 	}
