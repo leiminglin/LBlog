@@ -17,7 +17,7 @@
 		
 		<div class="ditem">
 			<div class="img">
-				<?php echo template_interpreter('<LBLOGimage id="'.substr($item['images'],0,1).'">', $item['title']);?>
+				<?php $temp=explode(',', $item['images']); echo template_interpreter('<LBLOGimage id="'.arr_get($temp, 0).'">', $item['title']);?>
 			</div>
 			<div class="title">
 				<h3><?php ehtml($item['title']);?></h3>

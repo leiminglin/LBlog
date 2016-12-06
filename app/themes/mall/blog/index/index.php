@@ -63,7 +63,7 @@
 				<a href="/item/<?php echo $v['id'];?>">
 				<div class="item">
 					<div class="img">
-						<?php echo template_interpreter('<LBLOGimage id="'.substr($v['images'],0,1).'" maxwidth="150" maxheight="150">', $v['title']);?>
+						<?php $temp=explode(',', $v['images']); echo template_interpreter('<LBLOGimage id="'.arr_get($temp, 0).'" maxwidth="150" maxheight="150">', $v['title']);?>
 					</div>
 					<div class="title">
 						<h3><?php ehtml($v['title']);?></h3>
