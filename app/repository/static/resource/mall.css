@@ -274,8 +274,7 @@ a:hover{
 .ditem .title{
 	text-align:center;
 }
-.ditem .intro{
-	padding:0 20px;
+.ditem .intro p{
 	text-indent:2em;
 }
 
