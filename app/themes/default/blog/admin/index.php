@@ -54,6 +54,14 @@ textarea{
 }
 .top .title{
 	float:left;
+	display:inline-block;
+	width:20px;
+	border:1px solid red;
+	border-radius:50%;
+	height:20px;
+	margin-top:1px;
+	line-height:20px;
+	text-align:center;
 }
 .top .user{
 	float:right;
