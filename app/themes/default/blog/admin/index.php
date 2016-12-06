@@ -48,6 +48,7 @@ textarea{
 	font-size:16px;
 	border-bottom:1px solid #e6e9ed;
 	padding-left:10px;
+	margin-bottom:2px;
 }
 .top span{
 	color:#333;
@@ -59,9 +60,11 @@ textarea{
 	border:1px solid red;
 	border-radius:50%;
 	height:20px;
-	margin-top:1px;
+	margin-top:8px;
 	line-height:20px;
 	text-align:center;
+	color:red;
+	cursor:pointer;
 }
 .top .user{
 	float:right;
@@ -110,25 +113,27 @@ div.line span{
 }
 
 .tabs_title{
-	position:absolute;
+	/*position:absolute;
 	top:-24px;
-	left:10px;
+	left:10px;*/
 	line-height:22px;
+	background:whitesmoke;
+	padding:2px;
 }
 .tabs_title a{
 	display:inline-block;
-	margin:0 3px;
+	margin:2px 3px;
 	padding:0 8px;
 	cursor:pointer;
 	position:relative;
-	border-left:1px solid white;
+	/*border-left:1px solid white;
 	border-right:1px solid white;
-	border-top:1px solid white;
-	border-bottom:1px solid #e6e9ed;
+	border-top:1px solid white;*/
+	border:1px solid #e6e9ed;
 }
 a.bbw{
 	border:1px solid #e6e9ed;
-	border-bottom:1px solid #fff;
+	/*border-bottom:1px solid #fff;*/
 	color:#ff6f3d;
 }
 .cl{

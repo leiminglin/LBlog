@@ -104,6 +104,7 @@ class ModuleAdmin extends LmlBlog{
 							$rs = $m->find($m->getLastId());
 							$this->assign('rs', $rs);
 							$z_id = $rs['id'];
+							$this->zProcess($z_id, $z);
 							$this->display('', '/edit.php');
 						}
 					}else{
@@ -117,8 +118,8 @@ class ModuleAdmin extends LmlBlog{
 						}else{
 							$this->assign('save_status', '内容未改变！');
 						}
+						$this->zProcess($z_id, $z);
 					}
-					$this->zProcess($z_id, $z);
 					break;
 			}
 			return;

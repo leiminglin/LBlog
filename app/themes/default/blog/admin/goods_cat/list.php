@@ -30,7 +30,7 @@
 <td><?php echo $v['id'];?></td>
 <td><?php ehtml($v['title']);?></td>
 <td><?php echo $v['status']?'Y':'N';?></td>
-<td><?php echo date("Y-m-d H:i:s", $v['createtime']);?></td>
+<td><?php echo date("ymd H:i:s", $v['createtime']);?></td>
 <td>
 <?php if(p('mall_cats_read_post')){?>
 <a href="javascript:void(0)" data-action="lblog_admin_mall_cats_post_page" data-id="<?php echo $v['id'];?>"><?php elang('Edit')?></a>
