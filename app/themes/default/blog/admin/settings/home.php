@@ -27,11 +27,11 @@ if(empty($site)){
 </tr>
 <tr>
 <td><?php elang('Site meta-infomation')?></td>
-<td><textarea cols="60" rows="3" name="SITE_DESCRIPTION"><?php ehtml(arr_get($site, 'site_description'));?></textarea></td>
+<td><textarea style="width:100%" rows="3" name="SITE_DESCRIPTION"><?php ehtml(arr_get($site, 'site_description'));?></textarea></td>
 </tr>
 <tr>
 <td><?php elang('Site Notice')?></td>
-<td><textarea cols="60" rows="3" name="SITE_NOTICE"><?php ehtml(s('config', 'SITE_NOTICE'));?></textarea></td>
+<td><textarea style="width:100%" rows="3" name="SITE_NOTICE"><?php ehtml(s('config', 'SITE_NOTICE'));?></textarea></td>
 </tr>
 
 <?php if(p('settings_modify_seo')){?>
@@ -74,7 +74,7 @@ if(empty($site)){
 <td><?php elang('JavaScript Code')?></td>
 </tr>
 <tr>
-<td><textarea cols="80" rows="12" name="JAVASCRIPT_CODE"><?php ehtml(arr_get($site, 'javascript_code'));?></textarea></td>
+<td><textarea style="width:100%" rows="12" name="JAVASCRIPT_CODE"><?php ehtml(arr_get($site, 'javascript_code'));?></textarea></td>
 </tr>
 
 <?php if(p('settings_modify_jscode')){?>
@@ -153,7 +153,7 @@ if(empty($site)){
 <table>
 <tr>
 <td><?php elang('Timezone')?></td>
-<td><input type="text" name="TIMEZONE" value="<?php echo arr_get($site, 'timezone');?>"/></td>
+<td><input type="text" class="longinput" name="TIMEZONE" value="<?php echo arr_get($site, 'timezone');?>"/></td>
 
 <?php if(p('settings_modify_timezone')){?>
 <td align="center"><input class="btn" type="button" value="<?php elang('Submit')?>"/></td>
@@ -172,7 +172,7 @@ if(empty($site)){
 <td><?php elang('Logo')?></td>
 
 <?php if(p('settings_modify_logo')){?>
-<td><input type="file" name="LOGO"/></td>
+<td><input type="file" name="LOGO" class="longinput"/></td>
 <td align="center"><input class="btn" type="submit" value="<?php elang('Submit')?>" data-id="settings_logo"/></td>
 <?php }?>
 
