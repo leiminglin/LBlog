@@ -43,7 +43,7 @@ $('input[type=button]',visible_tab).click(function(){
 (function(){
 	var style_str='
 	.template_imgs{
-		width:670px;
+		width:100%;
 		position:absolute;
 		display:none;
 		opacity:.9;

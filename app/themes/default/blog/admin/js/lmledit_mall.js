@@ -8,10 +8,10 @@
 		textarea.css({"display":"none"});
 		
 		var div = $("<div/>").attr({"contentEditable":"true","class":"lmledit"}).html(textarea.val());
-		var divwrap = $("<div/>").css({"width":"670px","border":"1px solid #d4d4d4","border-radius":"4px"});
+		var divwrap = $("<div/>").css({"width":"100%","border":"1px solid #d4d4d4","border-radius":"4px"});
 		var image = $("<a/>").append('image').append($("<div/>")
 				.css({"position":"absolute","background":"#fff","opacity":.92,
-					"display":"none","left":"-165px","border":"1px solid #ccc","width":"670px"}))
+					"display":"none","left":"-165px","border":"1px solid #ccc","width":"100%"}))
 		.css({"cursor":"pointer","position":"relative","display":"inline-block"}).mouseover(function(){
 			if(!textarea.is(':visible')){
 				$(this).children('div').show();
@@ -75,7 +75,7 @@
 				$(this).html('html');
 				panel.flag=false;
 			}else{
-				textarea.css({"display":"block","height":div.height()+'px',"width":'664px'});
+				textarea.css({"display":"block","height":div.height()+'px',"width":'100%'});
 				div.css({"display":"none"});
 				$(this).html('pvw');
 				panel.flag=true;
@@ -250,6 +250,10 @@
 		'}'+
 		'.lmledit p{'+
 			'border:1px dotted red'+
+		'}'+
+		'.lmledit p img{'+
+			'max-width:90%;'+
+			'height:auto;'+
 		'}'+
 		'.lmledit p img{'+
 		'margin:0 auto;'+
