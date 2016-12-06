@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <title>后台管理 - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
@@ -13,11 +14,11 @@ image{
 	border:0;
 }
 input{
-	width:350px;
+	width:100%;
 }
 .btn{
-	width:100px;
-	height:30px;
+	/*width:100px;*/
+	/*height:30px;*/
 }
 </style>
 </head>
@@ -28,7 +29,7 @@ if(isset($save_status)){
 }
 ?></div>
 <form action="<?php echo WEB_APP_PATH?>admin/postarticle" method="post">
-<table>
+<table style="width:90%" align="center">
 <tr>
 <td>Title：</td>
 <td><input name="title" type="text"/></td>
@@ -56,7 +57,7 @@ if(isset($save_status)){
 </tr>
 <tr>
 <td>Content：</td>
-<td><textarea cols="100" rows="15" name="content"></textarea></td>
+<td><textarea style="width:100%" rows="15" name="content"></textarea></td>
 </tr>
 <tr>
 <td align="center" colspan="2"><input class="btn" type="submit" value="Submit"/></td>

@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <title><?php elang('Backstage management')?> - <?php ehtml(SITE_NAME)?></title>
 <style>
 body{
@@ -40,7 +41,7 @@ textarea{
 	font-size:14px;
 }
 .sitewrap{
-	min-width:960px;
+	/*min-width:960px;*/
 }
 .top{
 	line-height:40px;
@@ -63,7 +64,7 @@ textarea{
 	float:left;
 	border-right:1px solid #edeff2;
 	padding:10px;
-	width:100px;
+	/*width:100px;*/
 	height:auto;
 	min-height:300px;
 }
@@ -124,7 +125,7 @@ a.bbw{
 	color:#ff6f3d;
 }
 .longinput{
-	width:400px;
+	width:100%;
 }
 </style>
 <script>
