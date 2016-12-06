@@ -252,7 +252,7 @@
 			'border:1px dotted red'+
 		'}'+
 		'.lmledit p img{'+
-			'max-width:90%;'+
+			'max-width:50%;'+
 			'height:auto;'+
 		'}'+
 		'.lmledit p img{'+

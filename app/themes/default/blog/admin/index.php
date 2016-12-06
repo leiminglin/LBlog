@@ -91,6 +91,8 @@ table tr td, table tr th{
 }
 table{
 	border-collapse:collapse;
+	width:100%;
+	max-width:960px;
 }
 div.line{
 	margin:10px 0;
