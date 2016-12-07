@@ -35,7 +35,7 @@ function form_iframe_get(action, callback){
 function adjust_right(){
 	var left_w = document.getElementsByClassName('left')[0].offsetWidth
 	,body_w = document.body.clientWidth, right = document.getElementsByClassName('right')[0];
-	right.style.width = body_w - left_w - 20 + "px";
+	right.style.width = body_w - left_w - 1 + "px";
 	lmlSmartFloat();
 }
 
