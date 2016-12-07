@@ -279,10 +279,10 @@
 				fd.span.html(' '+screen.width+'x'+screen.height);
 			}
 			t*=2;
-			if(t>500){
-				t=500;
+			if(t>1000){
+				t=1000;
 			}
-			setTimeout(q,t*2);
+			setTimeout(q,t);
 		};
 		setTimeout(q,t);
 		deferred.promise();
