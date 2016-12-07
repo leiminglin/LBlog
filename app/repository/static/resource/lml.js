@@ -279,8 +279,8 @@
 				fd.span.html(' '+screen.width+'x'+screen.height);
 			}
 			t*=2;
-			if(t>1000){
-				t=1000;
+			if(t>1e3){
+				t=1e3;
 			}
 			setTimeout(q,t);
 		};
