@@ -268,15 +268,23 @@
 			win.attachEvent("onscroll", loadImg);
 		}
 		loadImg();
-		setInterval(function(){loadImg();
-			if($){
+		var t=1;
+		var q=function(){
+			loadImg();
+			if(typeof $!='undefined'){
 				var fd=$('#footdate').get(0);
 				if(!fd.span){
 					fd.span=$('<span/>').appendTo(fd);
 				}
 				fd.span.html(' '+screen.width+'x'+screen.height);
 			}
-		}, 1000);
+			t*=2;
+			if(t>500){
+				t=500;
+			}
+			setTimeout(q,t*2);
+		};
+		setTimeout(q,t);
 		deferred.promise();
 	});
 
