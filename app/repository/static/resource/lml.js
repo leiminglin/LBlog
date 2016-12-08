@@ -273,10 +273,12 @@
 			loadImg();
 			if(typeof $!='undefined'){
 				var fd=$('#footdate').get(0);
-				if(!fd.span){
-					fd.span=$('<span/>').appendTo(fd);
+				if(fd){
+					if(!fd.span){
+						fd.span=$('<span/>').appendTo(fd);
+					}
+					fd.span.html(' '+screen.width+'x'+screen.height);
 				}
-				fd.span.html(' '+screen.width+'x'+screen.height);
 			}
 			t*=2;
 			if(t>1e3){
