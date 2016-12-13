@@ -109,7 +109,7 @@ if($mall_cats){
 
 
 <script>
-lml.loadJs('<?php echo WEB_APP_PATH.'admin/js/lmledit_mall?t='.DEFAULT_LANG.filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/lmledit_mall.js');?>', function(){
+lml.loadJs('<?php echo WEB_APP_PATH.'admin/js/lmledit?t='.DEFAULT_LANG.filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/lmledit.js');?>', function(){
 	lmledit($('.tabs_content').children(':visible').find('textarea[name=content]'));
 });
 lml.loadJs('<?php echo WEB_APP_PATH.'admin/js/mall?t='.DEFAULT_LANG.filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/mall.js');?>', function(){

@@ -85,6 +85,6 @@ $('form input[type=button]',visible_tab).click(function(){
 });
 
 lml.loadJs('<?php echo WEB_APP_PATH.'admin/js/lmledit?t='.DEFAULT_LANG.filemtime(DEFAULT_THEME_PATH.C_GROUP.'/admin/js/lmledit.js');?>', function(){
-	lmledit();
+	lmledit($('.tabs_content').children(':visible').find('textarea[name=content]'));
 });
 </script>
