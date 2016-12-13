@@ -271,7 +271,7 @@
 	$(document).scroll(function(){
 		clearTimeout(this.timer);
 		this.timer=setTimeout(function(){
-			var panel=$('.lmledit_wrap').find('div.panel');
+			var panel=$('.tabs_content').children(':visible').find('.lmledit_wrap div.panel');
 			var element = panel[0];
 			if(!element){
 				return;
