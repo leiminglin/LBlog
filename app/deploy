@@ -38,4 +38,15 @@ if [ -d ${ORIGIN_DIR}/app/repository/image ];then
 	echo 'move repository/image folder ok';
 fi
 
+DATE_TIME=`date "+%Y%m%d_%H%M%S"`;
+
+if [ -d ${ORIGIN_DIR} ];then
+	cd ../../;
+	NEW_DIR=`realpath $basedir`;
+	NEW_DIR=`dirname $NEW_DIR`;
+	mv ${ORIGIN_DIR} ${ORIGIN_DIR}.$DATE_TIME;
+	mv $NEW_DIR ${ORIGIN_DIR};
+	echo 'exchange folder name ok';
+fi
+
 echo 'done.';
