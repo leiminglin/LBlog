@@ -349,16 +349,20 @@
 	lml.createDeferred = createDeferred;
 	lml.loadJs = loadJs;
 	lml.onload = 0;
-	lml.run = function(){
-		lml.onload = 1;
-		deferred.promise();
-		loadJs.start();
-	};
+	lml.run = function(){};
 
 	win.lml = lml;
 
+	var oldload=function(){};
+	if(typeof win.onload=='function'){
+		oldload=win.onload;
+	}
+	win.onload=function(){
+		lml.onload = 1;
+		deferred.promise();
+		loadJs.start();
+		oldload();
+	};
+
 })(window, document);
 
-window.onload=function(){
-	lml.run();
-}
