@@ -225,6 +225,11 @@ lml.registerOnResize(adjust_right);
 	right.originMarginTop = right.style.marginTop.match(/\d+/);
 
 	var rightFloat = function(){
+
+		if(getEleStyle(left,'float')=='none'||getEleStyle(right,'float')=='none'){
+			return;
+		}
+
 		leftHeight = left.offsetHeight;
 		rightHeight = right.offsetHeight;
 		if(leftHeight < rightHeight){
